@@ -1,7 +1,7 @@
 import PageRouter from './components/PageRouter.vue'
 const config = require('./config')
 var map = {
-  mode: 'hash',
+  mode: 'history',
   base: '/' + config.ADMIN_NAME,
   routes: [
     {

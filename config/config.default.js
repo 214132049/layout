@@ -5,7 +5,7 @@ const path = require('path')
 I18n.configure({
   locales: ['zh-CN'],
   defaultLocale: 'zh-CN',
-  directory: path.json(__dirname, '/locale')
+  directory: path.join(__dirname, '/locale')
 })
 
 module.exports = (appInfo) => {
@@ -41,7 +41,7 @@ module.exports = (appInfo) => {
 
   config.cors = {
     origin: '*',
-    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS'
   }
 
   config.security = {

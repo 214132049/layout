@@ -1,16 +1,36 @@
 {
-  "session": {
-    "maxAge": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-session\\config\\config.default.js",
-    "key": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-session\\config\\config.default.js",
-    "httpOnly": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-session\\config\\config.default.js",
-    "encrypt": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-session\\config\\config.default.js"
+  "middleware": "C:\\Users\\wenli.li\\Desktop\\layout\\config\\config.default.js",
+  "errorHandler": {
+    "enable": "C:\\Users\\wenli.li\\Desktop\\layout\\config\\config.default.js",
+    "match": "C:\\Users\\wenli.li\\Desktop\\layout\\config\\config.default.js"
+  },
+  "validate": {
+    "translate": "C:\\Users\\wenli.li\\Desktop\\layout\\config\\config.default.js"
+  },
+  "jwt": {
+    "secret": "C:\\Users\\wenli.li\\Desktop\\layout\\config\\config.default.js",
+    "enable": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-jwt\\config\\config.default.js"
+  },
+  "keys": "C:\\Users\\wenli.li\\Desktop\\layout\\config\\config.default.js",
+  "mongoose": {
+    "client": {
+      "url": "C:\\Users\\wenli.li\\Desktop\\layout\\config\\config.default.js",
+      "options": "C:\\Users\\wenli.li\\Desktop\\layout\\config\\config.default.js"
+    },
+    "url": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-mongoose\\config\\config.default.js",
+    "options": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-mongoose\\config\\config.default.js",
+    "plugins": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-mongoose\\config\\config.default.js",
+    "loadModel": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-mongoose\\config\\config.default.js",
+    "app": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-mongoose\\config\\config.default.js",
+    "agent": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-mongoose\\config\\config.default.js"
+  },
+  "cors": {
+    "origin": "C:\\Users\\wenli.li\\Desktop\\layout\\config\\config.default.js",
+    "allowMethods": "C:\\Users\\wenli.li\\Desktop\\layout\\config\\config.default.js"
   },
   "security": {
-    "domainWhiteList": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
-    "protocolWhiteList": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
-    "defaultMiddleware": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
     "csrf": {
-      "enable": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
+      "enable": "C:\\Users\\wenli.li\\Desktop\\layout\\config\\config.default.js",
       "type": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
       "ignoreJSON": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
       "useSession": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
@@ -21,6 +41,9 @@
       "queryName": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
       "refererWhiteList": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js"
     },
+    "domainWhiteList": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
+    "protocolWhiteList": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
+    "defaultMiddleware": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
     "xframe": {
       "enable": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
       "value": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js"
@@ -58,6 +81,12 @@
       "ipBlackList": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
       "checkAddress": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js"
     }
+  },
+  "session": {
+    "maxAge": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-session\\config\\config.default.js",
+    "key": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-session\\config\\config.default.js",
+    "httpOnly": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-session\\config\\config.default.js",
+    "encrypt": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-session\\config\\config.default.js"
   },
   "helper": {
     "shtml": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js"
@@ -144,9 +173,11 @@
     "defaultViewEngine": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-view\\config\\config.default.js",
     "mapping": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-view\\config\\config.default.js"
   },
+  "bcrypt": {
+    "saltRounds": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-bcrypt\\config\\config.default.js"
+  },
   "env": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
   "name": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
-  "keys": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
   "cookies": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
   "proxy": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
   "maxIpsCount": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
@@ -176,8 +207,12 @@
       "dayjs": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
       "deep-assign": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
       "egg": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "egg-bcrypt": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
       "egg-cors": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "egg-jwt": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "egg-mongoose": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
       "egg-validate": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "i18n": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
       "lodash": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
       "md5": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
       "qs": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",

@@ -1,21 +1,18 @@
-'use strict';
-module.exports = app => {
-  return app.model.define('project', {
-    id: { field: 'id', type: app.Sequelize.INTEGER, primaryKey: true },
-    key: { field: 'key', type: app.Sequelize.STRING },
-    name: { field: 'name', type: app.Sequelize.STRING },
-    categoryId: { field: 'category_id', type: app.Sequelize.INTEGER },
-    status: { field: 'status', type: app.Sequelize.INTEGER },
-    desc: { field: 'desc', type: app.Sequelize.STRING },
-    image: { field: 'image', type: app.Sequelize.STRING },
-    updateTime: { field: 'update_time', type: app.Sequelize.BIGINT },
-    createTime: { field: 'create_time', type: app.Sequelize.BIGINT }
-  }, {
-    timestamps: true,
-    tableName: 'tb_project',
-    createdAt: 'createTime',
-    updatedAt: 'updateTime',
-  }, {
-    classMethods: {},
-  });
-};
+module.exports = (app) => {
+  const mongoose = app.mongoose
+  const Schema = mongoose.Schema
+
+  const ProjectSchema = new Schema({
+    id: { type: Number },
+    key: { type: String },
+    name: { type: String },
+    categoryId: { type: Number },
+    status: {  type: Number },
+    desc: { type: String },
+    image: { type: String },
+    createDate: { type: Date, default: Date.now },
+    modifyDate: { type: Date, default: Date.now },
+  })
+
+  return mongoose.model('project', ProjectSchema)
+}

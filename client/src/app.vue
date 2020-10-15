@@ -25,7 +25,6 @@
 <script type='text/ecmascript-6'>
   import CHeader from 'src/components/Header'
   import CContent from 'src/components/Content'
-  import CFooter from 'src/components/Footer'
   import CDialogs from 'src/components/Dialogs'
   import Welcome from 'src/components/Welcome'
   import { mapState } from 'vuex'
@@ -38,7 +37,7 @@
       }
     },
     components: {
-      CHeader, CContent, CFooter, CDialogs, Welcome
+      CHeader, CContent, CDialogs, Welcome
     },
     mounted: function () {
       window.EMA.bind('logout', () => {
@@ -51,12 +50,12 @@
         this.showLoading = false
       })
       window.EMA.bind('alert.show', (title, fn) => {
-        this.$alert(title, '注意', {
-          callback: action => {
-            if (typeof fn == 'function') {
-              fn()
-            }
-          }
+        this.$error({
+          title: '注意',
+          content: title,
+          onOk () {
+            typeof fn == 'function' && fn()
+          },
         })
       })
       this.$store.dispatch('changeAppSize', {

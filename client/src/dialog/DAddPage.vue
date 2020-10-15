@@ -21,9 +21,6 @@
           <a-form-item label="描述" prop="desc">
             <a-input type="textarea" placeholder="该页面的简要描述1-50个字" :minlength="1" :maxlength="50" v-model.trim="form.desc"></a-input>
           </a-form-item>
-          <a-form-item label="标签">
-            <tags :can-add="true" :category-id="1" :tags.sync="form.tags"></tags>
-          </a-form-item>
           <a-form-item label="页面类型">
             <a-select label="页面类型" v-model="form.type" placeholder="请选择">
               <a-option
@@ -78,13 +75,11 @@
 <script type="text/ecmascript-6">
   import BaseDialog from 'src/extend/BaseDialog'
   import Server from 'src/extend/Server'
-  import Tags from 'src/components/Tags'
-  import {mapState} from 'vuex'
+  import { mapState } from 'vuex'
 
   export default {
     mixins: [BaseDialog],
     name: 'DAddPage',
-    components: {Tags},
     data () {
       return {
         Visible: true,
@@ -95,12 +90,11 @@
           desc: '',
           type: '0',
           visibilitylevel: 0,
-          projectId: 0,
-          tags: []
+          projectId: 0
         },
         rules: {
-          name: [{required: true, message: '请输入页面标题', trigger: 'blur'}],
-          desc: [{required: false, message: '请输入描述内容', trigger: 'blur'}]
+          name: [{ required: true, message: '请输入页面标题', trigger: 'blur' }],
+          desc: [{ required: false, message: '请输入描述内容', trigger: 'blur' }]
         }
       }
     },
@@ -131,7 +125,7 @@
               type: 'warning'
             }).then(() => {
               this.close()
-              this.$router.push({path: '/projects/new'})
+              this.$router.push({ path: '/projects/new' })
             }).catch(() => {
               this.$message('已取消')
             })
@@ -140,11 +134,11 @@
         })
       },
       addPageInfo (ruleForm) {
-        let me = this
+        const me = this
         this.$refs[ruleForm].validate((valid) => {
           if (valid) {
             Server({
-              url: 'editor/pages/save',
+              url: 'api/pages/save',
               method: 'post',
               needLoading: true,
               trimNull: false,
@@ -166,4 +160,3 @@
     }
   }
 </script>
-

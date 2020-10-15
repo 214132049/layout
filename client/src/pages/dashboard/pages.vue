@@ -287,7 +287,7 @@
       },
       loadMyProject: function () {
         Server({
-          url: 'editor/pages/publiclist',
+          url: 'api/pages/publiclist',
           method: 'get',
           needLoading: true,
           data: {

@@ -56,9 +56,6 @@
                                 { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }]">
             <a-input type="textarea" :maxlength="50" v-model="form.desc"></a-input>
           </a-form-item>
-          <a-form-item label="标签">
-            <tags :can-add="true" :category-id="1" :tags.sync="form.tags"></tags>
-          </a-form-item>
           <a-form-item label="页面类型">
             <a-select label="页面类型" v-model="form.type" placeholder="请选择">
               <a-option
@@ -124,12 +121,11 @@
   import BasePage from 'src/extend/BasePage'
   import Upload from 'src/components/Upload'
   import Server from 'src/extend/Server'
-  import Tags from 'src/components/Tags'
-  import {mapState} from 'vuex'
+  import { mapState } from 'vuex'
 
   export default {
     mixins: [BasePage],
-    components: {Upload, Tags},
+    components: { Upload },
     name: 'pages_cnew',
     props: {
       id: { // 页面id
@@ -145,7 +141,6 @@
         loading: false,
         myProjects: [],
         form: {
-          tags: [],
           id: '',
           key: '',
           name: '',
@@ -172,9 +167,9 @@
       },
       getProjectInfo: function () {
         Server({
-          url: 'editor/pages/info',
+          url: 'api/pages/info',
           method: 'post',
-          data: {id: this.id + ''}
+          data: { id: this.id + '' }
         }).then((response) => {
           var data = response.data.data
           this.form = {
@@ -186,7 +181,6 @@
             name: data.name,
             projectId: data.projectId,
             visibilitylevel: data.visibilitylevel,
-            tags: data.tags || []
           }
         })
       },
@@ -210,9 +204,9 @@
           if (valid) {
             this.loading = true
             Server({
-              url: 'editor/pages/save',
+              url: 'api/pages/save',
               method: 'post',
-              data: {...this.form}
+              data: { ...this.form }
             }).then((response) => {
               this.loading = false
               this.$notify({

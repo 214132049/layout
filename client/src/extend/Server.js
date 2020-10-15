@@ -5,7 +5,7 @@ const instance = axios.create({
   baseURL: config.API_PATH,
   timeout: 30000,
   headers: {},
-  withCredentials: true,
+  withCredentials: false,
   needLoading: false,  // 是否需要加载效果
   ignoreCode: false  // 是否忽略服务端的错误提示
 })

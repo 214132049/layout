@@ -21,9 +21,6 @@
           <a-form-item label="描述" prop="desc">
             <a-input type="textarea" placeholder="该页面的简要描述1-50个字" :minlength="1" :maxlength="50" v-model.trim="form.desc"></a-input>
           </a-form-item>
-          <a-form-item label="标签">
-            <tags :can-add="true" :category-id="1" :tags.sync="form.tags"></tags>
-          </a-form-item>
           <a-form-item label="设为模板" v-if='type != "fork"'>
             <a-radio-group v-model="form.visibilitylevel">
               <a-radio :label="0">否</a-radio>
@@ -68,12 +65,10 @@
 <script type="text/ecmascript-6">
   import BaseDialog from 'src/extend/BaseDialog'
   import Server from 'src/extend/Server'
-  import Tags from 'src/components/Tags'
 
   export default {
     mixins: [BaseDialog],
     name: 'DCopyPage',
-    components: {Tags},
     data () {
       return {
         Visible: true,
@@ -84,15 +79,14 @@
           desc: '',
           visibilitylevel: 0,
           projectId: null,
-          tags: [],
           type: '0',
           content: ''
         },
         source: {},
         rules: {
-          projectId: [{required: true, message: '请选择所属项目', trigger: 'change'}],
-          name: [{required: true, message: '请输入页面标题', trigger: 'blur'}],
-          desc: [{required: false, message: '请输入描述内容', trigger: 'blur'}]
+          projectId: [{ required: true, message: '请选择所属项目', trigger: 'change' }],
+          name: [{ required: true, message: '请输入页面标题', trigger: 'blur' }],
+          desc: [{ required: false, message: '请输入描述内容', trigger: 'blur' }]
         }
       }
     },
@@ -120,7 +114,7 @@
               type: 'warning'
             }).then(() => {
               this.close()
-              this.$router.push({path: '/projects/new'})
+              this.$router.push({ path: '/projects/new' })
             }).catch(() => {
               this.$message('已取消')
             })
@@ -130,7 +124,7 @@
       },
       updateFork (data) {
         Server({
-          url: 'editor/pages/update-fork',
+          url: 'api/pages/update-fork',
           method: 'post',
           trimNull: false,
           data: {
@@ -142,11 +136,11 @@
         })
       },
       addPageInfo (ruleForm) {
-        let me = this
+        const me = this
         this.$refs[ruleForm].validate((valid) => {
           if (valid) {
             Server({
-              url: 'editor/pages/save',
+              url: 'api/pages/save',
               method: 'post',
               needLoading: true,
               trimNull: false,
@@ -160,7 +154,7 @@
               if (me.type === 'fork') {
                 this.updateFork()
                 this.$router.push({
-                  path: '/project', query: {id: me.form.projectId}
+                  path: '/project', query: { id: me.form.projectId }
                 })
               }
               this.ema.fire('projects_cdoc.pageAddSuccess')
@@ -172,4 +166,3 @@
     }
   }
 </script>
-

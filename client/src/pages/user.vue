@@ -60,11 +60,8 @@
       var id = this.$route.query.id
       if (id && id != this.userInfo.userId) {
         Server({
-          url: 'users/info',
+          url: 'api/user/info',
           method: 'get',
-          params: {
-            uid: id
-          }
         }).then((response) => {
           var data = response.data.data
           this.info = data

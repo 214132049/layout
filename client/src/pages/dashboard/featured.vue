@@ -253,7 +253,7 @@
       // 立即使用
       useTemp: function (item) {
         Server({
-          url: 'editor/pages/detail',
+          url: 'api/pages/detail',
           method: 'post', // default
           needLoading: false,
           data: {
@@ -294,7 +294,7 @@
           type: 'warning'
         }).then(() => {
           Server({
-            url: 'editor/pages/delete',
+            url: 'api/pages/delete',
             method: 'POST',
             needLoading: true,
             trimNull: false,
@@ -313,7 +313,7 @@
       // 模板列表
       detailInfo () {
         Server({
-          url: 'editor/pages/publiclist',
+          url: 'api/pages/publiclist',
           method: 'post',
           needLoading: true,
           trimNull: false,

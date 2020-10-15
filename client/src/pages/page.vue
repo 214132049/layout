@@ -154,7 +154,7 @@
     methods: {
       loadProject: function () {
         Server({
-          url: 'editor/pages/info',
+          url: 'api/pages/info',
           method: 'post',
           needLoading: true,
           data: {
@@ -193,7 +193,7 @@
           type: 'warning'
         }).then(() => {
           Server({
-            url: 'editor/pages/delete',
+            url: 'api/pages/delete',
             method: 'POST',
             needLoading: true,
             trimNull: false,
@@ -214,7 +214,7 @@
       },
       async getIdByKey (id) {
         const names = await Server({
-          url: 'editor/pages/getNameBykeys',
+          url: 'api/pages/getNameBykeys',
           method: 'post',
           data: {
             ids: [id],

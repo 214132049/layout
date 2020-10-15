@@ -63,10 +63,7 @@
     mounted () {
       // 获取用户信息
       Server({
-        url: 'users/info',
-        params: {
-          uid: 0
-        },
+        url: 'api/user/info',
         method: 'get'
       }).then((response) => {
         this.loading = false
@@ -90,7 +87,7 @@
       },
       initAllCategory: function () {
         Server({
-          url: 'editor/category/list',
+          url: 'api/category/list',
           method: 'POST',
           data: {}
         }).then((res) => {

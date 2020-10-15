@@ -199,7 +199,7 @@
         this.activeName = this.activeName === 'login' ? 'register' : 'login'
         this.resetForm()
       },
-      loginSuccess: function (data) {
+      loginSuccess: function () {
         window.location.replace('index.html')
       },
       loginSubmit () {

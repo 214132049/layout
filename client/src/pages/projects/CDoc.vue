@@ -400,7 +400,7 @@
           type: 'warning'
         }).then(() => {
           Server({
-            url: 'editor/pages/change-status',
+            url: 'api/pages/change-status',
             data: {
               id: +item.id,
               status: +me.status
@@ -426,7 +426,7 @@
           type: 'warning'
         }).then(() => {
           Server({
-            url: 'editor/pages/delete',
+            url: 'api/pages/delete',
             method: 'POST',
             needLoading: true,
             trimNull: false,
@@ -445,7 +445,7 @@
       // 详情页面挂载
       detailInfo () {
         Server({
-          url: 'editor/pages/list',
+          url: 'api/pages/list',
           method: 'post',
           needLoading: true,
           trimNull: false,
@@ -475,7 +475,7 @@
       copy: function (item) {
         console.log(item)
         Server({
-          url: 'editor/pages/detail',
+          url: 'api/pages/detail',
           method: 'post', // default
           needLoading: false,
           data: {

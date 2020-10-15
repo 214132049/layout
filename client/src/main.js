@@ -18,15 +18,6 @@ window.EMA = EmaProxy
 
 const router = new VueRouter(routerMap)
 
-router.beforeEach((to, from, next) => {
-  if (to.path !== '/login') {
-    return next()
-  }
-  if (!window.localStorage.getItem('loginuser')) {
-    next('/login')
-  }
-})
-
 export default new Vue({
   el: '#app',
   store: store,

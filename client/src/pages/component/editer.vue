@@ -20,9 +20,6 @@
                   <a-input placeholder="名称" disabled :maxlength="35" v-model="form.name">
                   </a-input>
                 </a-form-item>
-                <a-form-item label="标签">
-                  <tags :category-id="categoryId" :tags.sync="form.tags"></tags>
-                </a-form-item>
                 <a-form-item label="描述" prop="desc" :rules="[{ required: false,message: '输入描述', trigger: 'blur'},
                                 { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }]">
                   <a-input type="textarea" :maxlength="50" v-model="form.desc"></a-input>
@@ -77,12 +74,11 @@
   import BasePage from 'src/extend/BasePage'
   import Server from 'src/extend/Server'
   import Upload from 'src/components/Upload'
-  import Tags from 'src/components/Tags'
   import { mapState } from 'vuex'
 
   export default {
     mixins: [BasePage],
-    components: { Upload, Tags },
+    components: { Upload },
     data () {
       return {
         loading: false,
@@ -93,8 +89,7 @@
           name: '',
           content: '',
           visibilitylevel: 0,
-          desc: '',
-          tags: []
+          desc: ''
         }
       }
     },
@@ -132,7 +127,6 @@
       },
       onSubmit: function () {
         var data = {}
-        data.tags = this.form.tags
         data.id = this.form.id
         data.name = this.form.name
         data.desc = this.form.desc

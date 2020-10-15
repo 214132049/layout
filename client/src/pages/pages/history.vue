@@ -73,7 +73,7 @@
         let yes = await this.$confirm('确定要直接恢复到此版本并发布吗，此操作会立即同步用户端，请谨慎操作！')
         if (!yes) return
         Server({
-          url: 'editor/pages/history-publish',
+          url: 'api/pages/history-publish',
           method: 'post',
           needLoading: true,
           data: {
@@ -91,7 +91,7 @@
         let yes = await this.$confirm('确定要将此版本恢复为草稿么，此操作会覆盖当前尚未发布的草稿，请谨慎操作！')
         if (!yes) return
         Server({
-          url: 'editor/pages/history-to-draft',
+          url: 'api/pages/history-to-draft',
           method: 'post',
           needLoading: true,
           data: {
@@ -116,7 +116,7 @@
       gotoDelete () {
         this.dialogVisible = false
         Server({
-          url: `editor/pages/history-delete?id=${this.deleteItem.id}`,
+          url: `api/pages/history-delete?id=${this.deleteItem.id}`,
           method: 'get',
           needLoading: true,
         }).then(response => {
@@ -129,7 +129,7 @@
       },
       getHistory () {
         Server({
-          url: `editor/pages/history?pageId=${this.id}`,
+          url: `api/pages/history?pageId=${this.id}`,
           method: 'get',
           needLoading: true,
         }).then((response) => {

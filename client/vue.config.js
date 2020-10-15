@@ -34,21 +34,18 @@ module.exports = {
       filename: 'index.html',
       template: './index.ejs',
       title: config.ADMIN_TITLE,
-      hmid: config.BAIDU_TONGJI
     },
     login: {
       entry: './src/login.js',
       filename: 'login.html',
       template: './login.ejs',
       title: config.ADMIN_TITLE,
-      hmid: config.BAIDU_TONGJI
     },
     updatePassword: {
       entry: './src/updatePassword.js',
       filename: 'updatePassword.html',
       template: './updatePassword.ejs',
       title: config.ADMIN_TITLE,
-      hmid: config.BAIDU_TONGJI
     }
   },
   devServer: {

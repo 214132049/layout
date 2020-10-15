@@ -1,25 +1,21 @@
-'use strict';
-module.exports = app => {
-  return app.model.define('pages', {
-    id: { field: 'id', type: app.Sequelize.INTEGER, primaryKey: true },
-    key: { field: 'key', type: app.Sequelize.STRING },
-    name: { field: 'name', type: app.Sequelize.STRING },
-    image: { field: 'image', type: app.Sequelize.STRING },
-    desc: { field: 'desc', type: app.Sequelize.STRING },
-    content: { field: 'content', type: app.Sequelize.STRING },
-    draft: { field: 'draft', type: app.Sequelize.STRING },
-    projectId: { field: 'project_id', type: app.Sequelize.INTEGER },
-    isHomePage: { field: 'is_home_page', type: app.Sequelize.INTEGER },
-    status: { field: 'status', type: app.Sequelize.INTEGER },
+module.exports = (app) => {
+  const mongoose = app.mongoose
+  const Schema = mongoose.Schema
 
-    updateTime: { field: 'update_time', type: app.Sequelize.BIGINT },
-    createTime: { field: 'create_time', type: app.Sequelize.BIGINT }
-  }, {
-    timestamps: true,
-    tableName: 'tb_pages',
-    createdAt: 'createTime',
-    updatedAt: 'updateTime',
-  }, {
-    classMethods: {},
-  });
-};
+  const PageSchema = new Schema({
+    id: { type: Number },
+    key: { type: String },
+    name: { type: String },
+    image: { type: String },
+    desc: { type: String },
+    content: { type: String },
+    draft: { type: String },
+    projectId: { type: Number },
+    isHomePage: { type: Number },
+    status: { type: Number },
+    createDate: { type: Date, default: Date.now },
+    modifyDate: { type: Date, default: Date.now },
+  })
+
+  return mongoose.model('page', PageSchema)
+}
