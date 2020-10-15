@@ -1,0 +1,305 @@
+{
+  "session": {
+    "maxAge": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-session\\config\\config.default.js",
+    "key": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-session\\config\\config.default.js",
+    "httpOnly": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-session\\config\\config.default.js",
+    "encrypt": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-session\\config\\config.default.js"
+  },
+  "security": {
+    "domainWhiteList": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
+    "protocolWhiteList": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
+    "defaultMiddleware": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
+    "csrf": {
+      "enable": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
+      "type": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
+      "ignoreJSON": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
+      "useSession": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
+      "cookieName": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
+      "sessionName": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
+      "headerName": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
+      "bodyName": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
+      "queryName": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
+      "refererWhiteList": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "xframe": {
+      "enable": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
+      "value": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "hsts": {
+      "enable": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.local.js",
+      "maxAge": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
+      "includeSubdomains": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "dta": {
+      "enable": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "methodnoallow": {
+      "enable": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "noopen": {
+      "enable": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "nosniff": {
+      "enable": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "referrerPolicy": {
+      "enable": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
+      "value": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "xssProtection": {
+      "enable": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
+      "value": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "csp": {
+      "enable": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
+      "policy": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "ssrf": {
+      "ipBlackList": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js",
+      "checkAddress": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js"
+    }
+  },
+  "helper": {
+    "shtml": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-security\\config\\config.default.js"
+  },
+  "jsonp": {
+    "limit": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-jsonp\\config\\config.default.js",
+    "callback": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-jsonp\\config\\config.default.js",
+    "csrf": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-jsonp\\config\\config.default.js"
+  },
+  "onerror": {
+    "errorPageUrl": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-onerror\\config\\config.default.js",
+    "appErrorFilter": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-onerror\\config\\config.default.js",
+    "templatePath": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-onerror\\config\\config.default.js"
+  },
+  "i18n": {
+    "defaultLocale": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-i18n\\config\\config.default.js",
+    "dirs": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-i18n\\config\\config.default.js",
+    "queryField": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-i18n\\config\\config.default.js",
+    "cookieField": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-i18n\\config\\config.default.js",
+    "cookieDomain": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-i18n\\config\\config.default.js",
+    "cookieMaxAge": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-i18n\\config\\config.default.js"
+  },
+  "watcher": {
+    "type": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-watcher\\config\\config.local.js",
+    "eventSources": {
+      "default": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-watcher\\config\\config.default.js",
+      "development": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-watcher\\config\\config.default.js"
+    }
+  },
+  "customLogger": {
+    "scheduleLogger": {
+      "consoleLevel": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-schedule\\config\\config.default.js",
+      "file": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-schedule\\config\\config.default.js"
+    }
+  },
+  "schedule": {
+    "directory": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-schedule\\config\\config.default.js"
+  },
+  "multipart": {
+    "mode": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-multipart\\config\\config.default.js",
+    "autoFields": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-multipart\\config\\config.default.js",
+    "defaultCharset": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-multipart\\config\\config.default.js",
+    "fieldNameSize": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-multipart\\config\\config.default.js",
+    "fieldSize": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-multipart\\config\\config.default.js",
+    "fields": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-multipart\\config\\config.default.js",
+    "fileSize": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-multipart\\config\\config.default.js",
+    "files": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-multipart\\config\\config.default.js",
+    "fileExtensions": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-multipart\\config\\config.default.js",
+    "whitelist": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-multipart\\config\\config.default.js",
+    "tmpdir": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-multipart\\config\\config.default.js",
+    "cleanSchedule": {
+      "cron": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-multipart\\config\\config.default.js"
+    }
+  },
+  "development": {
+    "watchDirs": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-development\\config\\config.default.js",
+    "ignoreDirs": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-development\\config\\config.default.js",
+    "fastReady": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-development\\config\\config.default.js",
+    "reloadOnDebug": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-development\\config\\config.default.js",
+    "overrideDefault": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-development\\config\\config.default.js",
+    "overrideIgnore": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-development\\config\\config.default.js"
+  },
+  "logrotator": {
+    "filesRotateByHour": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-logrotator\\config\\config.default.js",
+    "hourDelimiter": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-logrotator\\config\\config.default.js",
+    "filesRotateBySize": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-logrotator\\config\\config.default.js",
+    "maxFileSize": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-logrotator\\config\\config.default.js",
+    "maxFiles": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-logrotator\\config\\config.default.js",
+    "rotateDuration": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-logrotator\\config\\config.default.js",
+    "maxDays": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-logrotator\\config\\config.default.js"
+  },
+  "static": {
+    "prefix": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-static\\config\\config.default.js",
+    "dir": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-static\\config\\config.default.js",
+    "dynamic": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-static\\config\\config.default.js",
+    "preload": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-static\\config\\config.default.js",
+    "buffer": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-static\\config\\config.default.js",
+    "maxFiles": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-static\\config\\config.default.js"
+  },
+  "view": {
+    "root": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-view\\config\\config.default.js",
+    "cache": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-view\\config\\config.local.js",
+    "defaultExtension": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-view\\config\\config.default.js",
+    "defaultViewEngine": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-view\\config\\config.default.js",
+    "mapping": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg-view\\config\\config.default.js"
+  },
+  "env": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+  "name": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+  "keys": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+  "cookies": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+  "proxy": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+  "maxIpsCount": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+  "maxProxyCount": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+  "protocolHeaders": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+  "ipHeaders": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+  "hostHeaders": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+  "pkg": {
+    "name": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "version": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "description": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "private": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "keywords": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "scripts": {
+      "server": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "dev": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "build": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "build-docker": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js"
+    },
+    "license": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "dependencies": {
+      "ant-design-vue": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "axios": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "babel-polyfill": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "co": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "crypto-js": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "dayjs": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "deep-assign": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "egg": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "egg-cors": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "egg-validate": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "lodash": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "md5": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "qs": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "vue": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "vue-router": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "vue-template-compiler": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "vuex": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js"
+    },
+    "devDependencies": {
+      "@vue/cli-plugin-babel": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "@vue/cli-plugin-eslint": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "@vue/cli-service": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "cross-env": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "egg-bin": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "egg-ci": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "ema-proxy": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "eslint": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "eslint-config-egg": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "eslint-config-standard": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "eslint-plugin-node": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "eslint-plugin-promise": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "eslint-plugin-standard": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "eslint-plugin-vue": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "html-loader": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "stylus": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "stylus-loader": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js"
+    },
+    "postcss": {
+      "plugins": {
+        "autoprefixer": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js"
+      }
+    },
+    "browserslist": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js"
+  },
+  "baseDir": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+  "HOME": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+  "rundir": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+  "dump": {
+    "ignore": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js"
+  },
+  "confusedConfigurations": {
+    "bodyparser": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "notFound": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "sitefile": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "middlewares": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "httpClient": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js"
+  },
+  "notfound": {
+    "pageUrl": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js"
+  },
+  "siteFile": {
+    "/favicon.ico": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js"
+  },
+  "bodyParser": {
+    "enable": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "encoding": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "formLimit": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "jsonLimit": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "textLimit": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "strict": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "queryString": {
+      "arrayLimit": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "depth": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "parameterLimit": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js"
+    },
+    "onerror": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js"
+  },
+  "logger": {
+    "dir": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "encoding": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "env": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "level": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "consoleLevel": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "disableConsoleAfterReady": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "outputJSON": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "buffer": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "appLogName": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "coreLogName": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "agentLogName": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "errorLogName": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "coreLogger": {
+      "consoleLevel": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.local.js"
+    },
+    "allowDebugAtProd": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js"
+  },
+  "httpclient": {
+    "enableDNSCache": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "dnsCacheLookupInterval": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "dnsCacheMaxLength": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "request": {
+      "timeout": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js"
+    },
+    "httpAgent": {
+      "keepAlive": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "freeSocketTimeout": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "maxSockets": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "maxFreeSockets": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js"
+    },
+    "httpsAgent": {
+      "keepAlive": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "freeSocketTimeout": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "maxSockets": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "maxFreeSockets": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js"
+    }
+  },
+  "meta": {
+    "enable": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "logging": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js"
+  },
+  "coreMiddleware": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+  "workerStartTimeout": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+  "serverTimeout": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+  "cluster": {
+    "listen": {
+      "path": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "port": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+      "hostname": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js"
+    }
+  },
+  "clusterClient": {
+    "maxWaitTime": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js",
+    "responseTimeout": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js"
+  },
+  "onClientError": "C:\\Users\\wenli.li\\Desktop\\layout\\node_modules\\egg\\config\\config.default.js"
+}

@@ -1,0 +1,9 @@
+{
+	"required": "字段不能为空",
+	"missing_field": "字段丢失",
+	"length should bigger than %s": "长度不少于%s位",
+	"invalid": "无效",
+	"password": "密码",
+	"userEmail": "用户邮箱",
+	"should be an email": "格式不正确"
+}

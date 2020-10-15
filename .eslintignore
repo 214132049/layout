@@ -1,0 +1,4 @@
+dist/
+src/assets/
+src/assets/js/
+.eslintrc.js
