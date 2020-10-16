@@ -39,6 +39,18 @@
   {
     "name": null,
     "methods": [
+      "POST"
+    ],
+    "paramNames": [],
+    "path": "/api/user/updatePassword",
+    "regexp": "/^\\/api\\/user\\/updatePassword(?:\\/(?=$))?$/",
+    "stack": [
+      "wrappedController"
+    ]
+  },
+  {
+    "name": null,
+    "methods": [
       "HEAD",
       "GET"
     ],
@@ -56,8 +68,8 @@
       "POST"
     ],
     "paramNames": [],
-    "path": "api/project/list",
-    "regexp": "/^api\\/project\\/list(?:\\/(?=$))?$/",
+    "path": "/api/project/list",
+    "regexp": "/^\\/api\\/project\\/list(?:\\/(?=$))?$/",
     "stack": [
       "middleware",
       "wrappedController"
@@ -69,8 +81,8 @@
       "POST"
     ],
     "paramNames": [],
-    "path": "api/project/save",
-    "regexp": "/^api\\/project\\/save(?:\\/(?=$))?$/",
+    "path": "/api/project/save",
+    "regexp": "/^\\/api\\/project\\/save(?:\\/(?=$))?$/",
     "stack": [
       "middleware",
       "wrappedController"
@@ -82,8 +94,8 @@
       "POST"
     ],
     "paramNames": [],
-    "path": "api/project/delete",
-    "regexp": "/^api\\/project\\/delete(?:\\/(?=$))?$/",
+    "path": "/api/project/delete",
+    "regexp": "/^\\/api\\/project\\/delete(?:\\/(?=$))?$/",
     "stack": [
       "middleware",
       "wrappedController"
@@ -95,8 +107,8 @@
       "POST"
     ],
     "paramNames": [],
-    "path": "api/project/change-status",
-    "regexp": "/^api\\/project\\/change-status(?:\\/(?=$))?$/",
+    "path": "/api/project/change-status",
+    "regexp": "/^\\/api\\/project\\/change-status(?:\\/(?=$))?$/",
     "stack": [
       "middleware",
       "wrappedController"
@@ -108,8 +120,8 @@
       "POST"
     ],
     "paramNames": [],
-    "path": "api/pages/list",
-    "regexp": "/^api\\/pages\\/list(?:\\/(?=$))?$/",
+    "path": "/api/pages/list",
+    "regexp": "/^\\/api\\/pages\\/list(?:\\/(?=$))?$/",
     "stack": [
       "middleware",
       "wrappedController"
@@ -121,8 +133,8 @@
       "POST"
     ],
     "paramNames": [],
-    "path": "api/pages/save",
-    "regexp": "/^api\\/pages\\/save(?:\\/(?=$))?$/",
+    "path": "/api/pages/save",
+    "regexp": "/^\\/api\\/pages\\/save(?:\\/(?=$))?$/",
     "stack": [
       "middleware",
       "wrappedController"
@@ -134,8 +146,8 @@
       "POST"
     ],
     "paramNames": [],
-    "path": "api/pages/delete",
-    "regexp": "/^api\\/pages\\/delete(?:\\/(?=$))?$/",
+    "path": "/api/pages/delete",
+    "regexp": "/^\\/api\\/pages\\/delete(?:\\/(?=$))?$/",
     "stack": [
       "middleware",
       "wrappedController"
@@ -147,8 +159,8 @@
       "POST"
     ],
     "paramNames": [],
-    "path": "api/pages/detail",
-    "regexp": "/^api\\/pages\\/detail(?:\\/(?=$))?$/",
+    "path": "/api/pages/detail",
+    "regexp": "/^\\/api\\/pages\\/detail(?:\\/(?=$))?$/",
     "stack": [
       "middleware",
       "wrappedController"
@@ -160,8 +172,8 @@
       "POST"
     ],
     "paramNames": [],
-    "path": "api/pages/change-status",
-    "regexp": "/^api\\/pages\\/change-status(?:\\/(?=$))?$/",
+    "path": "/api/pages/change-status",
+    "regexp": "/^\\/api\\/pages\\/change-status(?:\\/(?=$))?$/",
     "stack": [
       "middleware",
       "wrappedController"
@@ -173,8 +185,8 @@
       "POST"
     ],
     "paramNames": [],
-    "path": "api/pages/set-home-page",
-    "regexp": "/^api\\/pages\\/set-home-page(?:\\/(?=$))?$/",
+    "path": "/api/pages/set-home-page",
+    "regexp": "/^\\/api\\/pages\\/set-home-page(?:\\/(?=$))?$/",
     "stack": [
       "middleware",
       "wrappedController"
@@ -186,8 +198,8 @@
       "POST"
     ],
     "paramNames": [],
-    "path": "api/pages/publish",
-    "regexp": "/^api\\/pages\\/publish(?:\\/(?=$))?$/",
+    "path": "/api/pages/publish",
+    "regexp": "/^\\/api\\/pages\\/publish(?:\\/(?=$))?$/",
     "stack": [
       "middleware",
       "wrappedController"
@@ -199,8 +211,8 @@
       "POST"
     ],
     "paramNames": [],
-    "path": "api/category/list",
-    "regexp": "/^api\\/category\\/list(?:\\/(?=$))?$/",
+    "path": "/api/category/list",
+    "regexp": "/^\\/api\\/category\\/list(?:\\/(?=$))?$/",
     "stack": [
       "middleware",
       "wrappedController"
@@ -212,8 +224,8 @@
       "POST"
     ],
     "paramNames": [],
-    "path": "api/category/save",
-    "regexp": "/^api\\/category\\/save(?:\\/(?=$))?$/",
+    "path": "/api/category/save",
+    "regexp": "/^\\/api\\/category\\/save(?:\\/(?=$))?$/",
     "stack": [
       "middleware",
       "wrappedController"
@@ -225,8 +237,8 @@
       "POST"
     ],
     "paramNames": [],
-    "path": "api/category/delete",
-    "regexp": "/^api\\/category\\/delete(?:\\/(?=$))?$/",
+    "path": "/api/category/delete",
+    "regexp": "/^\\/api\\/category\\/delete(?:\\/(?=$))?$/",
     "stack": [
       "middleware",
       "wrappedController"
@@ -238,8 +250,8 @@
       "POST"
     ],
     "paramNames": [],
-    "path": "api/resources/list",
-    "regexp": "/^api\\/resources\\/list(?:\\/(?=$))?$/",
+    "path": "/api/resources/list",
+    "regexp": "/^\\/api\\/resources\\/list(?:\\/(?=$))?$/",
     "stack": [
       "middleware",
       "wrappedController"
@@ -251,8 +263,8 @@
       "POST"
     ],
     "paramNames": [],
-    "path": "api/resources/save",
-    "regexp": "/^api\\/resources\\/save(?:\\/(?=$))?$/",
+    "path": "/api/resources/save",
+    "regexp": "/^\\/api\\/resources\\/save(?:\\/(?=$))?$/",
     "stack": [
       "middleware",
       "wrappedController"
@@ -264,8 +276,8 @@
       "POST"
     ],
     "paramNames": [],
-    "path": "api/resources/delete",
-    "regexp": "/^api\\/resources\\/delete(?:\\/(?=$))?$/",
+    "path": "/api/resources/delete",
+    "regexp": "/^\\/api\\/resources\\/delete(?:\\/(?=$))?$/",
     "stack": [
       "middleware",
       "wrappedController"

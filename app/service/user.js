@@ -3,15 +3,18 @@ const { Service } = require('egg')
 class UserService extends Service {
   find (params) {
     const { ctx } = this
-    return ctx.model.User.findOne({
-      userEmail: params.userEmail.trim()
-    })
+    if (params.email) {
+      return ctx.model.User.findOne({
+        email: params.email.trim()
+      })
+    }
+    return ctx.model.User.findAll()
   }
 
   login (params) {
     const { ctx } = this
     return ctx.model.User.findOne({
-      userEmail: params.userEmail.trim(),
+      email: params.email.trim(),
       password: params.password.trim()
     })
   }
@@ -19,8 +22,17 @@ class UserService extends Service {
   register (params) {
     const { ctx } = this
     return ctx.model.User.create({
-      userId: ctx.helper.uuid(),
-      userEmail: params.userEmail.trim(),
+      id: ctx.helper.uuid(),
+      email: params.email.trim(),
+      password: params.password.trim()
+    })
+  }
+
+  updatePwd (params) {
+    const { ctx } = this
+    return ctx.model.User.findOneAndUpdate({
+      email: params.email.trim()
+    }, {
       password: params.password.trim()
     })
   }

@@ -10,3 +10,5 @@ converage
 yarn-error.log
 npm-debug.log
 .yarnclean
+run
+.github

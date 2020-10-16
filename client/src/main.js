@@ -7,7 +7,6 @@ import App from './app'
 import store from './store'
 import './assets/js/base'
 import './extend/filter'
-import './assets/style/base.css'
 import routerMap from './RouterMap'
 
 Vue.use(Antd)

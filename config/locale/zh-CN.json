@@ -5,5 +5,6 @@
 	"invalid": "无效",
 	"password": "密码",
 	"userEmail": "用户邮箱",
-	"should be an email": "格式不正确"
+	"should be an email": "格式不正确",
+	"email": "email"
 }

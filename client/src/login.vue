@@ -2,45 +2,45 @@
   <div class="custom-page-class">
     <div class="main">
       <div class="switch-nav" @click="handleClick">
-        {{activeName == 'login' ? '注册 →' : '登录 →'}}
+        {{activeName === 'login' ? '注册 →' : '登录 →'}}
       </div>
       <div class="form-box">
-        <a-form ref="loginForm" :model="loginForm" :rules="registerrule" v-if="activeName === 'login'">
-          <a-form-item label="" prop="account">
+        <a-form-model ref="loginForm" :model="loginForm" :rules="registerrule" v-if="activeName === 'login'">
+          <a-form-model-item label="" prop="email">
             <a-input placeholder="邮箱" type="text" auto-complete="on" id="username" name="username"
-                      v-model="loginForm.account">
+                      v-model="loginForm.email">
             </a-input>
-          </a-form-item>
-          <a-form-item label="" prop="password">
+          </a-form-model-item>
+          <a-form-model-item label="" prop="password">
             <a-input placeholder="密 码" type="password" auto-complete="on" v-model="loginForm.password">
             </a-input>
-          </a-form-item>
+          </a-form-model-item>
           <div class="submit-box">
             <a-button class="submit-box__btn" type="primary" :loading="loading" @click="loginSubmit">登 陆</a-button>
-            <div style="float:right; cursor: pointer;" @click="forgetPassword">忘记密码？</div>
+            <a-button type="link" @click="forgetPassword">忘记密码？</a-button>
           </div>
-        </a-form>
-        <a-form ref="registerForm" :model="registerForm" :rules="registerrule" v-else>
-          <a-form-item label="" prop="email">
+        </a-form-model>
+        <a-form-model ref="registerForm" :model="registerForm" :rules="registerrule" v-else key="registerForm">
+          <a-form-model-item label="" prop="email">
             <a-input placeholder="邮箱" @blur="emailBlur" v-model="registerForm.email">
             </a-input>
-          </a-form-item>
-          <a-form-item label="" prop="name">
+          </a-form-model-item>
+          <a-form-model-item label="" prop="name">
             <a-input placeholder="用 户 名" v-model="registerForm.name">
             </a-input>
-          </a-form-item>
-          <a-form-item label="" prop="password">
+          </a-form-model-item>
+          <a-form-model-item label="" prop="password">
             <a-input placeholder="密 码" type="password" v-model="registerForm.password">
             </a-input>
-          </a-form-item>
-          <a-form-item label="" prop="password2">
+          </a-form-model-item>
+          <a-form-model-item label="" prop="password2">
             <a-input placeholder="确认密码" type="password" v-model="registerForm.password2">
             </a-input>
-          </a-form-item>
+          </a-form-model-item>
           <div class="submit-box">
             <a-button class="submit-box__btn" type="primary" :loading="loading" @click="registerSubmit">注 册</a-button>
           </div>
-        </a-form>
+        </a-form-model>
       </div>
     </div>
   </div>
@@ -56,7 +56,6 @@
     width: 400px;
     margin: 0 auto;
     background-color #fff;
-    border: 1px solid #e9e9e9;
     border-radius 4px;
     padding: 40px 50px 48px;
     text-align center
@@ -64,27 +63,15 @@
       color #409EFF
       cursor pointer
       text-align left
-      font-size 18px;
+      font-size 14px;
       margin-bottom 10px;
     }
     .form-box {
       margin: 20px 0;
       text-align left
-      .kaptchaImg {
-        width: 80px;
-        margin-left 5px
-        background: #eee;
-        cursor pointer
-      }
       .submit-box {
         &__btn {
           width 100%
-        }
-        .forget {
-          padding 10px 0
-          text-align right
-          color #409EFF
-          cursor pointer
         }
       }
     }
@@ -93,7 +80,6 @@
 </style>
 <script>
   import Server from './extend/Server'
-  import config from './config'
   var SHA256 = require('crypto-js/sha256')
 
   export default {
@@ -111,17 +97,9 @@
       return {
         loading: false,
         registerrule: {
-          kaptcha: [
-            { required: true, message: '输入4位验证码', trigger: 'blur' },
-            { min: 4, max: 4, message: '输入4位验证码', trigger: 'blur' }
-          ],
           name: [
             { required: true, message: '输入用户名', trigger: 'blur' },
             { min: 2, max: 15, message: '长度在 2 到 15 个字符', trigger: 'blur' }
-          ],
-          account: [
-            { required: true, message: '请输入账号', trigger: 'blur' },
-            { min: 5, max: 50, message: '长度在 5 到 50 个字符', trigger: 'blur' }
           ],
           password: [
             { required: true, message: '输入密码', trigger: 'blur' },
@@ -135,16 +113,12 @@
             { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change' }
           ]
         },
-        kaptchaImg: '',
         loginForm: {
-          account: '',
-          password: '',
-          kaptcha: '',
-          remember: true
+          email: '',
+          password: ''
         },
         registerForm: {
           email: '',
-          kaptcha: '',
           name: '',
           password: '',
           password2: ''
@@ -163,44 +137,26 @@
         this.showLoading = false
       })
       window.EMA.bind('alert.show', (title, fn) => {
-        this.$alert(title, '注意', {
-          callback: action => {
-            if (typeof fn == 'function') {
-              fn()
-            }
-          }
+        this.$error({
+          title: '注意',
+          content: title,
+          onOk () {
+            typeof fn == 'function' && fn()
+          },
         })
       })
-      const user = window.localStorage.getItem('loginuser') || '{}'
-      let userInfo = {}
-      try {
-        userInfo = JSON.parse(user)
-      } catch (e) {
-        userInfo = {}
-      }
-      this.loginForm.account = userInfo.account
-      this.loginForm.password = userInfo.password
     },
     methods: {
       forgetPassword () {
-        if (!this.loginForm.account) {
-          this.$alert('请输入账号')
-          return
-        }
-        this.$confirm('确认忘记密码！请前往邮箱通过点击链接重置密码！', '忘记密码', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          window.location.href = 'updatePassword.html'
-        }).catch(() => {})
+        window.location.href = '/updatePassword'
       },
       handleClick: function () {
         this.activeName = this.activeName === 'login' ? 'register' : 'login'
         this.resetForm()
       },
-      loginSuccess: function () {
-        window.location.replace('index.html')
+      loginSuccess: function (response) {
+        window.localStorage.setItem('token', response.data.token)
+        window.location.replace('/')
       },
       loginSubmit () {
         this.$refs.loginForm.validate(async (valid) => {
@@ -209,28 +165,23 @@
           }
           this.loading = true
           try {
-            await Server({
-              url: 'users/login',
+            const response = await Server({
+              url: 'api/user/login',
               data: {
-                account: this.loginForm.account,
-                kaptcha: this.loginForm.kaptcha,
+                email: this.loginForm.email,
                 password: SHA256(this.loginForm.password) + ''
               },
               needLoading: true,
               method: 'post'
             })
-            window.localStorage.setItem('loginuser', JSON.stringify({
-              account: this.loginForm.account,
-              password: this.loginForm.password
-            }))
-            this.loginSuccess()
+            this.loginSuccess(response)
           } finally {
             this.loading = false
           }
         })
       },
       emailBlur: function () {
-        var name = this.registerForm.email.split('@')
+        const name = this.registerForm.email.split('@')
         this.registerForm.name = name[0]
       },
       /**
@@ -241,16 +192,15 @@
           if (valid) {
             this.loading = true
             Server({
-              url: 'api/users/register',
+              url: 'api/user/register',
               data: {
                 email: this.registerForm.email,
-                kaptcha: this.registerForm.kaptcha,
                 name: this.registerForm.name,
                 password: SHA256(this.registerForm.password) + ''
               },
               method: 'post'
             }).then((response) => {
-              this.loginSuccess()
+              this.loginSuccess(response)
             }).catch((e) => {
               this.loading = false
               console.log('err', e)

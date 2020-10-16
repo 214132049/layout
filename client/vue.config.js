@@ -50,7 +50,7 @@ module.exports = {
   },
   devServer: {
     disableHostCheck: true,
-    port: 8567,
+    port: 3000,
     publicPath: '/',
   },
   configureWebpack: configureWebpack,

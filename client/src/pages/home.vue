@@ -1,10 +1,8 @@
 <template>
   <div class="content-wrapper">
-    <div class="blank-state blank-state-welcome welcome">
-      <h2 class="blank-state-welcome-title">
-        欢迎使用 {{packageInfo.description}}
-      </h2>
-    </div>
+    <h2 class="blank-state blank-state-welcome welcome">
+      欢迎使用 {{packageInfo.description}}
+    </h2>
     <div class="cont">
       <div class="blank-state cont_blank">
         <div class="blank-state-icon">
@@ -21,23 +19,25 @@
 </template>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped type="text/stylus">
-  .welcome {
-    padding 100px 0
-  }
-  .cont {
-    padding-top 100px
-    display flex
-    .cont_blank {
-      flex 1
-      & >>> .blank-state-text {
-        margin-bottom 0
-      }
-      .btn {
-        margin-top 20px
-      }
-      .compImg {
-        width 56px
-        height 56px
+  .content-wrapper {
+    text-align center
+    .welcome {
+      padding 60px 0
+    }
+    .cont {
+      display flex
+      .cont_blank {
+        flex 1
+        & >>> .blank-state-text {
+          margin-bottom 0
+        }
+        .btn {
+          margin-top 20px
+        }
+        .compImg {
+          width 56px
+          height 56px
+        }
       }
     }
   }

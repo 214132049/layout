@@ -1,7 +1,7 @@
 const BaseController = require('./base')
 
 const RULES = {
-  userEmail: { required: true, type: 'email' },
+  email: { required: true, type: 'email' },
   password: { required: true, type: 'password' }
 }
 
@@ -54,23 +54,28 @@ class UserController extends BaseController {
     })
   }
 
+  async updatePassword () {
+    const { ctx } = this
+    await ctx.service.user.updatePwd({
+      user: ctx.state.user,
+      password: this.body.password
+    })
+    this.success()
+  }
+
   async findUser (userInfo) {
     const { service } = this
     return service.user.find(userInfo || this.body)
   }
 
-  async createUserToken ({ userId, userEmail }) {
-    const { ctx, app } = this
-    const token = app.jwt.sign({
-      userEmail,
-      userId
+  async createUserToken ({ id, email }) {
+    const { app } = this
+    return app.jwt.sign({
+      email,
+      id
     }, app.config.jwt.secret, {
       expiresIn: '0.5h'
     })
-    ctx.cookies.set('Authorization', `Bearer ${token}`, {
-      encrypt: true, // 加密传输
-    })
-    return token
   }
 }
 

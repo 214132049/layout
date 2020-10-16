@@ -169,7 +169,7 @@
     },
     "cors": {
       "origin": "*",
-      "allowMethods": "GET,HEAD,PUT,POST,DELETE,PATCH"
+      "allowMethods": "GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS"
     },
     "jwt": {
       "secret": "<String len: 6>",
@@ -188,7 +188,7 @@
     "pkg": {
       "name": "layout",
       "version": "1.0.0",
-      "description": "可视化表单",
+      "description": "可视化表单系统",
       "private": false,
       "keywords": [],
       "scripts": {

@@ -5,7 +5,7 @@ const instance = axios.create({
   baseURL: config.API_PATH,
   timeout: 30000,
   headers: {},
-  withCredentials: false,
+  withCredentials: true,
   needLoading: false,  // 是否需要加载效果
   ignoreCode: false  // 是否忽略服务端的错误提示
 })
@@ -13,6 +13,10 @@ const instance = axios.create({
 instance.interceptors.request.use(function (config) {
   if (config.needLoading) {
     window.EMA.fire('loading.show')
+  }
+  const token = window.localStorage.getItem('token')
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
   }
   return config
 }, function (error) {
@@ -32,14 +36,12 @@ instance.interceptors.response.use(function (response) {
         })
         break
       default:
-        window.EMA.fire('alert.show', response.data.msg, function () {})
+        window.EMA.fire('alert.show', response.data.message, function () {})
     }
     throw new Error(response)
-  } else {
-    return response
   }
+  return response
 }, function (error) {
-  window.console.log(error)
   const status = error.response.status
   const message = error.message
   if (status !== 200) {

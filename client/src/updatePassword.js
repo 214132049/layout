@@ -3,7 +3,6 @@ import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
 import EmaProxy from 'ema-proxy'
 import './assets/js/base'
-import './assets/style/base.css'
 
 import updatePassword from './updatePassword.vue'
 
