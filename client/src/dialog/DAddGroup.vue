@@ -24,7 +24,7 @@
 <script type="text/ecmascript-6">
   import BaseDialog from 'src/extend/BaseDialog'
   import {mapState} from 'vuex'
-  import CNew from 'src/pages/groups/CNew.vue'
+  import CNew from 'src/pages/groups/edit.vue'
 
   export default {
     mixins: [ BaseDialog ],

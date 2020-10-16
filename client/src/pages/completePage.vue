@@ -120,7 +120,7 @@
   import BasePage from 'src/extend/BasePage'
   import Server from 'src/extend/Server'
   import Member from './projects/members.vue'
-  import CNew from './projects/CNew.vue'
+  import CNew from './projects/edit.vue'
   import CDoc from './projects/CDoc.vue'
 
   export default {

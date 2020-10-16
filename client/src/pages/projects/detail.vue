@@ -119,13 +119,13 @@
 <script type="text/ecmascript-6">
   import BasePage from 'src/extend/BasePage'
   import Server from 'src/extend/Server'
-  import Member from './projects/members.vue'
-  import CNew from './projects/CNew.vue'
-  import CDoc from './projects/CDoc.vue'
+  import Member from './members.vue'
+  import CNew from './edit.vue'
+  import CDoc from './CDoc.vue'
 
   export default {
     mixins: [BasePage],
-    components: {Member, CNew, CDoc},
+    components: { Member, CNew, CDoc },
     name: 'project',
     data: function () {
       return {
@@ -182,7 +182,7 @@
               id: this.$route.query.id
             }
           }).then((response) => {
-            this.$router.push({path: '/dashboard/projects'})
+            this.$router.push({ path: '/dashboard/projects' })
           }).catch(() => {
           })
         }).catch(() => {

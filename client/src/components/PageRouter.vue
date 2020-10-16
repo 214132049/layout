@@ -13,7 +13,6 @@
   import BaseComponent from 'src/extend/BaseComponent'
   import noPage from '../pages/noPage'
   var pagePrex = 'page-'
-  var keyIndex = 0
   export default {
     mixins: [BaseComponent],
     name: 'PageRouter',
@@ -49,12 +48,11 @@
             },
             methods: data.methods || {}
           })
-          keyIndex++
-          Vue.component(`${pagePrex}${path.replace(/\//gi, '_')}-${keyIndex}`, tempModule)
+          const name = `${pagePrex}${path.replace(/\//gi, '-')}`
+          Vue.component(name, tempModule)
           fn({
             pageName: data.pageName || module.pageName || '无名',
-            name: `${pagePrex}${path.replace(/\//gi, '_')}-${keyIndex}`,
-            key: `${pagePrex}${path.replace(/\//gi, '_')}-${keyIndex}`
+            name: name,
           })
         }).catch(() => {
           console.error('不存在该页面', path)

@@ -1,7 +1,7 @@
 /**
  * 所有页面基础类
  */
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 export default {
   /* 父类向下传递的参数数据 */
   props: [],

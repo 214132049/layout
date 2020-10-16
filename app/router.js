@@ -5,11 +5,13 @@ module.exports = app => {
   router.post('/api/user/register', controller.user.register)
   router.post('/api/user/updatePassword', controller.user.updatePassword)
   router.get('/api/user/info', jwt, controller.user.getInfo)
+  router.get('/api/user/find', jwt, controller.user.findUser)
 
   // project
   router.post('/api/project/list', jwt, controller.project.list)
   router.post('/api/project/save', jwt, controller.project.save)
   router.post('/api/project/delete', jwt, controller.project.delete)
+  router.post('/api/project/info', jwt, controller.project.info)
   router.post('/api/project/change-status', jwt, controller.project.changeStatus)
 
   // pages

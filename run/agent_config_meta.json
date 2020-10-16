@@ -26,7 +26,8 @@
   },
   "cors": {
     "origin": "C:\\Users\\wenli.li\\Desktop\\layout\\config\\config.default.js",
-    "allowMethods": "C:\\Users\\wenli.li\\Desktop\\layout\\config\\config.default.js"
+    "allowMethods": "C:\\Users\\wenli.li\\Desktop\\layout\\config\\config.default.js",
+    "credentials": "C:\\Users\\wenli.li\\Desktop\\layout\\config\\config.default.js"
   },
   "security": {
     "csrf": {

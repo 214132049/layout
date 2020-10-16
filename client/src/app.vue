@@ -6,7 +6,7 @@
       </div>
       <a-menu theme="dark" mode="inline">
         <a-menu-item key="1">
-          <router-link to="/dashboard/projects" title="Projects" class="dashboard-shortcuts-projects">
+          <router-link to="/projects/list" title="Projects" class="dashboard-shortcuts-projects">
             项目
           </router-link>
         </a-menu-item>
@@ -37,8 +37,11 @@
           <img class="header-user-avatar" :src="photo|defaultHeader">
         </a-popover>
       </a-layout-header>
+      <a-breadcrumb style="margin: 16px 0 16px 16px">
+        <a-breadcrumb-item v-for="item in breadcrumbData" :key="item">{{ item }}</a-breadcrumb-item>
+      </a-breadcrumb>
       <a-layout-content
-        :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
+        :style="{ margin: '0 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
       >
         <router-view></router-view>
       </a-layout-content>
@@ -55,15 +58,26 @@
     padding 20px 24px
     a
       color #ffffff
+  .header-user-avatar {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin-right: 16px;
+  }
 </style>
 <script type='text/ecmascript-6'>
+  import BasePage from 'src/extend/BasePage'
   import { mapState } from 'vuex'
   import Server from './extend/Server'
-  const config = require('src/config')
+  import config from 'src/config'
+  import locale from 'src/assets/meta/locale'
+
   export default {
+    mixins: [BasePage],
     data: function () {
       return {
-        photo: ''
+        photo: '',
+        breadcrumbData: []
       }
     },
     mounted: function () {
@@ -82,9 +96,16 @@
       this.getUserInfo()
     },
     computed: mapState({
-      theme: state => state.app.theme,
       packageInfo: state => state.app.packageInfo
     }),
+    watch: {
+      '$route.path': {
+        handler () {
+          this.breadcrumbData = this.getBreadcrumbData()
+        },
+        immediate: true
+      }
+    },
     methods: {
       logout: function () {
         window.localStorage.removeItem('token')
@@ -101,7 +122,6 @@
           // 初始化导航信息
           // 设置用户信息
           this.$store.dispatch('initUserInfo', this.user)
-          this.initAllCategory()
         }).catch(() => {
           // this.$alert('获取用户信息失败')
           this.loading = false
@@ -111,23 +131,18 @@
         this.$confirm({
           title: '提示',
           content: '确认登出系统',
-          type: 'warning'
-        }).then(() => {
-          Server({
-            url: 'api/user/logout',
-            method: 'post'
-          }).then(() => {
-            this.ema.fire('logout')
-          }).catch(() => {
-            this.$error({
-              title: '登出失败'
+          onOk: async () => {
+            await Server({
+              url: 'api/user/logout',
+              method: 'post'
             })
-          })
-        }).catch(() => {
-          this.$info({
-            title: '已取消'
-          })
+            this.ema.fire('logout')
+          }
         })
+      },
+      getBreadcrumbData () {
+        const params = this.$route.params
+        return Object.values(params).map(v => locale[v])
       }
     }
   }
