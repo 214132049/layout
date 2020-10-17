@@ -1,4 +1,4 @@
-import PageRouter from './components/PageRouter.vue'
+import PageRouter from './components/PageRouter.js'
 const config = require('./config')
 var map = {
   mode: 'history',

@@ -25,7 +25,9 @@
                   <a-input type="textarea" :maxlength="50" v-model="form.desc"></a-input>
                 </a-form-item>
                 <a-form-item label="上传组件">
-                  <Upload />
+                  <a-upload accept=".zip" :before-upload="beforeUpload">
+                    <a-button> <a-icon type="upload" />开始上传</a-button>
+                  </a-upload>
                 </a-form-item>
                 <a-form-item label="是否公开">
                   <a-radio-group v-model="form.visibilitylevel">
@@ -73,12 +75,10 @@
 <script type="text/ecmascript-6">
   import BasePage from 'src/extend/BasePage'
   import Server from 'src/extend/Server'
-  import Upload from 'src/components/Upload'
   import { mapState } from 'vuex'
 
   export default {
     mixins: [BasePage],
-    components: { Upload },
     data () {
       return {
         loading: false,
@@ -158,7 +158,8 @@
             return false
           }
         })
-      }
+      },
+      beforeUpload () {}
     }
   }
 </script>

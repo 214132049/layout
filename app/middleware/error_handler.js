@@ -1,11 +1,11 @@
-const I18n = require('i18n');
+const I18n = require('i18n')
 
 // 配置i18n
 I18n.configure({
   locales: ['zh-CN'],
   defaultLocale: 'zh-CN',
   directory: 'config/locale',
-});
+})
 
 module.exports = () => {
   return async function errorHandler (ctx, next) {
@@ -22,14 +22,14 @@ module.exports = () => {
         : err.message
 
       // 从 error 对象上读出各个属性，设置到响应中
-      let body = {
+      const body = {
         code: err.code || -1, // TODO: 使用传入的code
         message: error
       }
 
       if (status === 422 && err.errors.length > 0) {
         const [first] = err.errors
-        const {message, field} = first
+        const { message, field } = first
         body.message = I18n.__(field) + message
         body.code = -1
         status = 200

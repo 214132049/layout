@@ -53,6 +53,8 @@ instance.interceptors.response.use(function (response) {
       window.EMA.fire('alert.show', '用户无权限,重新登录', function () {
         window.EMA.fire('logout')
       })
+    } else if (status === 404) {
+      window.EMA.fire('alert.show', '接口地址不存在', function () {})
     } else if (status === 422) {
       window.EMA.fire('alert.show', '传递参数错误', function () {})
     } else {

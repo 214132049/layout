@@ -3,107 +3,51 @@ const BaseController = require('./base')
 class ProjectController extends BaseController {
   async list () {
     const { ctx } = this
-    const searchRule = {
-      key: {
-        type: 'string',
-        allowEmpty: true,
-        required: false
-      },
-      name: {
-        type: 'string',
-        allowEmpty: true,
-        required: false
-      },
-      categoryId: {
-        type: 'int',
-        required: false,
-        allowEmpty: true
-      },
-      status: {
-        type: 'int',
-        required: false,
-        allowEmpty: true
-      },
-      page: {
-        type: 'int',
-        required: false,
-        allowEmpty: true
-      },
-      pageSize: {
-        type: 'int',
-        required: false,
-        allowEmpty: true
-      }
-    }
-    ctx.validate(searchRule)
-    ctx.body = await ctx.service.project.list(this.body)
+    ctx.body = await ctx.service.project.list({ userId: this.user.id })
   }
 
   async save () {
     const { ctx } = this
-    const searchRule = {
-      id: {
-        type: 'int',
-        required: false,
-        allowEmpty: true
-      },
-      key: {
-        type: 'string',
-        allowEmpty: true,
-        required: false
-      },
-      name: {
-        type: 'string',
-        max: 50,
-        required: true,
-        allowEmpty: false
-      },
-      categoryId: {
-        type: 'int',
-        required: true,
-        allowEmpty: false
-      },
-      image: {
-        type: 'string',
-        max: 255,
-        required: false,
-        allowEmpty: true
-      }
+    const RULES = {
+      name: { required: true, type: 'string' },
+      member: { required: true, type: 'array' },
+      image: { required: true, type: 'string' },
+      desc: { required: true, type: 'string' }
     }
-    ctx.validate(searchRule)
-    console.log('validate success')
-    ctx.body = await ctx.service.project.save(this.body)
-  }
-
-  async changeStatus () {
-    const { ctx } = this
-    const searchRule = {
-      id: {
-        type: 'int',
-        required: true,
-        allowEmpty: false
-      },
-      status: {
-        type: 'int',
-        required: true,
-        allowEmpty: false
-      }
+    console.log(this.body)
+    await ctx.validate(RULES, this.body)
+    if (this.body.id) {
+      await this.find(this.body.id)
     }
-    ctx.validate(searchRule)
-    console.log('validate success')
-    ctx.body = await ctx.service.project.changeStatus(this.body)
+    await ctx.service.project.save({ ...this.body, userId: this.user.id })
+    this.success()
   }
 
   async delete () {
     const { ctx } = this
-    const createRule = {
-      id: {
-        type: 'int',
-        required: true
-      }
+    await this.find(this.body.id)
+    await ctx.service.project.delete(this.body)
+    this.success()
+  }
+
+  async info () {
+    const res = await this.find(this.body.id)
+    this.success({
+      data: res
+    })
+  }
+
+  async find () {
+    const { ctx } = this
+    const rule = {
+      id: { required: true, type: 'string' }
     }
-    ctx.validate(createRule)
-    await ctx.service.project.delete(this.body.id)
+    await ctx.validate(rule, this.body)
+    const res = await ctx.service.project.find({ ...this.body, userId: ctx.state.user.id })
+    if (!res) {
+      ctx.throw({ msg: '项目不存在' })
+    }
+    return res
   }
 }
 

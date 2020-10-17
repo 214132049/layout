@@ -1,43 +1,13 @@
 <template>
   <div class="project-edit-container">
-    <div class="project-edit-errors">
-
-    </div>
     <div class="row prepend-top-default">
       <div class="col-lg-3 profile-settings-sidebar">
-        <h4 class="prepend-top-0">
-          <div v-if="id">
-            更新页面
-          </div>
-          <div v-else>
-            新建页面
-          </div>
-        </h4>
-        <div>
-          <div v-if="id">
-            修改自己的页面内容
-          </div>
-          <div v-else>
-            创建的页面必须在指定的一个组里面，可以自己新建团队
-          </div>
-        </div>
+        {{ id ? '更新页面' : '新建页面' }}
       </div>
       <div class="col-lg-9">
-
         <a-form ref="form" :model="form" laba-width="80px">
           <a-form-item label="图标">
-            <div class="headIcon">
-              <img :src="form.image|defaultProject">
-            </div>
-            <upload accept="image" :showBtn="true" :auto="true" @uploadSuccess="uploadEnd"></upload>
-
-          </a-form-item>
-          <a-form-item label="所属项目">
-            <a-select v-model="form.projectId" placeholder="请选择">
-              <a-option v-for="item in myProjects" :key="item.id" :label="item.groupName+'/'+item.projectName" :value="item.id">
-                <span style="float: left">{{ item.groupName+'/'+item.projectName }}</span>
-              </a-option>
-            </a-select>
+            <UploadImage @ended="uploadEnd"/>
           </a-form-item>
           <a-form-item label="页面名称" prop="name" :rules="[
                         { required: true,message: '输入1-35位页面名', trigger: 'blur'},
@@ -119,13 +89,13 @@
 
 <script type="text/ecmascript-6">
   import BasePage from 'src/extend/BasePage'
-  import Upload from 'src/components/Upload'
+  import UploadImage from 'src/components/UploadImage'
   import Server from 'src/extend/Server'
   import { mapState } from 'vuex'
 
   export default {
     mixins: [BasePage],
-    components: { Upload },
+    components: { UploadImage },
     name: 'pages_cnew',
     props: {
       id: { // 页面id

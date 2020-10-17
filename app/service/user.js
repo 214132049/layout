@@ -8,7 +8,16 @@ class UserService extends Service {
         email: params.email.trim()
       })
     }
-    return ctx.model.User.findAll()
+    return ctx.model.User.find()
+  }
+
+  getAllUser () {
+    const { ctx } = this
+    return ctx.model.User.find({}, {
+      email: 1,
+      id: 1,
+      _id: 0
+    })
   }
 
   login (params) {
@@ -23,6 +32,7 @@ class UserService extends Service {
     const { ctx } = this
     return ctx.model.User.create({
       id: ctx.helper.uuid(),
+      name: params.name.trim(),
       email: params.email.trim(),
       password: params.password.trim()
     })

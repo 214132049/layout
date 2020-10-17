@@ -50,7 +50,11 @@ class UserController extends BaseController {
     const { ctx } = this
     const res = await this.findUser(ctx.state.user)
     this.success({
-      data: res
+      data: {
+        id: res.id,
+        email: res.email,
+        name: res.name || ''
+      }
     })
   }
 
@@ -66,6 +70,14 @@ class UserController extends BaseController {
   async findUser (userInfo) {
     const { service } = this
     return service.user.find(userInfo || this.body)
+  }
+
+  async getAllUser () {
+    const { service } = this
+    const list = await service.user.getAllUser()
+    this.success({
+      list
+    })
   }
 
   async createUserToken ({ id, email }) {

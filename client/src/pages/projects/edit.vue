@@ -4,12 +4,9 @@
       <div class="col-lg-3 profile-settings-sidebar">
         {{ id ? '更新项目' : '新建项目' }}
       </div>
-      <a-form-model ref="form" :model="form" laba-width="80px" :rules="rules">
+      <a-form-model ref="form" :model="form" :rules="rules" :label-col="{span: 3}" :wrapper-col="{span: 21}">
         <a-form-model-item label="项目图标">
-          <div class="headIcon">
-            <img :src="form.image|defaultProject">
-          </div>
-          <upload accept="image" :showBtn="true" :auto="true" @uploadSuccess="uploadEnd"></upload>
+          <UploadImage @ended="uploadEnd"/>
         </a-form-model-item>
         <a-form-model-item label="项目名称" prop="name">
           <a-input placeholder="项目名称" :maxlength="35" v-model="form.name" />
@@ -17,15 +14,16 @@
         <a-form-model-item label="描述" prop="desc">
           <a-input type="textarea" :maxlength="50" v-model="form.desc" />
         </a-form-model-item>
-        <a-form-model-item label="项目成员" prop="groupId">
-          <a-select v-model="form.groupId" filterable placeholder="请选择">
-            <a-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
-              {{ item.name }}
-            </a-option>
+        <a-form-model-item label="项目成员" prop="member">
+          <a-select mode="multiple" :value="form.member" placeholder="添加成员"  @change="addMember"
+          >
+            <a-spin v-if="fetching" slot="notFoundContent" size="small" />
+            <a-select-option v-for="item in options" :key="item.id">
+              {{ item.email }}
+            </a-select-option>
           </a-select>
-          <a-button type="text" @click="addMember">添加成员</a-button>
         </a-form-model-item>
-        <a-form-model-item>
+        <a-form-model-item :wrapper-col="{ span: 14, offset: 3 }">
           <a-button type="primary" :loading="loading" @click="onSubmit">提交</a-button>
         </a-form-model-item>
       </a-form-model>
@@ -57,12 +55,10 @@
   .headIcon {
     width: 150px;
     height: 150px;
-    // border-radius: 50%;
     overflow: hidden;
     margin: 20px;
     background: url('~src/assets/image/header/default.png');
     background-size: 100% 100%;
-
     img {
       width: 100%;
       height: 100%;
@@ -72,34 +68,34 @@
 
 <script type="text/ecmascript-6">
   import BasePage from 'src/extend/BasePage'
-  import Upload from 'src/components/Upload'
+  import UploadImage from 'src/components/UploadImage'
   import Server from 'src/extend/Server'
 
   export default {
     mixins: [BasePage],
-    components: { Upload },
+    components: { UploadImage },
     name: 'projects_cnew',
     data () {
       return {
-        // 一个典型列表数据格式
         loading: false,
         options: [],
-        value: '',
         form: {
-          visibilitylevel: 0,
           image: '',
           name: '',
-          groupId: '',
+          member: [],
           desc: ''
         },
         rules: {
           name: [
-            { required: true,message: '输入1-35位项目名', trigger: 'blur' },
+            { required: true, message: '输入1-35位项目名', trigger: 'blur' },
             { min: 1, max: 35, message: '长度在 1 到 35 个字符', trigger: 'blur' }
           ],
           desc: [
-            { required: true,message: '输入描述', trigger: 'blur' },
+            { required: true, message: '输入描述', trigger: 'blur' },
             { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
+          ],
+          member: [
+            { type: 'array', required: true, min: 1, message: '请添加成员', trigger: 'change' },
           ]
         }
       }
@@ -109,97 +105,68 @@
         return this.$route.query.id
       }
     },
+    watch: {
+      '$store.state.userInfo': {
+        handler (val) {
+          if (!val || !val.id) return
+          this.form.member.splice(0, 0, val.id)
+        },
+        immediate: true
+      }
+    },
     mounted: function () {
       if (this.id) {
         this.getProjectInfo()
       }
+      this.findUser()
     },
     methods: {
-      addMember () {
-
+      addMember (value) {
+        this.form.member = value
       },
-      uploadEnd: function (url) {
+      uploadEnd (url) {
         this.form.image = url
       },
-      getProjectInfo: function () {
-        Server({
-          url: '/api/project/info',
+      async getProjectInfo () {
+        const { data: _data } = await Server({
+          url: 'api/project/info',
           method: 'get',
           data: { id: this.id }
-        }).then((response) => {
-          var data = response.data.data
-          this.form = {
-            image: data.image,
-            name: data.projectName,
-            groupId: data.groupId,
-            desc: data.desc,
-            ddwebhook: data.ddwebhook,
-            visibilitylevel: data.visibilitylevel
-          }
         })
+        const data = _data.data
+        this.form = {
+          image: data.image,
+          name: data.projectName,
+          member: data.member,
+          desc: data.desc
+        }
       },
-      getAllUsers: function () {
-        Server({
+      async findUser () {
+        const { data } = await Server({
           url: '/api/user/find',
-          method: 'get',
-          params: {
-            type: 0,
-            start: 0,
-            count: 100
+          method: 'get'
+        })
+        this.options = data.list
+      },
+      onSubmit () {
+        this.$refs.form.validate(async valid => {
+          if (!valid) {
+            return
           }
-        }).then((response) => {
-          this.options = response.data.data
+          this.loading = true
+          try {
+            await Server({
+              url: 'api/project/save',
+              method: 'post',
+              data: { ...this.form, id: this.id }
+            })
+            this.$message.success('提交成功')
+          } finally {
+            this.loading = false
+          }
         })
       },
-      onSubmit: function () {
-        this.$refs.form.validate((valid) => {
-          if (valid) {
-            this.loading = true
-            if (this.id) {
-              Server({
-                url: 'project/project',
-                method: 'put',
-                data: { ...this.form, id: this.id }
-              }).then((response) => {
-                this.loading = false
-                this.$notify({
-                  title: '成功',
-                  message: '修改成功',
-                  type: 'success'
-                })
-              }).catch(() => {
-                this.loading = false
-                this.$notify({
-                  itle: '警告',
-                  message: '修改失败',
-                  type: 'warning'
-                })
-              })
-            } else {
-              Server({
-                url: 'project/project',
-                method: 'post',
-                data: this.form
-              }).then((response) => {
-                this.loading = false
-                this.$notify({
-                  title: '成功',
-                  message: '创建成功',
-                  type: 'success'
-                })
-                this.$router.push({
-                  path: '/dashboard/projects'
-                })
-              }).catch(() => {
-                this.loading = false
-              })
-            }
-          } else {
-            this.$message('信息填写错误')
-            return false
-          }
-        })
-      }
+
     }
   }
 </script>

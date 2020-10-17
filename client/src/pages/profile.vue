@@ -25,10 +25,7 @@
             <div class="col-lg-9">
               <a-form ref="baseForm" :model="form" :rules="rules" laba-width="80px">
                 <a-form-item label="头 像">
-                  <div class="headIcon">
-                    <img :src="form.photo|defaultHeader">
-                  </div>
-                  <upload accept="image" :showBtn="true" :auto="true" @uploadSuccess="uploadEnd"></upload>
+                  <UploadImage @ended="uploadEnd"/>
                 </a-form-item>
                 <a-form-item label="邮 箱" prop="email">
                   <a-input placeholder="邮箱" :disabled="!!userInfo.email" v-model="form.email">
@@ -117,14 +114,14 @@
 
 <script type="text/ecmascript-6">
   import BasePage from 'src/extend/BasePage'
-  import Upload from 'src/components/Upload'
+  import UploadImage from 'src/components/UploadImage'
   import Server from 'src/extend/Server'
   var SHA256 = require('crypto-js/sha256')
   var MD5 = require('crypto-js/md5')
 
   export default {
     mixins: [BasePage],
-    components: {Upload},
+    components: {UploadImage},
     name: 'profile',
     data () {
       var targetPassword2 = (rule, value, callback) => {
@@ -136,7 +133,7 @@
           callback()
         }
       }
-      let validateCheck = (rule, value, callback) => {
+      const validateCheck = (rule, value, callback) => {
         if (!/^([a-zA-Z0-9]+[_|_|.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|_|.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test(this.form.email)) {
           callback(new Error('请输入正确的邮箱地址'))
         } else {
@@ -145,32 +142,33 @@
       }
       return {
         activeName: 'base',
+        loading: false,
         rules: {
           name: [
-            {required: true, message: '请输入姓名', trigger: 'blur'},
-            {min: 2, max: 15, message: '长度在 2 到 15 个字符', trigger: 'blur'}
+            { required: true, message: '请输入姓名', trigger: 'blur' },
+            { min: 2, max: 15, message: '长度在 2 到 15 个字符', trigger: 'blur' }
           ],
           account: [
-            {required: true, message: '请输入账户名称', trigger: 'blur'},
-            {min: 5, max: 20, message: '5-20位大小写字母和._-组成的名称', trigger: 'blur'}
+            { required: true, message: '请输入账户名称', trigger: 'blur' },
+            { min: 5, max: 20, message: '5-20位大小写字母和._-组成的名称', trigger: 'blur' }
           ],
           email: [
-            {required: true, message: '请输入邮箱地址', trigger: 'blur'},
-            {validator: validateCheck}
+            { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+            { validator: validateCheck }
           ],
           telephone: [
-            {min: 11, max: 11, message: '11位手机号', trigger: 'blur'}
+            { min: 11, max: 11, message: '11位手机号', trigger: 'blur' }
           ],
           password: [
-            {required: true, message: '输入密码', trigger: 'blur'},
-            {min: 6, max: 20, message: '6-20位大小写字母和._-组成的名称', trigger: 'blur'}
+            { required: true, message: '输入密码', trigger: 'blur' },
+            { min: 6, max: 20, message: '6-20位大小写字母和._-组成的名称', trigger: 'blur' }
           ],
           targetPassword: [
-            {required: true, message: '输入密码', trigger: 'blur'},
-            {min: 6, max: 20, message: '6-20位大小写字母和._-组成的名称', trigger: 'blur'}
+            { required: true, message: '输入密码', trigger: 'blur' },
+            { min: 6, max: 20, message: '6-20位大小写字母和._-组成的名称', trigger: 'blur' }
           ],
           targetPassword2: [
-            {validator: targetPassword2, trigger: 'blur'}
+            { validator: targetPassword2, trigger: 'blur' }
           ]
         },
         passform: {
