@@ -1,5 +1,5 @@
 <template>
-  <a-locale-provider :locale="locale">
+  <a-config-provider :locale="locale">
     <div class="findPassword">
       <div class="main">
         <h4>重置密码</h4>
@@ -19,7 +19,7 @@
         </a-form-model>
       </div>
     </div>
-  </a-locale-provider>
+  </a-config-provider>
 </template>
 
 <style lang="stylus" scoped>

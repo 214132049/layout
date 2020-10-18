@@ -1,5 +1,5 @@
 <template>
-  <a-locale-provider :locale="locale">
+  <a-config-provider :locale="locale">
     <a-layout>
     <a-layout-sider>
       <div class="logo">
@@ -43,7 +43,7 @@
       </a-layout-content>
     </a-layout>
   </a-layout>
-  </a-locale-provider>
+  </a-config-provider>
 </template>
 <style lang="stylus">
   @import "assets/style/app.styl";
@@ -137,7 +137,7 @@
       },
       getBreadcrumbData () {
         const params = this.$route.params
-        return Object.values(params).map(v => locale[v])
+        return Object.values(params).map(v => locale[v]).filter(Boolean)
       }
     }
   }

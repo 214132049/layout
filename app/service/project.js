@@ -11,16 +11,24 @@ class ProjectService extends CountersService {
     })
   }
 
-  async find (params) {
+  async findProject (params) {
     const { ctx } = this
-    return ctx.model.Project.findOne({
-      member: { $elemMatch: { $eq: params.userId } },
+    const res = await ctx.model.Project.findOne({
       id: params.id,
       status: 1
     }, {
       _id: 0,
       __v: 0
     })
+    if (!res) {
+      ctx.throw('项目不存在', 200)
+    }
+    if (!res.member.includes(params.userId)) {
+      ctx.throw('您没有权限', 200, {
+        code: -403
+      })
+    }
+    return res
   }
 
   async save (params) {
@@ -40,7 +48,6 @@ class ProjectService extends CountersService {
       })
     }
     const id = await this.getNextId('projects')
-    console.log(id)
     body.status = 1
     return ctx.model.Project.create({ ...body, id })
   }

@@ -38,7 +38,7 @@
   export default {
     mixins: [BasePage],
     components: { UploadImage },
-    name: 'projects_cnew',
+    name: 'projectsEdit',
     data () {
       return {
         loading: false,

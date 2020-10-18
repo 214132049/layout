@@ -10,7 +10,7 @@
 </style>
 <script type="text/ecmascript-6">
   import BaseDialog from 'src/extend/BaseDialog'
-  import CNew from '../pages/groups/CNew.vue'
+  import CNew from '../pages/groups/edit.vue'
   export default {
     mixins: [ BaseDialog ],
     name: 'DGroupsNew',

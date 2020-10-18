@@ -38,10 +38,12 @@ instance.interceptors.response.use(function (response) {
           window.EMA.fire('logout')
         })
         break
+      case -403:
+        break
       default:
         window.EMA.fire('alert.show', response.data.message, function () {})
     }
-    throw new Error(response)
+    return Promise.reject(response)
   }
   return response
 }, function (error) {

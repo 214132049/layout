@@ -12,5 +12,6 @@
 	"id": "id",
 	"should be a string": "should be a string",
 	"should be an integer": "should be an integer",
-	"member": "member"
+	"member": "member",
+	"projectId": "projectId"
 }

@@ -121,7 +121,7 @@
 <script type="text/ecmascript-6">
   import BasePage from 'src/extend/BasePage'
   import Server from 'src/extend/Server'
-  import CNew from './pages/CNew.vue'
+  import CNew from './pages/edit.vue'
   import CDoc from './pages/CDoc.vue'
   import History from './pages/history.vue'
 

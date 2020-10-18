@@ -1,5 +1,5 @@
 <template>
-  <a-locale-provider :locale="locale">
+  <a-config-provider :locale="locale">
     <div class="custom-page-class">
       <div class="main">
         <div class="switch-nav" @click="handleClick">
@@ -45,7 +45,7 @@
         </div>
       </div>
     </div>
-  </a-locale-provider>
+  </a-config-provider>
 </template>
 <style lang="stylus" scoped>
 .custom-page-class {

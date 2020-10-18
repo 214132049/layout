@@ -1,20 +1,18 @@
 <template>
   <div v-if="loadend">
-    <template v-if="project.id">
-      <a-tabs v-model="activeName" @tab-click="tabHandleClick">
-        <a-tab-pane tab="页面" key="doc">
-          <c-doc :id="project.id" :userId="project.userId" />
-        </a-tab-pane>
-        <a-tab-pane tab="成员" key="member">
-          <member :id="project.id" :member="project.member" :userId="project.userId" @refresh="loadProject"/>
-        </a-tab-pane>
-        <a-tab-pane v-if="isAdmin" tab="设置" key="setting">
-          <c-new :id="project.id"></c-new>
-          <a-button class="btn btn-remove" type="danger" @click="delectProject">删除项目</a-button>
-        </a-tab-pane>
-      </a-tabs>
-    </template>
-    <template v-else>
+    <a-tabs v-if="project.id" v-model="activeName" @tab-click="tabHandleClick">
+      <a-tab-pane tab="页面" key="doc">
+        <c-doc :id="project.id" :userId="project.userId" />
+      </a-tab-pane>
+      <a-tab-pane tab="成员" key="member">
+        <member :id="project.id" :member="project.member" :userId="project.userId" @refresh="loadProject"/>
+      </a-tab-pane>
+      <a-tab-pane v-if="isAdmin" tab="设置" key="setting">
+        <c-new :id="project.id"></c-new>
+        <a-button class="btn btn-remove" type="danger" @click="delectProject">删除项目</a-button>
+      </a-tab-pane>
+    </a-tabs>
+    <template v-if="noPower">
       <a-result status="403" title="403" sub-title="你没有此页面的访问权限。">
         <template #extra>
           <router-link to="/project/list">
@@ -35,7 +33,7 @@
   import Server from 'src/extend/Server'
   import Member from './members.vue'
   import CNew from './edit.vue'
-  import CDoc from './CDoc.vue'
+  import CDoc from './pages.vue'
 
   export default {
     mixins: [BasePage],
@@ -44,6 +42,7 @@
     data: function () {
       return {
         loadend: false,
+        noPower: false,
         project: {},
         id: this.$route.query.id,
         activeName: 'doc'
@@ -68,6 +67,11 @@
           }
         }).then((response) => {
           this.project = response.data.data
+        }).catch(({ data }) => {
+          if (data.code === -403) {
+            this.noPower = true
+          }
+        }).finally(() => {
           this.loadend = true
         })
       },

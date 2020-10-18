@@ -59,11 +59,7 @@ class ProjectController extends BaseController {
       id: { required: true, type: 'int' }
     }
     await ctx.validate(rule, this.body)
-    const res = await ctx.service.project.find({ id: this.body.id, userId: this.user.id })
-    if (!res) {
-      ctx.throw('项目不存在', 200)
-    }
-    return res
+    return await ctx.service.project.findProject({ id: this.body.id, userId: this.user.id })
   }
 }
 

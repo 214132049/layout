@@ -8,7 +8,7 @@
   </a-result>
 </template>
 
-<style lang="stylus" rel="stylesheet/stylus" scoped type="text/stylus">
+<style lang="stylus" scoped>
 
 </style>
 
