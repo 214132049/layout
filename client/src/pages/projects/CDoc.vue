@@ -1,20 +1,9 @@
 <template>
   <div class="content">
-    <div class="project-home-panel text-center">
-      <div class="container-fluid container-limited">
-      </div>
-    </div>
+    <a-button @click="newApi" type="primary">添加页面</a-button>
     <!--页面列表信息-->
-    <div v-if="!hasData">
-      <div class="blank-state">
-        <div class="blank-state-icon">
-          <i class="ifont icon-empty"></i>
-          <span>暂无页面信息，请先添加页面</span>
-        </div>
-        <h3 class="blank-state-title">
-          <a-button @click="newApi" type="primary">添加页面</a-button>
-        </h3>
-      </div>
+    <div class="blank-state" v-if="!hasData">
+      <a-empty style="margin-top: 100px;" description="暂无页面" />
     </div>
     <div class="pages clearfix" v-else>
       <div class="boxSize" v-for="(item, k) in productList" :key='k'>
@@ -27,14 +16,6 @@
         </div>
         <div class="sourceName">{{item.name}}</div>
         <div class="bottom">
-          <a class="qr">
-            <div class="qrBox">
-              <i class="eqf-QRcode"></i>
-            </div>
-            <a :title="item.desc" style="display: inline-block; cursor: pointer;" :href="getUrl(item,true)" target="_blank" class="erCode" >
-              <img class="qrcode" :src="getqrUrl(item)" alt="">
-            </a>
-          </a>
           <div class="sourceButton">
             <a class="editButton" :href="getUrl(item)" target="_blank">编辑</a>
             <a class="editButton act_btn" target="_blank">操作
@@ -75,10 +56,8 @@
     margin: auto;
   }
 
-  .blank-state-icon {
-    span {
-      font-size: 24px;
-    }
+  .blank-state {
+    text-align center
   }
 
   .pathWarp {
@@ -211,41 +190,6 @@
         z-index 3
       }
     }
-    .qr {
-      float left
-      cursor: pointer;
-      top 8px
-      margin 0 20px
-      border 0
-      .qrBox {
-        position relative
-        top 6px
-        background-color: #eee;
-        border-radius: 3px;
-        text-align: center;
-        width 36px
-        height 36px
-      }
-      &:hover {
-        .qrBox {
-          background-color: #1593ff;
-        }
-        .qrcode {
-          display: block;
-        }
-      }
-      .eqf-QRcode {
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        font-size: 20px;
-        background url('../../assets/image/project/qr.png')
-        background-repeat: no-repeat
-        background-size: 100% 100%
-        top 50%
-        transform translate(-50%, -50%)
-      }
-    }
     .sourceButton {
       float left
       height: 46px;
@@ -257,7 +201,7 @@
       align-items: center;
 
       .editButton {
-        text-decoration:none; 
+        text-decoration:none;
         color:#333;
         margin: 10px 2px;
         padding 6px 10px
@@ -289,12 +233,12 @@
         z-index: 999;
         .action {
           font-family: PingFang-SC-Medium;
-          text-decoration:none; 
+          text-decoration:none;
           color:#333;
           font-size: 13px;
           cursor: pointer;
           transition: background-color 0.4s ease-in-out;
-          margin 0    
+          margin 0
           line-height: 25px;
           padding: 4px 10px;
           &:hover {
@@ -304,7 +248,7 @@
         .last {
           width 100%
           height 10px
-          margin 0  
+          margin 0
           padding 0
           background-color: rgba(220, 196, 196, 0.2);
         }
@@ -327,7 +271,7 @@
     name: 'projects_cdoc',
     props: {
       id: { // 项目id
-        type: String
+        type: Number
       }
     },
     data () {
@@ -369,7 +313,7 @@
     methods: {
       setting: function (item) {
         this.$router.push({
-          path: '/page',
+          path: '/pages',
           query: {
             id: item.id
           }
@@ -384,9 +328,6 @@
         } else {
           return `${config.EDITOR_PATH}?key=${item.key}`
         }
-      },
-      getqrUrl: function (item) {
-        return `https://www.kuaizhan.com/common/encode-png?large=true&data=${encodeURIComponent(this.getUrl(item, 1))}`
       },
       // 1启用、2禁用 0删除
       changeStatus: function (item) {

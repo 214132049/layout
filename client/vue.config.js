@@ -1,5 +1,4 @@
 const path = require('path')
-const config = require('./src/config')
 
 const configureWebpack = {
   resolve: {
@@ -23,34 +22,32 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = {
-  publicPath: '/' + config.ADMIN_NAME,
+  publicPath: '/',
   assetsDir: 'static',
-  outputDir: `dist/${config.ADMIN_NAME || 'admin'}`,
+  outputDir: 'dist',
   lintOnSave: process.env.NODE_ENV !== 'production',
   productionSourceMap: process.env.NODE_ENV !== 'production',
   pages: {
     index: {
       entry: './src/main.js',
       filename: 'index.html',
-      template: './index.ejs',
-      title: config.ADMIN_TITLE,
+      template: './index.ejs'
     },
     login: {
       entry: './src/login.js',
       filename: 'login.html',
-      template: './login.ejs',
-      title: config.ADMIN_TITLE,
+      template: './login.ejs'
     },
     updatePassword: {
       entry: './src/updatePassword.js',
       filename: 'updatePassword.html',
-      template: './updatePassword.ejs',
-      title: config.ADMIN_TITLE,
+      template: './updatePassword.ejs'
     }
   },
   devServer: {
     disableHostCheck: true,
     port: 3000,
+    host: '127.0.0.1',
     publicPath: '/',
   },
   configureWebpack: configureWebpack,

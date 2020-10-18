@@ -1,7 +1,7 @@
 <template>
   <div class="content-wrapper">
     <h1 class="blank-state blank-state-welcome welcome">
-      欢迎使用{{packageInfo.description}}
+      欢迎使用可视化表单系统
     </h1>
   </div>
 </template>

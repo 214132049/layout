@@ -1,10 +1,8 @@
 import Vue from 'vue'
-import BaseComponent from 'src/extend/BaseComponent'
 import noPage from 'src/pages/noPage'
 
 export default {
   name: 'PageRoute',
-  mixins: [BaseComponent],
   data () {
     return {
       instance: null

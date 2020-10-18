@@ -8,7 +8,7 @@ module.exports = (app) => {
     member: { type: Array },
     status: {  type: Number },
     desc: { type: String },
-    image: { type: String },
+    image: { type: String, default: '' },
     userId: { type: String },
     createDate: { type: Date, default: Date.now },
     modifyDate: { type: Date, default: Date.now },

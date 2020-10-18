@@ -1,49 +1,51 @@
 <template>
-  <div class="custom-page-class">
-    <div class="main">
-      <div class="switch-nav" @click="handleClick">
-        {{activeName === 'login' ? '注册 →' : '登录 →'}}
-      </div>
-      <div class="form-box">
-        <a-form-model ref="loginForm" :model="loginForm" :rules="registerrule" v-if="activeName === 'login'">
-          <a-form-model-item label="" prop="email">
-            <a-input placeholder="邮箱" type="text" auto-complete="on" id="username" name="username"
-                      v-model="loginForm.email">
-            </a-input>
-          </a-form-model-item>
-          <a-form-model-item label="" prop="password">
-            <a-input placeholder="密 码" type="password" auto-complete="on" v-model="loginForm.password">
-            </a-input>
-          </a-form-model-item>
-          <div class="submit-box">
-            <a-button class="submit-box__btn" type="primary" :loading="loading" @click="loginSubmit">登 陆</a-button>
-            <a-button type="link" @click="forgetPassword">忘记密码？</a-button>
-          </div>
-        </a-form-model>
-        <a-form-model ref="registerForm" :model="registerForm" :rules="registerrule" v-else key="registerForm">
-          <a-form-model-item label="" prop="email">
-            <a-input placeholder="邮箱" @blur="emailBlur" v-model="registerForm.email">
-            </a-input>
-          </a-form-model-item>
-          <a-form-model-item label="" prop="name">
-            <a-input placeholder="用 户 名" v-model="registerForm.name">
-            </a-input>
-          </a-form-model-item>
-          <a-form-model-item label="" prop="password">
-            <a-input placeholder="密 码" type="password" v-model="registerForm.password">
-            </a-input>
-          </a-form-model-item>
-          <a-form-model-item label="" prop="password2">
-            <a-input placeholder="确认密码" type="password" v-model="registerForm.password2">
-            </a-input>
-          </a-form-model-item>
-          <div class="submit-box">
-            <a-button class="submit-box__btn" type="primary" :loading="loading" @click="registerSubmit">注 册</a-button>
-          </div>
-        </a-form-model>
+  <a-locale-provider :locale="locale">
+    <div class="custom-page-class">
+      <div class="main">
+        <div class="switch-nav" @click="handleClick">
+          {{activeName === 'login' ? '注册 →' : '登录 →'}}
+        </div>
+        <div class="form-box">
+          <a-form-model ref="loginForm" :model="loginForm" :rules="registerrule" v-if="activeName === 'login'">
+            <a-form-model-item label="" prop="email">
+              <a-input placeholder="邮箱" type="text" auto-complete="on" id="username" name="username"
+                        v-model="loginForm.email">
+              </a-input>
+            </a-form-model-item>
+            <a-form-model-item label="" prop="password">
+              <a-input placeholder="密 码" type="password" auto-complete="on" v-model="loginForm.password">
+              </a-input>
+            </a-form-model-item>
+            <div class="submit-box">
+              <a-button class="submit-box__btn" type="primary" :loading="loading" @click="loginSubmit">登 陆</a-button>
+              <a-button type="link" @click="forgetPassword">忘记密码？</a-button>
+            </div>
+          </a-form-model>
+          <a-form-model ref="registerForm" :model="registerForm" :rules="registerrule" v-else key="registerForm">
+            <a-form-model-item label="" prop="email">
+              <a-input placeholder="邮箱" @blur="emailBlur" v-model="registerForm.email">
+              </a-input>
+            </a-form-model-item>
+            <a-form-model-item label="" prop="name">
+              <a-input placeholder="用 户 名" v-model="registerForm.name">
+              </a-input>
+            </a-form-model-item>
+            <a-form-model-item label="" prop="password">
+              <a-input placeholder="密 码" type="password" v-model="registerForm.password">
+              </a-input>
+            </a-form-model-item>
+            <a-form-model-item label="" prop="password2">
+              <a-input placeholder="确认密码" type="password" v-model="registerForm.password2">
+              </a-input>
+            </a-form-model-item>
+            <div class="submit-box">
+              <a-button class="submit-box__btn" type="primary" :loading="loading" @click="registerSubmit">注 册</a-button>
+            </div>
+          </a-form-model>
+        </div>
       </div>
     </div>
-  </div>
+  </a-locale-provider>
 </template>
 <style lang="stylus" scoped>
 .custom-page-class {
@@ -79,6 +81,7 @@
 }
 </style>
 <script>
+  import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
   import Server from './extend/Server'
   var SHA256 = require('crypto-js/sha256')
 
@@ -96,6 +99,7 @@
       }
       return {
         loading: false,
+        locale: zhCN,
         registerrule: {
           name: [
             { required: true, message: '输入用户名', trigger: 'blur' },

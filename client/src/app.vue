@@ -1,5 +1,6 @@
 <template>
-  <a-layout>
+  <a-locale-provider :locale="locale">
+    <a-layout>
     <a-layout-sider>
       <div class="logo">
         <router-link to="/">可视化表单系统</router-link>
@@ -10,13 +11,8 @@
             项目
           </router-link>
         </a-menu-item>
-        <a-menu-item key="2">
-          <router-link to="/dashboard/resources" class="dashboard-shortcuts-resources" title="resources">
-            资源
-          </router-link>
-        </a-menu-item>
         <a-menu-item key="3">
-          <router-link to="/dashboard/component" class="dashboard-shortcuts-resources" title="resources">
+          <router-link to="/components/list" class="dashboard-shortcuts-resources" title="resources">
             组件
           </router-link>
         </a-menu-item>
@@ -34,7 +30,7 @@
                  data-method="delete">注销</a>
             </div>
           </template>
-          <img class="header-user-avatar" :src="photo|defaultHeader">
+          <img class="header-user-avatar" :src="userInfo.photo | defaultHeader">
         </a-popover>
       </a-layout-header>
       <a-breadcrumb style="margin: 16px 0 16px 16px">
@@ -47,6 +43,7 @@
       </a-layout-content>
     </a-layout>
   </a-layout>
+  </a-locale-provider>
 </template>
 <style lang="stylus">
   @import "assets/style/app.styl";
@@ -67,16 +64,17 @@
 </style>
 <script type='text/ecmascript-6'>
   import BasePage from 'src/extend/BasePage'
-  import { mapState } from 'vuex'
   import Server from './extend/Server'
   import config from 'src/config'
   import locale from 'src/assets/meta/locale'
+  import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
 
   export default {
     mixins: [BasePage],
     data: function () {
       return {
         photo: '',
+        locale: zhCN,
         breadcrumbData: []
       }
     },
@@ -95,9 +93,6 @@
       })
       this.getUserInfo()
     },
-    computed: mapState({
-      packageInfo: state => state.app.packageInfo
-    }),
     watch: {
       '$route.path': {
         handler () {

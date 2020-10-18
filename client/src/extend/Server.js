@@ -1,5 +1,8 @@
+import Vue from 'vue'
 import axios from 'axios'
 const config = require('../config')
+
+const vueInstance = new Vue()
 
 const instance = axios.create({
   baseURL: config.API_PATH,
@@ -9,10 +12,10 @@ const instance = axios.create({
   needLoading: false,  // 是否需要加载效果
   ignoreCode: false  // 是否忽略服务端的错误提示
 })
-
+let hide = null
 instance.interceptors.request.use(function (config) {
   if (config.needLoading) {
-    window.EMA.fire('loading.show')
+    hide = vueInstance.$message.loading('数据加载中...', 0)
   }
   const token = window.localStorage.getItem('token')
   if (token) {
@@ -25,7 +28,7 @@ instance.interceptors.request.use(function (config) {
 
 instance.interceptors.response.use(function (response) {
   if (response.config.needLoading) {
-    window.EMA.fire('loading.hide')
+    hide()
   }
   const code = response.data.code
   if (response.data.code && response.data.code !== 1 && !response.config.ignoreCode) {

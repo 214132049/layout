@@ -6,5 +6,11 @@
 	"password": "密码",
 	"userEmail": "用户邮箱",
 	"should be an email": "格式不正确",
-	"email": "email"
+	"email": "email",
+	"should not be empty": "should not be empty",
+	"image": "image",
+	"id": "id",
+	"should be a string": "should be a string",
+	"should be an integer": "should be an integer",
+	"member": "member"
 }

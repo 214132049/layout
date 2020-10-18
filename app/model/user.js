@@ -8,6 +8,7 @@ module.exports = (app) => {
     id: { type: String },
     email: { type: String },
     status: { type: String },
+    photo: { type: String },
     createDate: { type: Date, default: Date.now },
     modifyDate: { type: Date, default: Date.now },
   })

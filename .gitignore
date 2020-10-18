@@ -13,3 +13,6 @@ npm-debug.log
 run
 .github
 /run/
+/.travis.yml
+/appveyor.yml
+/logs/

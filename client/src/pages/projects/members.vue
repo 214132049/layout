@@ -1,322 +1,127 @@
 <template>
-  <div class="">
-
-
-    <div class="flash-container flash-container-page">
-    </div>
-
-
-    <div class="container-fluid container-limited ">
-      <div class="content">
-        <div class="project-members-page prepend-top-default">
-          <div class="panel pana-default" v-if="role<=2">
-            <div class="pana-heading">
-              添加用户到项目
-            </div>
-            <div class="pana-body">
-              <p class="light">
-                下面列举的是可以访问项目的所有用户
-              </p>
-              <a-form laba-width="80px">
-
-                <a-form-item label="账号">
-                  <a-select
-                      class="searchUser"
-                      v-model="req.userId"
-                      multiple
-                      filterable
-                      remote
-                      placeholder="请输入关键词"
-                      :remote-method="querySearchAsync"
-                  >
-                    <a-option
-                        v-for="item in searchUsers"
-                        :key="item.id"
-                        :label="item.name+item.email"
-                        :value="item.id">
-                    </a-option>
-                  </a-select>
-                </a-form-item>
-                <a-form-item label="权限">
-                  <a-select v-model="req.role" placeholder="请选择">
-                    <a-option
-                        v-for="(item, key) in projectPower"
-                        :key="key"
-                        :label="item.label"
-                        :value="item.value">
-                    </a-option>
-                  </a-select>
-                </a-form-item>
-                <a-form-item>
-                  <a-button type="primary" :disabled="(!req.role||!hasAddUser)" @click="onSubmit">添加用户到项目</a-button>
-                </a-form-item>
-              </a-form>
-            </div>
-          </div>
-
-          <div class="panel pana-default">
-            <div class="pana-heading">
-              <strong>{{info.projectName}}</strong>
-              <span class="badge">{{pusers.length}}</span>
-            </div>
-            <ul class="content-list">
-              <li class="group_member js-toggle-container" :key="key" v-for="(item, key) in pusers">
-                <div class="controls">
-                  <a-dropdown @command="handleCommand" v-if="role<=2">
-                      <span class="a-dropdown-link">
-                      {{item.role|projectRole}}<i class="a-icon-caret-bottom a-icon--right"></i>
-                      </span>
-                    <a-dropdown-menu slot="dropdown">
-                      <a-dropdown-item :key="e.value" v-for="e in projectPower" trigger="click"
-                                        :command="e.value + ',' + item.userId">{{e.label}}
-                      </a-dropdown-item>
-                    </a-dropdown-menu>
-                  </a-dropdown>
-                  <template v-else>
-                    {{item.role | groupRole}}
-                  </template>
-
-                  <a v-if="(item.userId === userInfo.userId)" class="btn btn-remove"
-                     @click="remove(item,true)">离开</a>
-                  <a v-if="item.userId != userInfo.userId&&info.role<=2" class="btn btn-remove"
-                     @click="remove(item)">移除</a>
-
-                </div>
-                <span class="list-item-name">
-                  <img class="avatar s40" alt="" :src="item.photo|defaultHeader">
-                  <strong>
-                    <router-link :to="{path:'/user',query:{id:item.userId}}">{{item.name}}</router-link>
-                  </strong>
-                  <span class="label laba-success" v-if="item.userId === userInfo.userId">当前用户</span>
-                  <div class="cgray">{{item.email}}</div>
-                </span>
-              </li>
-            </ul>
-          </div>
-
-
-          <div class="panel pana-default">
-            <div class="pana-heading">
-              <strong>{{info.groupName}}</strong>
-              <span class="badge">{{gusers.length}}</span>
-            </div>
-            <ul class="content-list">
-              <li class="group_member js-toggle-container" :key="item.userId" v-for="(item, key) in gusers">
-                <span class="list-item-name">
-                  <img class="avatar s40" alt="" :src="item.photo|defaultHeader">
-                  <strong>
-                    <router-link :to="{path:'/user',query:{id:item.userId}}">{{item.name}}</router-link>
-                  </strong>
-                  <span class="label laba-success" v-if="item.userId === userInfo.userId">当前用户</span>
-                  <div class="cgray">{{item.email}}</div>
-                  <div class="cgray">{{item.role|projectRole}}</div>
-                </span>
-              </li>
-            </ul>
-          </div>
-
-        </div>
-
-      </div>
-    </div>
+  <div class="project-members-page">
+    <a-form-model laba-width="80px" v-if="userInfo.id === userId">
+      <a-form-model-item prop="member">
+        <a-select mode="multiple" :value="newMember" placeholder="添加成员" @change="addMember"
+        >
+          <a-select-option v-for="item in options" :key="item.id" :disabled="member.includes(item.id)">
+            {{ item.email }}
+          </a-select-option>
+        </a-select>
+        <a-button type="primary" @click="onSubmit">添加用户到项目</a-button>
+      </a-form-model-item>
+    </a-form-model>
+    <a-list item-layout="horizontal" :data-source="tempMember">
+      <a-list-item slot="renderItem" slot-scope="item">
+        <a-list-item-meta :description="item.email">
+          <a-avatar slot="avatar" :src="item.photo | defaultHeader"/>
+          <span slot="title">{{ item.name }} </span>
+        </a-list-item-meta>
+        <a-button slot="actions" v-if="userId === userInfo.id && item.id !== userId" type="link"
+                  @click="changeAdmin(item)">设为管理员</a-button>
+        <a-button slot="actions" v-if="item.id === userInfo.id && item.id !== userId" type="link"
+                  @click="remove(item)">离开</a-button>
+        <a-button slot="actions" v-if="userId === userInfo.id && item.id !== userId" type="link"
+                  @click="remove(item)">移除</a-button>
+        <a-tag color="pink" v-if="item.id === userId">管理员</a-tag>
+        <a-tag color="pink" v-if="item.id === userInfo.id">当前用户</a-tag>
+      </a-list-item>
+    </a-list>
   </div>
 </template>
 
-<style lang="stylus" rel="stylesheet/stylus" scoped type="text/stylus">
- .searchUser
-    width 600px
+<style lang="stylus" scoped>
 </style>
 
 <script type="text/ecmascript-6">
   import BasePage from 'src/extend/BasePage'
   import Server from 'src/extend/Server'
-  import UserItem from '../../components/User/Item'
-  import {mapState} from 'vuex'
-  import Vue from 'vue'
-  Vue.component('my-item-zh', {
-    functional: true,
-    render: function (h, ctx) {
-      return h('li', ctx.data, [ h(UserItem, {
-        props: {
-          item: ctx.props.item
-        }
-      }) ])
-    },
-    props: {
-      item: { type: Object, required: true }
-    }
-  })
 
-  export default{
-    mixins: [ BasePage ],
+  export default {
+    mixins: [BasePage],
     components: {},
-    name: 'projects_members',
+    name: 'projectsMembers',
     props: {
       id: { // 项目id
-        type: String
+        type: Number
+      },
+      userId: {
+        type: String,
+        default: ''
+      },
+      member: {
+        type: Array,
+        default: () => []
       }
     },
     data () {
       return {
-        searchUsers: [],
-        // 团队信息
-        info: {},
-        req: {
-          projectId: '',
-          role: '',
-          userId: ''
-        },
-        value: '',
-        pusers: [],
-        gusers: []
+        newMember: [],
+        options: []
       }
     },
-    mounted: function () {
-      this.req.projectId = this.id
-      this.loadData()
-    },
-    computed: mapState({
-      Metadata: state => state.Metadata,
-      projectPower: function (state) {
-        return state.Metadata.projectPower.filter((value) => {
-          return value.value != 1
-        })
-      },
-      hasAddUser: function () {
-        if (this.req.userId.length > 0) {
-          return true
-        } else {
-          return false
-        }
-      },
-      role: function () {
-        var role = 100
-        this.pusers.forEach((value) => {
-          if (value.userId == this.userInfo.userId) {
-            role = Math.min(role, value.role)
-          }
-        })
-        this.gusers.forEach((value) => {
-          if (value.userId == this.userInfo.userId) {
-            role = Math.min(role, value.role)
-          }
-        })
-        return role
-      },
-      canLeave: function () {
-        return true
+    computed: {
+      tempMember () {
+        return this.options.filter(({ id }) => this.member.includes(id))
       }
-    }),
+    },
+    mounted () {
+      this.getAllUsers()
+    },
     methods: {
-      querySearchAsync (queryString, cb) {
-        if (queryString == '') {
-          return
-        }
+      addMember (value) {
+        this.newMember = value
+      },
+      getAllUsers () {
         Server({
-          url: 'users/search',
+          url: 'api/user/find',
           method: 'get',
-          params: { key: queryString }
-        }).then((response) => {
-          var results = this.pretreatmentList(response.data.data)
-          this.searchUsers = results
-        }).catch(() => {
-
+        }).then(({ data }) => {
+          this.options = data.list
         })
       },
-      pretreatmentList (list) {
-        var result = []
-        list.forEach(function (e) {
-          result.push({
-            'value': e.name,
-            'email': e.email,
-            'name': e.name,
-            'photo': e.photo,
-            'id': e.id
-          })
-        })
-        return result
-      },
-      loadData () {
+      onSubmit () {
         Server({
-          url: 'project/projectuser',
-          method: 'get',
-          params: {
-            count: 100,
-            projectId: this.req.projectId,
-            start: 0
-          }
-        }).then((response) => {
-          this.pusers = response.data.data
-        })
-        Server({
-          url: 'project/projectinfo',
-          method: 'get',
-          params: {
-            id: this.req.projectId
-          }
-        }).then((response) => {
-          this.info = response.data.data
-          var me = this
-          Server({
-            url: 'project/groupuser',
-            method: 'get',
-            params: {
-              count: 100,
-              id: this.info.groupId,
-              start: 0
-            }
-          }).then((response) => {
-            me.gusers = response.data.data
-          })
-        })
-      },
-      handleCommand (command) {
-        var role = command.split(',')[ 0 ]
-        var userId = command.split(',')[ 1 ]
-        Server({
-          url: 'project/projectuser',
-          method: 'put',
-          data: {
-            projectId: this.req.projectId,
-            role: role,
-            userId: userId
-          }
-        }).then((response) => {
-          this.$message('修改成功')
-          this.loadData()
-        }).catch(() => {
-
-        })
-      },
-      onSubmit: function () {
-        Server({
-          url: 'project/projectuser',
+          url: 'api/project/updateMember',
           method: 'post',
-          data: this.req
-        }).then((response) => {
-          this.$message('添加成功')
-          this.loadData()
-        }).catch(() => {
-
+          data: {
+            id: this.id,
+            member: this.member.concat(this.newMember)
+          }
+        }).then(() => {
+          this.$message.success('添加成功')
+          this.newMember = []
+          this.$emit('refresh')
+        })
+      },
+      changeAdmin (item) {
+        Server({
+          url: 'api/project/changeAdmin',
+          method: 'post',
+          data: {
+            id: this.id,
+            userId: item.id
+          }
+        }).then(() => {
+          this.$message.success('设置成功')
+          this.$emit('refresh')
         })
       },
       remove (item) {
         Server({
-          url: 'project/projectuser',
-          method: 'delete',
+          url: 'api/project/updateMember',
+          method: 'post',
           data: {
-            projectId: this.req.projectId,
-            userId: item.userId
+            id: this.id,
+            member: this.member.filter(id => id !== item.id)
           }
-        }).then((response) => {
-          this.$message('删除成功')
-          if (item.userId === this.userInfo.userId) {
-            this.$router.push({ path: '/dashboard/groups' })
+        }).then(() => {
+          this.$message.success('删除成功')
+          if (item.id === this.userInfo.id) {
+            this.$router.push({ path: '/projects/list' })
           } else {
-            this.loadData()
+            this.$emit('refresh')
           }
-        }).catch(() => {
-
         })
       }
     }

@@ -3,25 +3,27 @@
     <router-link to="/projects/edit">
       <a-button type="primary">添加项目</a-button>
     </router-link>
-    <ul class="projects-list content-list" v-if="hasMyData">
-      <router-link
-        class="card"
-        v-for="item in myProjects"
-        :key="item.id"
-        :to="{path:'/projects/detail', query:{id:item.id}}"
-        tag="li">
-        <div class="img">
-          <img :src="item.image|defaultProject" class="image">
-        </div>
-        <div class="cardContent">
-          <div class="title">
-            {{item.projectName}}
+    <template v-if="loadend">
+      <ul class="projects-list content-list" v-if="hasMyData">
+        <router-link
+          class="card"
+          v-for="item in myProjects"
+          :key="item.id"
+          :to="{path:'/projects/detail', query:{id:item.id}}"
+          tag="li">
+          <div class="img">
+            <img :src="item.image | defaultProject" class="image">
           </div>
-          <div class="time">{{item.createTime | datetime}}</div>
-        </div>
-      </router-link>
-    </ul>
-    <a-empty style="margin-top: 100px;" description="暂无项目" v-else />
+          <div class="cardContent">
+            <div class="title">
+              {{item.name}}
+            </div>
+            <div class="time">{{item.createDate | datetime}}</div>
+          </div>
+        </router-link>
+      </ul>
+      <a-empty style="margin-top: 100px;" description="暂无项目" v-else />
+    </template>
   </div>
 </template>
 
@@ -95,6 +97,7 @@
     name: 'projects',
     data () {
       return {
+        loadend: false,
         myProjects: {},
       }
     },
@@ -112,12 +115,10 @@
           url: '/api/project/list',
           method: 'post',
           needLoading: true,
-          data: {
-            count: 100,
-            start: 0
-          }
+          data: {}
         }).then((response) => {
-          this.myProjects = response.data.data || []
+          this.myProjects = response.data.list || []
+          this.loadend = true
         })
       }
     }

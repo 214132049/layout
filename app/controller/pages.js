@@ -1,10 +1,8 @@
 const BaseController = require('./base')
 
 class PagesController extends BaseController {
-  * list () {
-    const {
-      ctx
-    } = this
+  async list () {
+    const { ctx } = this
     const searchRule = {
       projectId: {
         type: 'int',
@@ -18,7 +16,7 @@ class PagesController extends BaseController {
       }
     }
     ctx.validate(searchRule)
-    ctx.body = yield ctx.service.pages.list(ctx.request.body)
+    ctx.body = await ctx.service.pages.list(ctx.request.body)
   }
 
   * detail () {

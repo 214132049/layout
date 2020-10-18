@@ -1,6 +1,6 @@
 <template>
   <a-upload action="#" class="image-uploader" list-type="picture-card" name="image" :show-upload-list="false" :before-upload="beforeUpload" @change="handleChange">
-    <img class="image" :src="imageUrl | defaultProject" alt="image" />
+    <img class="image" :src="imageUrl" alt="image" />
   </a-upload>
 </template>
 
@@ -15,7 +15,15 @@
     },
     data () {
       return {
-        imageUrl: this.url
+        imageUrl: ''
+      }
+    },
+    watch: {
+      url: {
+        handler (val) {
+          this.imageUrl = val
+        },
+        immediate: true
       }
     },
     methods: {

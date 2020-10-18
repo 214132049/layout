@@ -6,6 +6,10 @@ class UserService extends Service {
     if (params.email) {
       return ctx.model.User.findOne({
         email: params.email.trim()
+      }, {
+        _id: 0,
+        __v: 0,
+        password: 0
       })
     }
     return ctx.model.User.find()
@@ -14,9 +18,9 @@ class UserService extends Service {
   getAllUser () {
     const { ctx } = this
     return ctx.model.User.find({}, {
-      email: 1,
-      id: 1,
-      _id: 0
+      _id: 0,
+      __v: 0,
+      password: 0
     })
   }
 
@@ -38,12 +42,15 @@ class UserService extends Service {
     })
   }
 
-  updatePwd (params) {
+  update (params) {
     const { ctx } = this
     return ctx.model.User.findOneAndUpdate({
       email: params.email.trim()
     }, {
-      password: params.password.trim()
+      $set: {
+        ...params.body,
+        modifyDate: new Date()
+      }
     })
   }
 }

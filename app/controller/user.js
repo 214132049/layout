@@ -50,19 +50,18 @@ class UserController extends BaseController {
     const { ctx } = this
     const res = await this.findUser(ctx.state.user)
     this.success({
-      data: {
-        id: res.id,
-        email: res.email,
-        name: res.name || ''
-      }
+      data: res
     })
   }
 
-  async updatePassword () {
+  async update () {
     const { ctx } = this
-    await ctx.service.user.updatePwd({
-      user: ctx.state.user,
-      password: this.body.password
+    const body = { ...this.body }
+    const email = this.body.email || this.user.email
+    delete body.email
+    await ctx.service.user.update({
+      email,
+      body
     })
     this.success()
   }
@@ -76,7 +75,7 @@ class UserController extends BaseController {
     const { service } = this
     const list = await service.user.getAllUser()
     this.success({
-      list
+      list: list || []
     })
   }
 

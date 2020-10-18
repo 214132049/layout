@@ -1,112 +1,53 @@
 <template>
-  <div>
-    <div class="layout-nav">
-      <div class="container-fluid">
-        <div class="nav-control scrolling-tabs-container">
-          <a-tabs class="nav-links" v-model="activeName" @tab-click="tabHandleClick">
-            <a-tab-pane label="基本信息" name="base"></a-tab-pane>
-            <!-- <a-tab-pane label="access" name="secretq" v-if='userInfo && !!userInfo.security'></a-tab-pane> -->
-            <!-- <a-tab-pane label="消息订阅" name="active"></a-tab-pane>
-            <a-tab-pane label="密码" name="password"></a-tab-pane> -->
-          </a-tabs>
-        </div>
-      </div>
-    </div>
-    <div class="content-wrapper page-with-layout-nav">
-      <div class="container-fluid container-limited ">
-        <div class="content">
-          <!--基本信息-->
-          <div v-show="activeName=='base'" class="row prepend-top-default">
-            <div class="col-lg-3 profile-settings-sidebar">
-              <h4 class="prepend-top-0">
-                用户信息
-              </h4>
-            </div>
-            <div class="col-lg-9">
-              <a-form ref="baseForm" :model="form" :rules="rules" laba-width="80px">
-                <a-form-item label="头 像">
-                  <UploadImage @ended="uploadEnd"/>
-                </a-form-item>
-                <a-form-item label="邮 箱" prop="email">
-                  <a-input placeholder="邮箱" :disabled="!!userInfo.email" v-model="form.email">
-                  </a-input>
-                </a-form-item>
-                <a-form-item label="姓 名" prop="name">
-                  <a-input placeholder="姓名" v-model="form.name">
-                  </a-input>
-                </a-form-item>
-                <a-form-item label="手 机" prop="telephone">
-                  <a-input placeholder="手 机" v-model="form.telephone">
-                  </a-input>
-                </a-form-item>
-                <a-form-item label="token" prop="security" :rules="[
-                          { message: '输入1-35位token', trigger: 'blur'},
-                          { min: 1, max: 64, message: '长度在 1 到 64 个字符', trigger: 'blur' }
-                          ]">
-                  <a-input placeholder="token" :maxlength="64" v-model="form.security" disabled>
-                    <a-button slot="append" @click="makeSecurity">随机生成</a-button>
-                  </a-input>
-                  <div class="desc">
-                    <div>创建组件、命令行登录等场景需使用token</div>
-                  </div>
-                </a-form-item>
-                <a-form-item>
-                  <a-button type="primary" @click="baseSubmit">修改</a-button>
-                </a-form-item>
-              </a-form>
-            </div>
-          </div>
-
-          <!--密码修改-->
-          <div v-show="activeName=='password'" class="row prepend-top-default">
-            <div class="col-lg-3 profile-settings-sidebar">
-              <h4 class="prepend-top-0">
-                密码修改
-              </h4>
-            </div>
-            <div class="col-lg-9">
-              <a-form ref="passwordForm" :model="passform" :rules="rules" laba-width="100px">
-                <a-form-item label="老密码" prop="password">
-                  <a-input type="password" placeholder="老密码" v-model="passform.password">
-                  </a-input>
-                </a-form-item>
-                <a-form-item label="新密码" prop="targetPassword">
-                  <a-input type="password" placeholder="新密码" v-model="passform.targetPassword">
-                  </a-input>
-                </a-form-item>
-                <a-form-item label="确认密码" prop="targetPassword2">
-                  <a-input type="password" placeholder="确认密码" v-model="passform.targetPassword2">
-                  </a-input>
-                </a-form-item>
-                <a-form-item>
-                  <a-button type="primary" @click="passSubmit">确认修改</a-button>
-                </a-form-item>
-
-              </a-form>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
+  <a-tabs default-active-key="1">
+    <a-tab-pane key="1" tab="基本信息">
+      <a-form-model ref="baseForm" :model="form" :rules="rules" laba-width="80px">
+        <a-form-model-item label="头 像">
+          <UploadImage @ended="uploadEnd" :url="form.photo | defaultHeader" />
+        </a-form-model-item>
+        <a-form-model-item label="邮 箱" prop="email">
+          <a-input placeholder="邮箱" :disabled="!!form.email" v-model="form.email">
+          </a-input>
+        </a-form-model-item>
+        <a-form-model-item label="姓 名" prop="name">
+          <a-input placeholder="姓名" v-model="form.name">
+          </a-input>
+        </a-form-model-item>
+<!--        <a-form-model-item label="token" prop="security" :rules="[-->
+<!--          { message: '输入1-35位token', trigger: 'blur'},-->
+<!--          { min: 1, max: 64, message: '长度在 1 到 64 个字符', trigger: 'blur' }-->
+<!--          ]">-->
+<!--          <a-input placeholder="token" :maxlength="64" v-model="form.security" disabled>-->
+<!--            <a-button slot="append" @click="makeSecurity">随机生成</a-button>-->
+<!--          </a-input>-->
+<!--          <div class="desc">-->
+<!--            <div>创建组件等场景需使用token</div>-->
+<!--          </div>-->
+<!--        </a-form-model-item>-->
+        <a-form-model-item>
+          <a-button type="primary" @click="baseSubmit">修改</a-button>
+        </a-form-model-item>
+      </a-form-model>
+    </a-tab-pane>
+    <a-tab-pane key="2" tab="密码修改">
+      <a-form-model ref="passwordForm" :model="passform" :rules="rules" laba-width="100px">
+        <a-form-model-item label="新密码" prop="targetPassword">
+          <a-input type="password" placeholder="新密码" v-model="passform.targetPassword">
+          </a-input>
+        </a-form-model-item>
+        <a-form-model-item label="确认密码" prop="targetPassword2">
+          <a-input type="password" placeholder="确认密码" v-model="passform.targetPassword2">
+          </a-input>
+        </a-form-model-item>
+        <a-form-model-item>
+          <a-button type="primary" @click="passSubmit">确认修改</a-button>
+        </a-form-model-item>
+      </a-form-model>
+    </a-tab-pane>
+  </a-tabs>
 </template>
 
-<style lang="stylus" rel="stylesheet/stylus" scoped type="text/stylus">
-  .headIcon {
-    width: 150px;
-    height: 150px;
-    // border-radius: 50%;
-    border: 1px solid #eee;
-    padding: 2px;
-    overflow: hidden;
-    margin: 20px;
-
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
+<style lang="stylus" scoped>
   .desc{
     color: #E6A23C
   }
@@ -116,15 +57,16 @@
   import BasePage from 'src/extend/BasePage'
   import UploadImage from 'src/components/UploadImage'
   import Server from 'src/extend/Server'
-  var SHA256 = require('crypto-js/sha256')
-  var MD5 = require('crypto-js/md5')
+
+  const SHA256 = require('crypto-js/sha256')
+  const MD5 = require('crypto-js/md5')
 
   export default {
     mixins: [BasePage],
-    components: {UploadImage},
+    components: { UploadImage },
     name: 'profile',
     data () {
-      var targetPassword2 = (rule, value, callback) => {
+      const targetPassword2 = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请再次输入密码'))
         } else if (value !== this.passform.targetPassword) {
@@ -133,77 +75,60 @@
           callback()
         }
       }
-      const validateCheck = (rule, value, callback) => {
-        if (!/^([a-zA-Z0-9]+[_|_|.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|_|.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test(this.form.email)) {
-          callback(new Error('请输入正确的邮箱地址'))
-        } else {
-          callback()
-        }
-      }
+
       return {
-        activeName: 'base',
         loading: false,
         rules: {
           name: [
             { required: true, message: '请输入姓名', trigger: 'blur' },
             { min: 2, max: 15, message: '长度在 2 到 15 个字符', trigger: 'blur' }
           ],
-          account: [
-            { required: true, message: '请输入账户名称', trigger: 'blur' },
-            { min: 5, max: 20, message: '5-20位大小写字母和._-组成的名称', trigger: 'blur' }
-          ],
           email: [
             { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-            { validator: validateCheck }
-          ],
-          telephone: [
-            { min: 11, max: 11, message: '11位手机号', trigger: 'blur' }
-          ],
-          password: [
-            { required: true, message: '输入密码', trigger: 'blur' },
-            { min: 6, max: 20, message: '6-20位大小写字母和._-组成的名称', trigger: 'blur' }
+            { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change' }
           ],
           targetPassword: [
             { required: true, message: '输入密码', trigger: 'blur' },
             { min: 6, max: 20, message: '6-20位大小写字母和._-组成的名称', trigger: 'blur' }
           ],
           targetPassword2: [
+            { required: true, message: '再次输入密码', trigger: 'blur' },
             { validator: targetPassword2, trigger: 'blur' }
           ]
         },
         passform: {
-          password: '',
           targetPassword: '',
           targetPassword2: ''
         },
-        // 一个典型列表数据格式
         form: {
           email: '',
           photo: '',
           name: '',
-          telephone: '',
-          security: ''
+          // security: ''
         }
       }
     },
+    watch: {
+      userInfo: {
+        handler () {
+          this.form.name = this.userInfo.name
+          this.form.email = this.userInfo.email
+          this.form.photo = this.userInfo.photo
+        },
+        immediate: true
+      }
+    },
     mounted: function () {
-      this.form.name = this.userInfo.name
-      this.form.telephone = this.userInfo.telephone
-      this.form.email = this.userInfo.email
-      this.form.photo = this.userInfo.photo || `https://s.gravatar.com/avatar/${MD5(this.userInfo.email)}`
       if (this.userInfo.security) {
         this.form.security = this.userInfo.security
-      } else {
-        this.makeSecurity()
-        this.baseSubmit()
       }
     },
     methods: {
       makeSecurity () {
-        var len = 64
-        var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678'
-        var maxPos = $chars.length
-        var pwd = ''
+        const len = 64
+        const $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678'
+        const maxPos = $chars.length
+        let pwd = ''
         for (var i = 0; i < len; i++) {
           pwd += $chars.charAt(Math.floor(Math.random() * maxPos))
         }
@@ -212,27 +137,18 @@
       uploadEnd: function (url) {
         this.form.photo = url
       },
-      handleRemove (file, fileList) {
-        console.log(file, fileList)
-      },
-      handlePreview (file) {
-        console.log(file)
-      },
-      tabHandleClick (tab) {
-        this.activeName = tab.name
-      },
       baseSubmit: function () {
         this.$refs.baseForm.validate((valid) => {
           if (valid) {
             Server({
-              url: 'users/edit',
+              url: 'api/user/update',
               data: this.form,
-              method: 'put'
+              method: 'post'
             }).then((response) => {
-              this.$message('修改成功')
+              this.$message.success('修改成功')
               this.$store.dispatch('initUserInfo', this.form)
             }).catch((e) => {
-              this.$message('修改失败')
+              this.$message.error('修改失败')
             })
           } else {
             return false
@@ -243,17 +159,17 @@
         this.$refs.passwordForm.validate((valid) => {
           if (valid) {
             Server({
-              url: 'users/updatePassword',
+              url: 'api/user/update',
               data: {
-                password: SHA256(this.passform.password) + '',
-                targetPassword: SHA256(this.passform.targetPassword) + ''
+                password: SHA256(this.passform.targetPassword) + ''
               },
-              method: 'put'
+              method: 'post'
             }).then((response) => {
-              this.$message('修改成功')
+              this.$message.success('修改成功')
               this.$refs.passwordForm.resetFields()
+              this.ema.fire('logout')
             }).catch((e) => {
-              this.$message('修改失败')
+              this.$message.error('修改失败')
             })
           } else {
             return false
