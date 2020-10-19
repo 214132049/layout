@@ -118,7 +118,7 @@
               }
             })
             this.$message.success('提交成功')
-            this.$router.back()
+            this.$router.push('/projects/list')
           } finally {
             this.loading = false
           }

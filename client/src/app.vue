@@ -1,25 +1,10 @@
 <template>
   <a-config-provider :locale="locale">
     <a-layout>
-    <a-layout-sider>
-      <div class="logo">
-        <router-link to="/">可视化表单系统</router-link>
-      </div>
-      <a-menu theme="dark" mode="inline">
-        <a-menu-item key="1">
-          <router-link to="/projects/list" title="Projects" class="dashboard-shortcuts-projects">
-            项目
-          </router-link>
-        </a-menu-item>
-        <a-menu-item key="3">
-          <router-link to="/components/list" class="dashboard-shortcuts-resources" title="resources">
-            组件
-          </router-link>
-        </a-menu-item>
-      </a-menu>
-    </a-layout-sider>
-    <a-layout>
-      <a-layout-header style="background: #fff; padding: 0 10px; text-align: right;">
+      <a-layout-header class="header">
+        <div class="logo">
+          <router-link to="/">可视化表单系统</router-link>
+        </div>
         <a-popover placement="bottom">
           <template slot="content">
             <div>
@@ -30,7 +15,7 @@
                  data-method="delete">注销</a>
             </div>
           </template>
-          <img class="header-user-avatar" :src="userInfo.photo | defaultHeader">
+          <img class="header-avatar" :src="userInfo.photo | defaultHeader">
         </a-popover>
       </a-layout-header>
       <a-breadcrumb style="margin: 16px 0 16px 16px">
@@ -42,7 +27,6 @@
         <router-view></router-view>
       </a-layout-content>
     </a-layout>
-  </a-layout>
   </a-config-provider>
 </template>
 <style lang="stylus">
@@ -50,17 +34,19 @@
   .ant-layout
     height: 100%;
     overflow hidden
-  .logo
-    font-size: 16px;
-    padding 20px 24px
-    a
-      color #ffffff
-  .header-user-avatar {
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    margin-right: 16px;
-  }
+    > .header
+      display flex
+      background: #fff
+      padding: 0 16px
+      .logo
+        font-size: 16px
+        padding 20px 24px
+        a
+          color #ffffff
+      &-avatar
+        border-radius: 50%
+        width: 30px
+        height: 30px
 </style>
 <script type='text/ecmascript-6'>
   import BasePage from 'src/extend/BasePage'

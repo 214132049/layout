@@ -45,20 +45,11 @@
     },
     data () {
       return {
-        visible: false,
-        projectKey: '',
-        projectName: '',
         projectId: this.$route.query.id,
-        categoryType: {
-          1: '活动类'
-        },
         pagesList: []
       }
     },
     mounted: function () {
-      this.projectId = this.$route.query.id - 0
-      this.projectKey = this.$route.query.key
-      this.projectName = window.decodeURIComponent(this.$route.query.name || '')
       this.getPagesList()
     },
     computed: {

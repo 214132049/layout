@@ -1,13 +1,22 @@
 <template>
-  <div class="content-wrapper">
-    <h1 class="blank-state blank-state-welcome welcome">
+  <div class="wrapper">
+    <h1 class="welcome">
       欢迎使用可视化表单系统
     </h1>
+    <p>先从创建项目开始吧！</p>
+    <div>
+      <router-link to="/projects/edit">
+        <a-button>创建项目</a-button>
+      </router-link>
+      <router-link to="/projects/list">
+        <a-button>查看已有项目</a-button>
+      </router-link>
+    </div>
   </div>
 </template>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped type="text/stylus">
-  .content-wrapper {
+  .wrapper {
     text-align center
     .welcome {
       padding 100px 0

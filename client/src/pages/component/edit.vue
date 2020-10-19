@@ -4,19 +4,10 @@
       <a-form-model-item label="名称" prop="name">
         <a-input placeholder="名称" :maxlength="35" v-model="form.name" />
       </a-form-model-item>
-      <a-form-model-item label="描述" prop="desc">
-        <a-input type="textarea" disabled :maxlength="500" v-model="form.desc" />
-      </a-form-model-item>
       <a-form-model-item label="上传组件">
         <a-upload accept=".zip" action="" :file-list="fileList" :remove="handleRemove" :before-upload="beforeUpload">
           <a-button><a-icon type="upload" />开始上传</a-button>
         </a-upload>
-      </a-form-model-item>
-      <a-form-model-item label="是否公开">
-        <a-radio-group v-model="form.share">
-          <a-radio :value="0">否</a-radio>
-          <a-radio :value="1">是</a-radio>
-        </a-radio-group>
       </a-form-model-item>
       <a-form-model-item :wrapper-col="{ span: 14, offset: 3 }">
         <a-button type="primary" :loading="loading" @click="onSubmit">提交</a-button>
@@ -53,10 +44,6 @@
         form: {
           id: +this.$route.query.id,
           name: '',
-          content: '',
-          share: 0,
-          desc: '',
-          changelog: '',
           version: '',
           npmName: ''
         },
@@ -73,6 +60,7 @@
       if (this.id) {
         this.getTypeList()
       }
+      this.form.projectId = +this.$route.query.projectId
     },
     methods: {
       // 获取分类列表
@@ -94,18 +82,13 @@
         })
       },
       onSubmit: function () {
-        var data = {}
-        data.id = this.form.id
-        data.name = this.form.name
-        data.desc = this.form.desc
-        data.share = this.form.share
         this.$refs.form.validate((valid) => {
           if (valid) {
             this.loading = true
             Server({
               url: 'api/component/save',
               method: 'post',
-              data: data
+              data: this.form
             }).then(() => {
               this.loading = false
               this.$message.success('提交成功')

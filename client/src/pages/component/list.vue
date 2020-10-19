@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link to="/component/edit">
+    <router-link :to="{ path: '/component/edit', query: { projectId } }">
       <a-button type="primary" style="margin-bottom: 20px;">添加组件</a-button>
     </router-link>
     <template v-if="loadend">
@@ -30,12 +30,17 @@
   import Server from 'src/extend/Server'
   export default {
     mixins: [BasePage],
-    components: {},
     name: 'ComponentList',
+    props: {
+      id: { // 项目id
+        type: Number
+      }
+    },
     data () {
       return {
         comLists: [],
-        loadend: false
+        loadend: false,
+        projectId: this.$route.query.id
       }
     },
     computed: {
@@ -69,9 +74,9 @@
         Server({
           url: 'api/component/getList',
           method: 'post',
-          needLoading: false,
+          needLoading: true,
           data: {
-            onlyMine: 1,
+            projectId: this.projectId
           }
         }).then(({ data }) => {
           this.comLists = data.list || []

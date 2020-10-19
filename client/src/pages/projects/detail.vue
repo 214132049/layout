@@ -2,7 +2,10 @@
   <div v-if="loadend">
     <a-tabs v-if="project.id" v-model="activeName" @tab-click="tabHandleClick">
       <a-tab-pane tab="页面" key="doc">
-        <c-doc :id="project.id" :userId="project.userId" />
+        <c-page :id="project.id" :userId="project.userId" />
+      </a-tab-pane>
+      <a-tab-pane tab="组件" key="doc">
+        <c-com :id="project.id" :userId="project.userId" />
       </a-tab-pane>
       <a-tab-pane tab="成员" key="member">
         <member :id="project.id" :member="project.member" :userId="project.userId" @refresh="loadProject"/>
@@ -33,11 +36,12 @@
   import Server from 'src/extend/Server'
   import Member from './members.vue'
   import CNew from './edit.vue'
-  import CDoc from './pages.vue'
+  import CPage from '../pages/list'
+  import CCom from '../component/list'
 
   export default {
     mixins: [BasePage],
-    components: { Member, CNew, CDoc },
+    components: { Member, CNew, CPage, CCom },
     name: 'project',
     data: function () {
       return {
