@@ -41,7 +41,7 @@
     },
     computed: {
       hasData: function () {
-        return Object.keys(this.myProjects).length > 0
+        return this.myProjects.length > 0
       }
     },
     methods: {
