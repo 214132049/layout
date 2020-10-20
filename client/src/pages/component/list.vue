@@ -72,7 +72,7 @@
       },
       loadData () {
         Server({
-          url: 'api/component/getList',
+          url: 'api/component/list',
           method: 'post',
           needLoading: true,
           data: {

@@ -3,9 +3,9 @@ module.exports = (app) => {
   const Schema = mongoose.Schema
 
   const ComponentCompiledSchema = new Schema({
-    componentId: { type: String },
-    componentResourcePath: { type: String },
-    componentNpmVersion: { type: String },
+    id: { type: String },
+    path: { type: String },
+    npmVersion: { type: String },
     createDate: { type: Date, default: Date.now },
     modifyDate: { type: Date, default: Date.now }
   })

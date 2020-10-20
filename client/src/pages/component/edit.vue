@@ -44,8 +44,8 @@
         form: {
           id: +this.$route.query.id,
           name: '',
-          version: '',
-          npmName: ''
+          npmVersion: '',
+          npmName: '',
         },
         fileList: [],
         rules: {
@@ -66,7 +66,7 @@
       // 获取分类列表
       getTypeList: function () {
         Server({
-          url: 'api/component/info',
+          url: 'api/component/detail',
           method: 'get',
           params: {
             id: this.id
@@ -85,10 +85,19 @@
         this.$refs.form.validate((valid) => {
           if (valid) {
             this.loading = true
+            const form = { ...this.form }
+            const formData = new FormData()
+            for (const prop in form) {
+              formData.append(prop, form[prop])
+            }
+            formData.append('file', this.fileList[0])
             Server({
               url: 'api/component/save',
               method: 'post',
-              data: this.form
+              headers: {
+                'content-type': 'Multipart/form-data'
+              },
+              data: formData
             }).then(() => {
               this.loading = false
               this.$message.success('提交成功')
