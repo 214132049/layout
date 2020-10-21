@@ -42,6 +42,11 @@ module.exports = {
       entry: './src/updatePassword.js',
       filename: 'updatePassword.html',
       template: './updatePassword.ejs'
+    },
+    formEdit: {
+      entry: './src/formEdit.js',
+      filename: 'formEdit.html',
+      template: './formEdit.ejs'
     }
   },
   devServer: {
