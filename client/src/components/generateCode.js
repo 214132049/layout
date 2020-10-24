@@ -12,14 +12,6 @@ function findRemoteFunc (list, funcList, tokenFuncList, blankList) {
             label: list[i].name
           })
         }
-      } else if (list[i].type == 'imgupload') {
-        if (list[i].options.tokenFunc) {
-          tokenFuncList.push({
-            func: list[i].options.tokenFunc,
-            label: list[i].name,
-            model: list[i].model
-          })
-        }
       } else {
         if (list[i].options.remote && list[i].options.remoteFunc) {
           funcList.push({
@@ -82,7 +74,7 @@ export default function (data, type = 'vue') {
     <fm-generate-form :data="jsonData" :remote="remoteFuncs" :value="editData" ref="generateForm">
       ${blankTemplate}
     </fm-generate-form>
-    <el-button type="primary" @click="handleSubmit">提交</el-button>
+    <a-button type="primary" @click="handleSubmit">提交</a-button>
   </div>
 </template>
 
@@ -122,7 +114,7 @@ export default function (data, type = 'vue') {
       <fm-generate-form :data="jsonData" :remote="remoteFuncs" :value="editData" ref="generateForm">
         ${blankTemplate}
       </fm-generate-form>
-      <el-button type="primary" @click="handleSubmit">提交</el-button>
+      <a-button type="primary" @click="handleSubmit">提交</a-button>
     </div>
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>

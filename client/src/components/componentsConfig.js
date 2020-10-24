@@ -1,6 +1,7 @@
 export const basicComponents = [
   {
     type: 'input',
+    name: '单行文本',
     icon: 'icon-input',
     options: {
       width: '100%',
@@ -14,6 +15,7 @@ export const basicComponents = [
   },
   {
     type: 'textarea',
+    name: '多行文本',
     icon: 'icon-diy-com-textarea',
     options: {
       width: '100%',
@@ -26,6 +28,7 @@ export const basicComponents = [
   },
   {
     type: 'number',
+    name: '计数器',
     icon: 'icon-number',
     options: {
       width: '',
@@ -40,6 +43,7 @@ export const basicComponents = [
   },
   {
     type: 'radio',
+    name: '单选框',
     icon: 'icon-radio-active',
     options: {
       inline: false,
@@ -73,6 +77,7 @@ export const basicComponents = [
   },
   {
     type: 'checkbox',
+    name: '多选框',
     icon: 'icon-check-box',
     options: {
       inline: false,
@@ -103,6 +108,7 @@ export const basicComponents = [
   },
   {
     type: 'time',
+    name: '时间选择器',
     icon: 'icon-time',
     options: {
       defaultValue: '21:19:56',
@@ -122,6 +128,7 @@ export const basicComponents = [
   },
   {
     type: 'date',
+    name: '日期选择器',
     icon: 'icon-date',
     options: {
       defaultValue: '',
@@ -141,6 +148,7 @@ export const basicComponents = [
   },
   {
     type: 'rate',
+    name: '评分',
     icon: 'icon-pingfen1',
     options: {
       defaultValue: null,
@@ -152,6 +160,7 @@ export const basicComponents = [
   },
   {
     type: 'color',
+    name: '颜色选择器',
     icon: 'icon-color',
     options: {
       defaultValue: '',
@@ -162,6 +171,7 @@ export const basicComponents = [
   },
   {
     type: 'select',
+    name: '下拉选择框',
     icon: 'icon-select',
     options: {
       defaultValue: '',
@@ -194,6 +204,7 @@ export const basicComponents = [
   },
   {
     type: 'switch',
+    name: '开关',
     icon: 'icon-switch',
     options: {
       defaultValue: false,
@@ -203,6 +214,7 @@ export const basicComponents = [
   },
   {
     type: 'slider',
+    name: '滑块',
     icon: 'icon-slider',
     options: {
       defaultValue: 0,
@@ -218,6 +230,7 @@ export const basicComponents = [
   },
   {
     type: 'text',
+    name: '文字',
     icon: 'icon-wenzishezhi-',
     options: {
       defaultValue: 'This is a text',
@@ -229,36 +242,15 @@ export const basicComponents = [
 export const advanceComponents = [
   {
     type: 'blank',
+    name: '自定义区域',
     icon: 'icon-zidingyishuju',
     options: {
       defaultType: 'String'
     }
   },
   {
-    type: 'imgupload',
-    icon: 'icon-tupian',
-    options: {
-      defaultValue: [],
-      size: {
-        width: 100,
-        height: 100,
-      },
-      width: '',
-      tokenFunc: 'funcGetToken',
-      token: '',
-      domain: 'http://pfp81ptt6.bkt.clouddn.com/',
-      disabled: false,
-      length: 8,
-      multiple: false,
-      isQiniu: false,
-      isDelete: false,
-      min: 0,
-      isEdit: false,
-      action: 'https://jsonplaceholder.typicode.com/photos/'
-    }
-  },
-  {
     type: 'editor',
+    name: '编辑器',
     icon: 'icon-fuwenbenkuang',
     options: {
       defaultValue: '',
@@ -267,6 +259,7 @@ export const advanceComponents = [
   },
   {
     type: 'cascader',
+    name: '级联选择器',
     icon: 'icon-jilianxuanze',
     options: {
       defaultValue: [],
@@ -289,6 +282,7 @@ export const advanceComponents = [
 export const layoutComponents = [
   {
     type: 'grid',
+    name: '栅格布局',
     icon: 'icon-grid-',
     columns: [
       {

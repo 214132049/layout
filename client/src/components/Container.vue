@@ -1,12 +1,12 @@
 <template>
   <span class="fm-style">
-    <el-container class="fm2-container">
-      <el-main class="fm2-main">
-        <el-container>
-          <el-aside width="250px">
+    <a-layout class="fm2-container">
+      <a-layout-content class="fm2-main">
+        <a-layout>
+          <a-layout-sider width="250px">
             <div class="components-list">
               <template v-if="basicFields.length">
-                <div class="widget-cate">{{$t('fm.components.basic.title')}}</div>
+                <div class="widget-cate">基础字段</div>
                 <draggable tag="ul" :list="basicComponents"
                   v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}"
                   @end="handleMoveEnd"
@@ -24,7 +24,7 @@
               </template>
 
               <template v-if="advanceFields.length">
-                <div class="widget-cate">{{$t('fm.components.advance.title')}}</div>
+                <div class="widget-cate">高级字段</div>
                 <draggable tag="ul" :list="advanceComponents"
                   v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}"
                   @end="handleMoveEnd"
@@ -43,7 +43,7 @@
 
 
               <template v-if="layoutFields.length">
-                <div class="widget-cate">{{$t('fm.components.layout.title')}}</div>
+                <div class="widget-cate">布局字段</div>
                 <draggable tag="ul" :list="layoutComponents"
                   v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}"
                   @end="handleMoveEnd"
@@ -62,36 +62,36 @@
 
             </div>
 
-          </el-aside>
-          <el-container class="center-container" direction="vertical">
-            <el-header class="btn-bar" style="height: 45px;">
+          </a-layout-sider>
+          <a-layout class="center-container" direction="vertical">
+            <a-layout-header class="btn-bar" style="height: 45px;">
               <slot name="action">
               </slot>
-              <el-button v-if="upload" type="text" size="medium" icon="el-icon-upload2" @click="handleUpload">{{$t('fm.actions.import')}}</el-button>
-              <el-button v-if="clearable" type="text" size="medium" icon="el-icon-delete" @click="handleClear">{{$t('fm.actions.clear')}}</el-button>
-              <el-button v-if="preview" type="text" size="medium" icon="el-icon-view" @click="handlePreview">{{$t('fm.actions.preview')}}</el-button>
-              <el-button v-if="generateJson" type="text" size="medium" icon="el-icon-tickets" @click="handleGenerateJson">{{$t('fm.actions.json')}}</el-button>
-              <el-button v-if="generateCode" type="text" size="medium" icon="el-icon-document" @click="handleGenerateCode">{{$t('fm.actions.code')}}</el-button>
-            </el-header>
-            <el-main :class="{'widget-empty': widgetForm.list.length == 0}">
+              <a-button v-if="upload" type="text" size="medium" icon="a-icon-upload2" @click="handleUpload">导入JSON</a-button>
+              <a-button v-if="clearable" type="text" size="medium" icon="a-icon-delete" @click="handleClear">清空</a-button>
+              <a-button v-if="preview" type="text" size="medium" icon="a-icon-view" @click="handlePreview">预览</a-button>
+              <a-button v-if="generateJson" type="text" size="medium" icon="a-icon-tickets" @click="handleGenerateJson">生成JSON</a-button>
+              <a-button v-if="generateCode" type="text" size="medium" icon="a-icon-document" @click="handleGenerateCode">生成代码</a-button>
+            </a-layout-header>
+            <a-layout-content :class="{'widget-empty': widgetForm.list.length == 0}">
 
               <widget-form v-if="!resetJson"  ref="widgetForm" :data="widgetForm" :select.sync="widgetFormSelect"></widget-form>
-            </el-main>
-          </el-container>
+            </a-layout-content>
+          </a-layout>
 
-          <el-aside class="widget-config-container">
-            <el-container>
-              <el-header height="45px">
-                <div class="config-tab" :class="{active: configTab=='widget'}" @click="handleConfigSelect('widget')">{{$t('fm.config.widget.title')}}</div>
-                <div class="config-tab" :class="{active: configTab=='form'}" @click="handleConfigSelect('form')">{{$t('fm.config.form.title')}}</div>
-              </el-header>
-              <el-main class="config-content">
+          <a-layout-sider class="widget-config-container">
+            <a-layout>
+              <a-layout-header height="45px">
+                <div class="config-tab" :class="{active: configTab=='widget'}" @click="handleConfigSelect('widget')">字段属性</div>
+                <div class="config-tab" :class="{active: configTab=='form'}" @click="handleConfigSelect('form')">表单属性</div>
+              </a-layout-header>
+              <a-layout-content class="config-content">
                 <widget-config v-show="configTab=='widget'" :data="widgetFormSelect"></widget-config>
                 <form-config v-show="configTab=='form'" :data="widgetForm.config"></form-config>
-              </el-main>
-            </el-container>
+              </a-layout-content>
+            </a-layout>
 
-          </el-aside>
+          </a-layout-sider>
 
           <cus-dialog
             :visible="previewVisible"
@@ -103,14 +103,14 @@
             <generate-form insite="true" @on-change="handleDataChange" v-if="previewVisible" :data="widgetForm" :value="widgetModels" :remote="remoteFuncs" ref="generateForm">
 
               <template v-slot:blank="scope">
-                Width <el-input v-model="scope.model.blank.width" style="width: 100px"></el-input>
-                Height <el-input v-model="scope.model.blank.height" style="width: 100px"></el-input>
+                Width <a-input v-model="scope.model.blank.width" style="width: 100px"></a-input>
+                Height <a-input v-model="scope.model.blank.height" style="width: 100px"></a-input>
               </template>
             </generate-form>
 
             <template slot="action">
-              <el-button type="primary" @click="handleTest">{{$t('fm.actions.getData')}}</el-button>
-              <el-button @click="handleReset">{{$t('fm.actions.reset')}}</el-button>
+              <a-button type="primary" @click="handleTest">获取数据</a-button>
+              <a-button @click="handleReset">重置</a-button>
             </template>
           </cus-dialog>
 
@@ -122,7 +122,7 @@
             width="800px"
             form
           >
-            <el-alert type="info" :title="$t('fm.description.uploadJsonInfo')"></el-alert>
+            <a-alert type="info" title="JSON格式如下，直接复制生成的json覆盖此处代码点击确定即可"></a-alert>
             <div id="uploadeditor" style="height: 400px;width: 100%;">{{jsonEg}}</div>
           </cus-dialog>
 
@@ -137,7 +137,7 @@
             <div id="jsoneditor" style="height: 400px;width: 100%;">{{jsonTemplate}}</div>
 
             <template slot="action">
-              <el-button type="primary" class="json-btn" :data-clipboard-text="jsonCopyValue">{{$t('fm.actions.copyData')}}</el-button>
+              <a-button type="primary" class="json-btn" :data-clipboard-text="jsonCopyValue">复制数据</a-button>
             </template>
           </cus-dialog>
 
@@ -150,19 +150,19 @@
             :action="false"
           >
             <!-- <div id="codeeditor" style="height: 500px; width: 100%;">{{htmlTemplate}}</div> -->
-            <el-tabs type="border-card" style="box-shadow: none;" v-model="codeActiveName">
-              <el-tab-pane label="Vue Component" name="vue">
+            <a-tabs type="border-card" style="box-shadow: none;" v-model="codeActiveName">
+              <a-tab-pane label="Vue Component" name="vue">
                 <div id="vuecodeeditor" style="height: 500px; width: 100%;">{{vueTemplate}}</div>
-              </el-tab-pane>
-              <el-tab-pane label="HTML" name="html">
+              </a-tab-pane>
+              <a-tab-pane label="HTML" name="html">
                 <div id="codeeditor" style="height: 500px; width: 100%;">{{htmlTemplate}}</div>
-              </el-tab-pane>
-            </el-tabs>
+              </a-tab-pane>
+            </a-tabs>
           </cus-dialog>
-        </el-container>
-      </el-main>
-      <el-footer height="30px" style="font-weight: 600;">Powered by <a target="_blank" href="https://github.com/GavinZhuLei/vue-form-making">vue-form-making</a></el-footer>
-    </el-container>
+        </a-layout>
+      </a-layout-content>
+      <a-footer height="30px" style="font-weight: 600;">Powered by <a target="_blank" href="https://github.com/GavinZhuLei/vue-form-making">vue-form-making</a></a-footer>
+    </a-layout>
   </span>
 </template>
 
@@ -215,7 +215,7 @@ export default {
     },
     advanceFields: {
       type: Array,
-      default: () => ['blank', 'imgupload', 'editor', 'cascader']
+      default: () => ['blank', 'editor', 'cascader']
     },
     layoutFields: {
       type: Array,
@@ -272,43 +272,19 @@ export default {
       jsonCopyValue: '',
       jsonClipboard: null,
       jsonEg: `{
-  "list": [],
-  "config": {
-    "labelWidth": 100,
-    "labelPosition": "top",
-    "size": "small"
-  }
-}`,
+        "list": [],
+        "config": {
+          "labelWidth": 100,
+          "labelPosition": "top",
+          "size": "small"
+        }
+      }`,
       codeActiveName: 'vue',
     }
   },
   mounted () {
-    this._loadComponents()
   },
   methods: {
-    _loadComponents () {
-      this.basicComponents = this.basicComponents.map(item => {
-        return {
-          ...item,
-          name: this.$t(`fm.components.fields.${item.type}`)
-        }
-      })
-      this.advanceComponents = this.advanceComponents.map(item => {
-        return {
-          ...item,
-          name: this.$t(`fm.components.fields.${item.type}`)
-        }
-      })
-      this.layoutComponents = this.layoutComponents.map(item => {
-        return {
-          ...item,
-          name: this.$t(`fm.components.fields.${item.type}`)
-        }
-      })
-    },
-    handleGoGithub () {
-      window.location.href = 'https://github.com/GavinZhuLei/vue-form-making'
-    },
     handleConfigSelect (value) {
       this.configTab = value
     },
@@ -426,9 +402,6 @@ export default {
       handler: function (val) {
         console.log(this.$refs.widgetForm)
       }
-    },
-    '$lang': function (val) {
-      this._loadComponents()
     }
   }
 }

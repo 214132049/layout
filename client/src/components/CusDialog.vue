@@ -1,5 +1,5 @@
 <template>
-  <el-dialog
+  <a-modal
     class="cus-dialog-container"
     :title="title"
     :visible.sync="dialogVisible"
@@ -17,11 +17,11 @@
     <span v-if="action" slot="footer" class="dialog-footer" v-loading="loading"
       :element-loading-text="loadingText">
       <slot name="action">
-        <el-button @click="close">{{$t('fm.actions.cancel')}}</el-button>
-        <el-button type="primary" @click="submit" >{{$t('fm.actions.confirm')}}</el-button>
+        <a-button @click="close">取 消</a-button>
+        <a-button type="primary" @click="submit" >确 定</a-button>
       </slot>
     </span>
-  </el-dialog>
+  </a-modal>
 </template>
 
 <script>
@@ -102,7 +102,7 @@ export default {
 
 <style lang="scss">
 .cus-dialog-container{
-  .el-dialog__footer{
+  .a-dialog__footer{
     margin: 0 20px;
     // border-top: 1px dashed #ccc;
     padding: 15px 0 16px;
@@ -120,12 +120,12 @@ export default {
         height: 24px;
       }
 
-      .el-loading-text{
+      .a-loading-text{
         display: inline-block;
         vertical-align: middle;
       }
 
-      .el-loading-spinner{
+      .a-loading-spinner{
         margin-top: -12px;
       }
     }

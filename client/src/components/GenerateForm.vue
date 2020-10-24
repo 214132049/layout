@@ -1,26 +1,24 @@
 <template>
   <div class="fm-style">
-    <el-form ref="generateForm"
-      label-suffix=":"
+    <a-form-model ref="generateForm"
+      laba-suffix=":"
       :size="data.config.size"
-      :model="models" :rules="rules" :label-position="data.config.labelPosition" :label-width="data.config.labelWidth + 'px'">
+      :model="models" :rules="rules" :laba-position="data.config.labelPosition" :laba-width="data.config.labelWidth + 'px'">
       <template v-for="item in data.list">
 
         <template v-if="item.type == 'grid'">
-          <el-row
+          <a-row
             :key="item.key"
             type="flex"
             :gutter="item.options.gutter ? item.options.gutter : 0"
             :justify="item.options.justify"
             :align="item.options.align"
           >
-            <el-col v-for="(col, colIndex) in item.columns" :key="colIndex" :span="col.span">
-
-
+            <a-col v-for="(col, colIndex) in item.columns" :key="colIndex" :span="col.span">
               <template v-for="citem in col.list" >
-                <el-form-item v-if="citem.type=='blank'" :label="citem.name" :prop="citem.model" :key="citem.key">
+                <a-form-model-item v-if="citem.type=='blank'" :label="citem.name" :prop="citem.model" :key="citem.key">
                   <slot :name="citem.model" :model="models"></slot>
-                </el-form-item>
+                </a-form-model-item>
                 <genetate-form-item v-else
                   :key="citem.key"
                   :models.sync="models"
@@ -30,14 +28,14 @@
                   @input-change="onInputChange">
                 </genetate-form-item>
               </template>
-            </el-col>
-          </el-row>
+            </a-col>
+          </a-row>
         </template>
 
         <template v-else-if="item.type == 'blank'">
-          <el-form-item :label="item.name" :prop="item.model" :key="item.key">
+          <a-form-model-item :label="item.name" :prop="item.model" :key="item.key">
             <slot :name="item.model" :model="models"></slot>
-          </el-form-item>
+          </a-form-model-item>
         </template>
 
         <template v-else>
@@ -52,7 +50,7 @@
         </template>
 
       </template>
-    </el-form>
+    </a-form-model>
   </div>
 </template>
 
@@ -122,7 +120,7 @@ export default {
           if (valid) {
             resolve(this.models)
           } else {
-            reject(new Error(this.$t('fm.message.validError')).message)
+            reject(new Error('表单数据校验失败').message)
           }
         })
       })

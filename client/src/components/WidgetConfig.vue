@@ -1,211 +1,211 @@
 <template>
   <div v-if="show">
-    <el-form label-position="top">
-      <el-form-item :label="$t('fm.config.widget.model')" v-if="data.type!='grid'">
-        <el-input v-model="data.model"></el-input>
-      </el-form-item>
-      <el-form-item :label="$t('fm.config.widget.name')" v-if="data.type!='grid'">
-        <el-input v-model="data.name"></el-input>
-      </el-form-item>
-      <el-form-item :label="$t('fm.config.widget.width')" v-if="Object.keys(data.options).indexOf('width')>=0">
-        <el-input v-model="data.options.width"></el-input>
-      </el-form-item>
+    <a-form laba-position="top">
+      <a-form-item label="字段标识" v-if="data.type!='grid'">
+        <a-input v-model="data.model"></a-input>
+      </a-form-item>
+      <a-form-item label="标题" v-if="data.type!='grid'">
+        <a-input v-model="data.name"></a-input>
+      </a-form-item>
+      <a-form-item label="宽度" v-if="Object.keys(data.options).indexOf('width')>=0">
+        <a-input v-model="data.options.width"></a-input>
+      </a-form-item>
 
-      <el-form-item :label="$t('fm.config.widget.height')" v-if="Object.keys(data.options).indexOf('height')>=0">
-        <el-input v-model="data.options.height"></el-input>
-      </el-form-item>
+      <a-form-item label="高度" v-if="Object.keys(data.options).indexOf('height')>=0">
+        <a-input v-model="data.options.height"></a-input>
+      </a-form-item>
 
-      <el-form-item :label="$t('fm.config.widget.size')" v-if="Object.keys(data.options).indexOf('size')>=0">
-        {{$t('fm.config.widget.width')}} <el-input style="width: 90px;" type="number" v-model.number="data.options.size.width"></el-input>
-        {{$t('fm.config.widget.height')}} <el-input style="width: 90px;" type="number" v-model.number="data.options.size.height"></el-input>
-      </el-form-item>
-      
-      <el-form-item :label="$t('fm.config.widget.placeholder')" v-if="Object.keys(data.options).indexOf('placeholder')>=0 && (data.type!='time' || data.type!='date')">
-        <el-input v-model="data.options.placeholder"></el-input>
-      </el-form-item>
-      <el-form-item :label="$t('fm.config.widget.layout')" v-if="Object.keys(data.options).indexOf('inline')>=0">
-        <el-radio-group v-model="data.options.inline">
-          <el-radio-button :label="false">{{$t('fm.config.widget.block')}}</el-radio-button>
-          <el-radio-button :label="true">{{$t('fm.config.widget.inline')}}</el-radio-button>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item :label="$t('fm.config.widget.showInput')" v-if="Object.keys(data.options).indexOf('showInput')>=0">
-        <el-switch v-model="data.options.showInput" ></el-switch>
-      </el-form-item>
-      <el-form-item :label="$t('fm.config.widget.min')" v-if="Object.keys(data.options).indexOf('min')>=0">
-        <el-input-number v-model="data.options.min" :min="0" :max="100" :step="1"></el-input-number>
-      </el-form-item>
-      <el-form-item :label="$t('fm.config.widget.max')" v-if="Object.keys(data.options).indexOf('max')>=0">
-        <el-input-number v-model="data.options.max" :min="0" :max="100" :step="1"></el-input-number>
-      </el-form-item>
-      <el-form-item :label="$t('fm.config.widget.step')" v-if="Object.keys(data.options).indexOf('step')>=0">
-        <el-input-number v-model="data.options.step" :min="0" :max="100" :step="1"></el-input-number>
-      </el-form-item>
-      <el-form-item :label="$t('fm.config.widget.multiple')" v-if="data.type=='select' || data.type=='imgupload'">
-        <el-switch v-model="data.options.multiple" @change="handleSelectMuliple"></el-switch>
-      </el-form-item>
-      <el-form-item :label="$t('fm.config.widget.filterable')" v-if="data.type=='select'">
-        <el-switch v-model="data.options.filterable"></el-switch>
-      </el-form-item>
-      <el-form-item :label="$t('fm.config.widget.allowHalf')" v-if="Object.keys(data.options).indexOf('allowHalf')>=0">
-        <el-switch
+      <a-form-item label="大小" v-if="Object.keys(data.options).indexOf('size')>=0">
+        宽度 <a-input style="width: 90px;" type="number" v-model.number="data.options.size.width"></a-input>
+        高度 <a-input style="width: 90px;" type="number" v-model.number="data.options.size.height"></a-input>
+      </a-form-item>
+
+      <a-form-item label="占位内容" v-if="Object.keys(data.options).indexOf('placeholder')>=0 && (data.type!='time' || data.type!='date')">
+        <a-input v-model="data.options.placeholder"></a-input>
+      </a-form-item>
+      <a-form-item label="布局方式" v-if="Object.keys(data.options).indexOf('inline')>=0">
+        <a-radio-group v-model="data.options.inline">
+          <a-radio-button label="false">块级</a-radio-button>
+          <a-radio-button label="true">行内</a-radio-button>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item label="显示输入框" v-if="Object.keys(data.options).indexOf('showInput')>=0">
+        <a-switch v-model="data.options.showInput" ></a-switch>
+      </a-form-item>
+      <a-form-item label="最小值" v-if="Object.keys(data.options).indexOf('min')>=0">
+        <a-input-number v-model="data.options.min" :min="0" :max="100" :step="1"></a-input-number>
+      </a-form-item>
+      <a-form-item label="最大值" v-if="Object.keys(data.options).indexOf('max')>=0">
+        <a-input-number v-model="data.options.max" :min="0" :max="100" :step="1"></a-input-number>
+      </a-form-item>
+      <a-form-item label="步长" v-if="Object.keys(data.options).indexOf('step')>=0">
+        <a-input-number v-model="data.options.step" :min="0" :max="100" :step="1"></a-input-number>
+      </a-form-item>
+      <a-form-item label="是否多选" v-if="data.type=='select'">
+        <a-switch v-model="data.options.multiple" @change="handleSelectMuliple"></a-switch>
+      </a-form-item>
+      <a-form-item label="是否可搜索" v-if="data.type=='select'">
+        <a-switch v-model="data.options.filterable"></a-switch>
+      </a-form-item>
+      <a-form-item label="允许半选" v-if="Object.keys(data.options).indexOf('allowHalf')>=0">
+        <a-switch
             v-model="data.options.allowHalf"
           >
-          </el-switch>
-      </el-form-item>
-      <el-form-item :label="$t('fm.config.widget.showAlpha')" v-if="Object.keys(data.options).indexOf('showAlpha')>=0">
-        <el-switch
+          </a-switch>
+      </a-form-item>
+      <a-form-item label="支持透明度选择" v-if="Object.keys(data.options).indexOf('showAlpha')>=0">
+        <a-switch
             v-model="data.options.showAlpha"
           >
-          </el-switch>
-      </el-form-item>
-      <el-form-item :label="$t('fm.config.widget.showLabel')" v-if="Object.keys(data.options).indexOf('showLabel')>=0">
-        <el-switch
+          </a-switch>
+      </a-form-item>
+      <a-form-item label="是否显示标签" v-if="Object.keys(data.options).indexOf('showLabel')>=0">
+        <a-switch
             v-model="data.options.showLabel"
           >
-        </el-switch>
-      </el-form-item>
-      <el-form-item :label="$t('fm.config.widget.option')" v-if="Object.keys(data.options).indexOf('options')>=0">
-        <el-radio-group v-model="data.options.remote" size="mini" style="margin-bottom:10px;">
-          <el-radio-button :label="false">{{$t('fm.config.widget.staticData')}}</el-radio-button>
-          <el-radio-button :label="true">{{$t('fm.config.widget.remoteData')}}</el-radio-button>
-        </el-radio-group>
+        </a-switch>
+      </a-form-item>
+      <a-form-item label="选项" v-if="Object.keys(data.options).indexOf('options')>=0">
+        <a-radio-group v-model="data.options.remote" size="mini" style="margin-bottom:10px;">
+          <a-radio-button label="false">静态数据</a-radio-button>
+          <a-radio-button label="true">远端数据</a-radio-button>
+        </a-radio-group>
         <template v-if="data.options.remote">
           <div>
-            <el-input size="mini" style="" v-model="data.options.remoteFunc">
-              <template slot="prepend">{{$t('fm.config.widget.remoteFunc')}}</template>
-            </el-input>
-            <el-input size="mini" style="" v-model="data.options.props.value">
-              <template slot="prepend">{{$t('fm.config.widget.value')}}</template>
-            </el-input>
-            <el-input size="mini" style="" v-model="data.options.props.label">
-              <template slot="prepend">{{$t('fm.config.widget.label')}}</template>
-            </el-input>
+            <a-input size="mini" style="" v-model="data.options.remoteFunc">
+              <template slot="prepend">远端方法</template>
+            </a-input>
+            <a-input size="mini" style="" v-model="data.options.props.value">
+              <template slot="prepend">值</template>
+            </a-input>
+            <a-input size="mini" style="" v-model="data.options.props.label">
+              <template slot="prepend">标签</template>
+            </a-input>
           </div>
         </template>
         <template v-else>
           <template v-if="data.type=='radio' || (data.type=='select'&&!data.options.multiple)">
-            <el-radio-group v-model="data.options.defaultValue">
-              <draggable tag="ul" :list="data.options.options" 
+            <a-radio-group v-model="data.options.defaultValue">
+              <draggable tag="ul" :list="data.options.options"
                 v-bind="{group:{ name:'options'}, ghostClass: 'ghost',handle: '.drag-item'}"
                 handle=".drag-item"
               >
                 <li v-for="(item, index) in data.options.options" :key="index" >
-                  <el-radio
-                    :label="item.value" 
+                  <a-radio
+                    label="item.value"
                     style="margin-right: 5px;"
                   >
-                    <el-input :style="{'width': data.options.showLabel? '90px': '180px' }" size="mini" v-model="item.value"></el-input>
-                    <el-input style="width:90px;" size="mini" v-if="data.options.showLabel" v-model="item.label"></el-input>
+                    <a-input :style="{'width': data.options.showLabel? '90px': '180px' }" size="mini" v-model="item.value"></a-input>
+                    <a-input style="width:90px;" size="mini" v-if="data.options.showLabel" v-model="item.label"></a-input>
                     <!-- <input v-model="item.value"/> -->
-                  </el-radio>
+                  </a-radio>
                   <i class="drag-item" style="font-size: 16px;margin: 0 5px;cursor: move;"><i class="iconfont icon-icon_bars"></i></i>
-                  <el-button @click="handleOptionsRemove(index)" circle plain type="danger" size="mini" icon="el-icon-minus" style="padding: 4px;margin-left: 5px;"></el-button>
-                  
+                  <a-button @click="handleOptionsRemove(index)" circle plain type="danger" size="mini" icon="a-icon-minus" style="padding: 4px;margin-left: 5px;"></a-button>
+
                 </li>
               </draggable>
-              
-            </el-radio-group>
+
+            </a-radio-group>
           </template>
 
           <template v-if="data.type=='checkbox' || (data.type=='select' && data.options.multiple)">
-            <el-checkbox-group v-model="data.options.defaultValue">
+            <a-checkbox-group v-model="data.options.defaultValue">
 
-              <draggable tag="ul" :list="data.options.options" 
+              <draggable tag="ul" :list="data.options.options"
                 v-bind="{group:{ name:'options'}, ghostClass: 'ghost',handle: '.drag-item'}"
                 handle=".drag-item"
               >
                 <li v-for="(item, index) in data.options.options" :key="index" >
-                  <el-checkbox
-                    :label="item.value"
+                  <a-checkbox
+                    label="item.value"
                     style="margin-right: 5px;"
                   >
-                    <el-input :style="{'width': data.options.showLabel? '90px': '180px' }" size="mini" v-model="item.value"></el-input>
-                    <el-input style="width:90px;" size="mini" v-if="data.options.showLabel" v-model="item.label"></el-input>
-                  </el-checkbox>
+                    <a-input :style="{'width': data.options.showLabel? '90px': '180px' }" size="mini" v-model="item.value"></a-input>
+                    <a-input style="width:90px;" size="mini" v-if="data.options.showLabel" v-model="item.label"></a-input>
+                  </a-checkbox>
                   <i class="drag-item" style="font-size: 16px;margin: 0 5px;cursor: move;"><i class="iconfont icon-icon_bars"></i></i>
-                  <el-button @click="handleOptionsRemove(index)" circle plain type="danger" size="mini" icon="el-icon-minus" style="padding: 4px;margin-left: 5px;"></el-button>
-                  
+                  <a-button @click="handleOptionsRemove(index)" circle plain type="danger" size="mini" icon="a-icon-minus" style="padding: 4px;margin-left: 5px;"></a-button>
+
                 </li>
               </draggable>
-            </el-checkbox-group>
+            </a-checkbox-group>
           </template>
           <div style="margin-left: 22px;">
-            <el-button type="text" @click="handleAddOption">{{$t('fm.actions.addOption')}}</el-button>
+            <a-button type="text" @click="handleAddOption">添加选项</a-button>
           </div>
         </template>
-        
-      </el-form-item>
 
-      <el-form-item :label="$t('fm.config.widget.remoteData')" v-if="data.type=='cascader'">
+      </a-form-item>
+
+      <a-form-item label="远端数据" v-if="data.type=='cascader'">
         <div>
-          <el-input size="mini" style="" v-model="data.options.remoteFunc">
-            <template slot="prepend">{{$t('fm.config.widget.remoteFunc')}}</template>
-          </el-input>
-          <el-input size="mini" style="" v-model="data.options.props.value">
-            <template slot="prepend">{{$t('fm.config.widget.value')}}</template>
-          </el-input>
-          <el-input size="mini" style="" v-model="data.options.props.label">
-            <template slot="prepend">{{$t('fm.config.widget.label')}}</template>
-          </el-input>
-          <el-input size="mini" style="" v-model="data.options.props.children">
-            <template slot="prepend">{{$t('fm.config.widget.childrenOption')}}</template>
-          </el-input>
+          <a-input size="mini" style="" v-model="data.options.remoteFunc">
+            <template slot="prepend">远端方法</template>
+          </a-input>
+          <a-input size="mini" style="" v-model="data.options.props.value">
+            <template slot="prepend">值</template>
+          </a-input>
+          <a-input size="mini" style="" v-model="data.options.props.label">
+            <template slot="prepend">标签</template>
+          </a-input>
+          <a-input size="mini" style="" v-model="data.options.props.children">
+            <template slot="prepend">子选项</template>
+          </a-input>
         </div>
-      </el-form-item>
+      </a-form-item>
 
-      <el-form-item :label="$t('fm.config.widget.defaultValue')" v-if="Object.keys(data.options).indexOf('defaultValue')>=0 && (data.type == 'textarea' || data.type == 'input' || data.type=='rate' || data.type=='color' || data.type=='switch')">
-        <el-input v-if="data.type=='textarea'" type="textarea" :rows="5" v-model="data.options.defaultValue"></el-input>
-        <el-input v-if="data.type=='input'" v-model="data.options.defaultValue"></el-input>
-        <el-rate v-if="data.type == 'rate'" style="display:inline-block;vertical-align: middle;" :max="data.options.max" :allow-half="data.options.allowHalf" v-model="data.options.defaultValue"></el-rate>
-        <el-button type="text" v-if="data.type == 'rate'" style="display:inline-block;vertical-align: middle;margin-left: 10px;" @click="data.options.defaultValue=0">{{$t('fm.actions.clear')}}</el-button>
-        <el-color-picker 
+      <a-form-item label="默认值" v-if="Object.keys(data.options).indexOf('defaultValue')>=0 && (data.type == 'textarea' || data.type == 'input' || data.type=='rate' || data.type=='color' || data.type=='switch')">
+        <a-input v-if="data.type=='textarea'" type="textarea" :rows="5" v-model="data.options.defaultValue"></a-input>
+        <a-input v-if="data.type=='input'" v-model="data.options.defaultValue"></a-input>
+        <a-rate v-if="data.type == 'rate'" style="display:inline-block;vertical-align: middle;" :max="data.options.max" :allow-half="data.options.allowHalf" v-model="data.options.defaultValue"></a-rate>
+        <a-button type="text" v-if="data.type == 'rate'" style="display:inline-block;vertical-align: middle;margin-left: 10px;" @click="data.options.defaultValue=0">清空</a-button>
+        <a-color-picker
           v-if="data.type == 'color'"
           v-model="data.options.defaultValue"
           :show-alpha="data.options.showAlpha"
-        ></el-color-picker>
-        <el-switch v-if="data.type=='switch'" v-model="data.options.defaultValue"></el-switch>
-      </el-form-item>
+        ></a-color-picker>
+        <a-switch v-if="data.type=='switch'" v-model="data.options.defaultValue"></a-switch>
+      </a-form-item>
 
       <template v-if="data.type == 'time' || data.type == 'date'">
-        <el-form-item :label="$t('fm.config.widget.showType')" v-if="data.type == 'date'">
-          <el-select v-model="data.options.type">
-            <el-option value="year"></el-option>
-            <el-option value="month"></el-option>
-            <el-option value="date"></el-option>
-            <el-option value="dates"></el-option>
-            <!-- <el-option value="week"></el-option> -->
-            <el-option value="datetime"></el-option>
-            <el-option value="datetimerange"></el-option>
-            <el-option value="daterange"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="$t('fm.config.widget.isRange')" v-if="data.type == 'time'">
-          <el-switch
+        <a-form-item label="显示类型" v-if="data.type == 'date'">
+          <a-select v-model="data.options.type">
+            <a-option value="year"></a-option>
+            <a-option value="month"></a-option>
+            <a-option value="date"></a-option>
+            <a-option value="dates"></a-option>
+            <!-- <a-option value="week"></a-option> -->
+            <a-option value="datetime"></a-option>
+            <a-option value="datetimerange"></a-option>
+            <a-option value="daterange"></a-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item label="是否为范围选择" v-if="data.type == 'time'">
+          <a-switch
             v-model="data.options.isRange"
           >
-          </el-switch>
-        </el-form-item>
-        <el-form-item :label="$t('fm.config.widget.isTimestamp')" v-if="data.type == 'date'">
-          <el-switch
+          </a-switch>
+        </a-form-item>
+        <a-form-item label="是否获取时间戳" v-if="data.type == 'date'">
+          <a-switch
             v-model="data.options.timestamp"
           >
-          </el-switch>
-        </el-form-item>
-        <el-form-item :label="$t('fm.config.widget.placeholder')" v-if="(!data.options.isRange && data.type == 'time') || (data.type != 'time' && data.options.type != 'datetimerange' && data.options.type != 'daterange')">
-          <el-input v-model="data.options.placeholder"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('fm.config.widget.startPlaceholder')" v-if="(data.options.isRange) || data.options.type=='datetimerange' || data.options.type=='daterange'">
-          <el-input v-model="data.options.startPlaceholder"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('fm.config.widget.endPlaceholder')" v-if="data.options.isRange || data.options.type=='datetimerange' || data.options.type=='daterange'">
-          <el-input v-model="data.options.endPlaceholder"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('fm.config.widget.format')">
-          <el-input v-model="data.options.format"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('fm.config.widget.defaultValue')" v-if="data.type=='time' && Object.keys(data.options).indexOf('isRange')>=0">
-          <el-time-picker 
+          </a-switch>
+        </a-form-item>
+        <a-form-item label="占位内容" v-if="(!data.options.isRange && data.type == 'time') || (data.type != 'time' && data.options.type != 'datetimerange' && data.options.type != 'daterange')">
+          <a-input v-model="data.options.placeholder"></a-input>
+        </a-form-item>
+        <a-form-item label="开始时间占位内容" v-if="(data.options.isRange) || data.options.type=='datetimerange' || data.options.type=='daterange'">
+          <a-input v-model="data.options.startPlaceholder"></a-input>
+        </a-form-item>
+        <a-form-item label="结束时间占位内容" v-if="data.options.isRange || data.options.type=='datetimerange' || data.options.type=='daterange'">
+          <a-input v-model="data.options.endPlaceholder"></a-input>
+        </a-form-item>
+        <a-form-item label="格式">
+          <a-input v-model="data.options.format"></a-input>
+        </a-form-item>
+        <a-form-item label="默认值" v-if="data.type=='time' && Object.keys(data.options).indexOf('isRange')>=0">
+          <a-time-picker
             key="1"
             style="width: 100%;"
             v-if="!data.options.isRange"
@@ -213,8 +213,8 @@
             :arrowControl="data.options.arrowControl"
             :value-format="data.options.format"
           >
-          </el-time-picker>
-          <el-time-picker 
+          </a-time-picker>
+          <a-time-picker
             key="2"
             v-if="data.options.isRange"
             style="width: 100%;"
@@ -223,115 +223,92 @@
             :arrowControl="data.options.arrowControl"
             :value-format="data.options.format"
           >
-          </el-time-picker>
-        </el-form-item>
-      </template>
-
-      <template v-if="data.type=='imgupload'">
-        
-        <el-form-item :label="$t('fm.config.widget.limit')">
-          <el-input type="number" v-model.number="data.options.length"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('fm.config.widget.isQiniu')">
-          <el-switch v-model="data.options.isQiniu"></el-switch>
-        </el-form-item>
-        <template v-if="data.options.isQiniu">
-          <el-form-item label="Domain" :required="true">
-          <el-input v-model="data.options.domain"></el-input>
-          </el-form-item>
-          <el-form-item :label="$t('fm.config.widget.tokenFunc')" :required="true">
-            <el-input v-model="data.options.tokenFunc"></el-input>
-          </el-form-item>
-        </template>
-        <template v-else>
-          <el-form-item :label="$t('fm.config.widget.imageAction')" :required="true">
-            <el-input v-model="data.options.action"></el-input>
-          </el-form-item>
-        </template>
+          </a-time-picker>
+        </a-form-item>
       </template>
 
       <template v-if="data.type=='blank'">
-        <el-form-item :label="$t('fm.config.widget.defaultType')">
-          <el-select v-model="data.options.defaultType">
-            <el-option value="String" :label="$t('fm.config.widget.string')"></el-option>
-            <el-option value="Object" :label="$t('fm.config.widget.object')"></el-option>
-            <el-option value="Array" :label="$t('fm.config.widget.array')"></el-option>
-          </el-select>
-        </el-form-item>
+        <a-form-item label="绑定数据类型">
+          <a-select v-model="data.options.defaultType">
+            <a-option value="String" label="字符串"></a-option>
+            <a-option value="Object" label="对象"></a-option>
+            <a-option value="Array" label="数组"></a-option>
+          </a-select>
+        </a-form-item>
       </template>
 
       <template v-if="data.type == 'grid'">
-        <el-form-item :label="$t('fm.config.widget.gutter')">
-          <el-input type="number" v-model.number="data.options.gutter"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('fm.config.widget.columnOption')">
-          <draggable tag="ul" :list="data.columns" 
+        <a-form-item label="栅格间隔">
+          <a-input type="number" v-model.number="data.options.gutter"></a-input>
+        </a-form-item>
+        <a-form-item label="列配置项">
+          <draggable tag="ul" :list="data.columns"
             v-bind="{group:{ name:'options'}, ghostClass: 'ghost',handle: '.drag-item'}"
             handle=".drag-item"
           >
             <li v-for="(item, index) in data.columns" :key="index" >
               <i class="drag-item" style="font-size: 16px;margin: 0 5px;cursor: move;"><i class="iconfont icon-icon_bars"></i></i>
-              <el-input :placeholder="$t('fm.config.widget.span')" size="mini" style="width: 100px;" type="number" v-model.number="item.span"></el-input>
-              
-              <el-button @click="handleOptionsRemove(index)" circle plain type="danger" size="mini" icon="el-icon-minus" style="padding: 4px;margin-left: 5px;"></el-button>
-              
+              <a-input :placeholder="栅格值" size="mini" style="width: 100px;" type="number" v-model.number="item.span"></a-input>
+
+              <a-button @click="handleOptionsRemove(index)" circle plain type="danger" size="mini" icon="a-icon-minus" style="padding: 4px;margin-left: 5px;"></a-button>
+
             </li>
           </draggable>
           <div style="margin-left: 22px;">
-            <el-button type="text" @click="handleAddColumn">{{$t('fm.actions.addColumn')}}</el-button>
+            <a-button type="text" @click="handleAddColumn">添加列</a-button>
           </div>
-        </el-form-item>
-        <el-form-item :label="$t('fm.config.widget.justify')">
-          <el-select v-model="data.options.justify">
-            <el-option value="start" :label="$t('fm.config.widget.justifyStart')"></el-option>
-            <el-option value="end" :label="$t('fm.config.widget.justifyEnd')"></el-option>
-            <el-option value="center" :label="$t('fm.config.widget.justifyCenter')"></el-option>
-            <el-option value="space-around" :label="$t('fm.config.widget.justifySpaceAround')"></el-option>
-            <el-option value="space-between" :label="$t('fm.config.widget.justifySpaceBetween')"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="$t('fm.config.widget.align')">
-          <el-select v-model="data.options.align">
-            <el-option value="top" :label="$t('fm.config.widget.alignTop')"></el-option>
-            <el-option value="middle" :label="$t('fm.config.widget.alignMiddle')"></el-option>
-            <el-option value="bottom" :label="$t('fm.config.widget.alignBottom')"></el-option>
-          </el-select>
-        </el-form-item>
+        </a-form-item>
+        <a-form-item label="水平排列方式">
+          <a-select v-model="data.options.justify">
+            <a-option value="start" label="左对齐"></a-option>
+            <a-option value="end" label="右对齐"></a-option>
+            <a-option value="center" label="居中"></a-option>
+            <a-option value="space-around" label="两侧间隔相等"></a-option>
+            <a-option value="space-between" label="两端对齐"></a-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item label="垂直排列方式">
+          <a-select v-model="data.options.align">
+            <a-option value="top" label="顶部对齐"></a-option>
+            <a-option value="middle" label="居中对齐"></a-option>
+            <a-option value="bottom" label="底部对齐"></a-option>
+          </a-select>
+        </a-form-item>
       </template>
-      
+
 
       <template v-if="data.type != 'grid'">
-        <el-form-item :label="$t('fm.config.widget.attribute')">
-          <el-checkbox v-model="data.options.readonly" v-if="Object.keys(data.options).indexOf('readonly')>=0">{{$t('fm.config.widget.readonly')}}</el-checkbox>
-          <el-checkbox v-model="data.options.disabled" v-if="Object.keys(data.options).indexOf('disabled')>=0">{{$t('fm.config.widget.disabled')}}	</el-checkbox>
-          <el-checkbox v-model="data.options.editable" v-if="Object.keys(data.options).indexOf('editable')>=0">{{$t('fm.config.widget.editable')}}</el-checkbox>
-          <el-checkbox v-model="data.options.clearable" v-if="Object.keys(data.options).indexOf('clearable')>=0">{{$t('fm.config.widget.clearable')}} </el-checkbox>
-          <el-checkbox v-model="data.options.arrowControl" v-if="Object.keys(data.options).indexOf('arrowControl')>=0">{{$t('fm.config.widget.arrowControl')}}</el-checkbox>
-          <el-checkbox v-model="data.options.isDelete" v-if="Object.keys(data.options).indexOf('isDelete')>=0">{{$t('fm.config.widget.isDelete')}}</el-checkbox>
-          <el-checkbox v-model="data.options.isEdit" v-if="Object.keys(data.options).indexOf('isEdit')>=0">{{$t('fm.config.widget.isEdit')}}</el-checkbox>
-          
-        </el-form-item>
-        <el-form-item :label="$t('fm.config.widget.validate')">
+        <a-form-item label="操作属性">
+          <a-checkbox v-model="data.options.readonly" v-if="Object.keys(data.options).indexOf('readonly')>=0">完全只读</a-checkbox>
+          <a-checkbox v-model="data.options.disabled" v-if="Object.keys(data.options).indexOf('disabled')>=0">禁用	</a-checkbox>
+          <a-checkbox v-model="data.options.editable" v-if="Object.keys(data.options).indexOf('editable')>=0">文本框可输入</a-checkbox>
+          <a-checkbox v-model="data.options.clearable" v-if="Object.keys(data.options).indexOf('clearable')>=0">显示清除按钮</a-checkbox>
+          <a-checkbox v-model="data.options.arrowControl" v-if="Object.keys(data.options).indexOf('arrowControl')>=0">使用箭头进行时间选择</a-checkbox>
+          <a-checkbox v-model="data.options.isDelete" v-if="Object.keys(data.options).indexOf('isDelete')>=0">删除</a-checkbox>
+          <a-checkbox v-model="data.options.isEdit" v-if="Object.keys(data.options).indexOf('isEdit')>=0">编辑}</a-checkbox>
+
+        </a-form-item>
+        <a-form-item label="校验">
           <div v-if="Object.keys(data.options).indexOf('required')>=0">
-            <el-checkbox v-model="data.options.required">{{$t('fm.config.widget.required')}}</el-checkbox>
+            <a-checkbox v-model="data.options.required">必填</a-checkbox>
           </div>
-          <el-select v-if="Object.keys(data.options).indexOf('dataType')>=0" v-model="data.options.dataType" size="mini" >
-            <el-option value="string" :label="$t('fm.config.widget.string')"></el-option>
-            <el-option value="number" :label="$t('fm.config.widget.number')"></el-option>
-            <el-option value="boolean" :label="$t('fm.config.widget.boolean')"></el-option>
-            <el-option value="integer" :label="$t('fm.config.widget.integer')"></el-option>
-            <el-option value="float" :label="$t('fm.config.widget.float')"></el-option>
-            <el-option value="url" :label="$t('fm.config.widget.url')"></el-option>
-            <el-option value="email" :label="$t('fm.config.widget.email')"></el-option>
-            <el-option value="hex" :label="$t('fm.config.widget.hex')"></el-option>
-          </el-select>
-          
+          <a-select v-if="Object.keys(data.options).indexOf('dataType')>=0" v-model="data.options.dataType" size="mini" >
+            <a-option value="string" label="字符串"></a-option>
+            <a-option value="number" label="数字"></a-option>
+            <a-option value="boolean" label="布尔值"></a-option>
+            <a-option value="integer" label="整数"></a-option>
+            <a-option value="float" label="浮点数"></a-option>
+            <a-option value="url" label="URL地址"></a-option>
+            <a-option value="email" label="邮箱地址"></a-option>
+            <a-option value="hex" label="十六进制"></a-option>
+          </a-select>
+
           <div v-if="Object.keys(data.options).indexOf('pattern')>=0">
-            <el-input size="mini" v-model.lazy="data.options.pattern"  style=" width: 240px;" :placeholder="$t('fm.config.widget.patternPlaceholder')"></el-input>
+            <a-input size="mini" v-model.lazy="data.options.pattern"  style=" width: 240px;" placeholder="填写正则表达式"></a-input>
           </div>
-        </el-form-item>
+        </a-form-item>
       </template>
-    </el-form>
+    </a-form>
   </div>
 </template>
 
@@ -369,20 +346,20 @@ export default {
       } else {
         this.data.options.options.splice(index, 1)
       }
-      
+
     },
     handleAddOption () {
       if (this.data.options.showLabel) {
         this.data.options.options.push({
-          value: this.$t('fm.config.widget.newOption'),
-          label: this.$t('fm.config.widget.newOption')
+          value: '新选项',
+          label: '新选项'
         })
       } else {
         this.data.options.options.push({
-          value: this.$t('fm.config.widget.newOption')
+          value: '新选项'
         })
       }
-      
+
     },
     handleAddColumn () {
       this.data.columns.push({
@@ -405,20 +382,20 @@ export default {
         } else {
           this.data.options.defaultValue = []
         }
-        
+
       } else {
         if (this.data.options.defaultValue.length>0){
           this.data.options.defaultValue = this.data.options.defaultValue[0]
         } else {
           this.data.options.defaultValue = ''
         }
-        
+
       }
     },
 
     validateRequired (val) {
       if (val) {
-        this.validator.required = {required: true, message: `${this.data.name}${this.$t('fm.config.widget.validatorRequired')}`}
+        this.validator.required = {required: true, message: `${this.data.name}必须填写`}
       } else {
         this.validator.required = null
       }
@@ -432,9 +409,9 @@ export default {
       if (!this.show) {
         return false
       }
-      
+
       if (val) {
-        this.validator.type = {type: val, message: this.data.name + this.$t('fm.config.widget.validatorType')}
+        this.validator.type = {type: val, message: this.data.name + '格式不正确'}
       } else {
         this.validator.type = null
       }
@@ -447,7 +424,7 @@ export default {
       }
 
       if (val) {
-        this.validator.pattern = {pattern: val, message: this.data.name + this.$t('fm.config.widget.validatorPattern')}
+        this.validator.pattern = {pattern: val, message: this.data.name + '格式不匹配'}
       } else {
         this.validator.pattern = null
       }
@@ -461,7 +438,7 @@ export default {
         if (val) {
           this.data.options.defaultValue = null
         } else {
-          if (Object.keys(this.data.options).indexOf('defaultValue')>=0) 
+          if (Object.keys(this.data.options).indexOf('defaultValue')>=0)
             this.data.options.defaultValue = ''
         }
       }
