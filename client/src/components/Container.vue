@@ -1,6 +1,6 @@
 <template>
   <a-layout style="height: 100%; overflow: hidden;">
-    <a-layout-sider width="300px" theme="light">
+    <a-layout-sider width="300px" style="border-right: 1px solid #e8e8e8;" theme="light">
       <a-card title="基础字段" :bordered="false" style="width: 100%;" v-if="basicFields.length">
         <draggable tag="ul" class="component-list" :list="basicComponents" @end="handleMoveEnd" @start="handleMoveStart" :move="handleMove" v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}">
           <li v-if="basicFields.indexOf(item.type) >= 0" class="component-list-item" v-for="(item, index) in basicComponents" :key="index">
@@ -32,19 +32,21 @@
       </a-card>
     </a-layout-sider>
     <a-layout>
-      <a-layout-header class="btn-bar" style="height: 45px;background: #fff;">
-        <a-button v-if="upload" type="link" icon="a-icon-upload2" @click="handleUpload">导入JSON</a-button>
-        <a-button v-if="clearable" type="link" icon="a-icon-delete" @click="handleClear">清空</a-button>
-        <a-button v-if="preview" type="link" icon="a-icon-view" @click="handlePreview">预览</a-button>
-        <a-button v-if="generateJson" type="link" icon="a-icon-tickets" @click="handleGenerateJson">生成JSON</a-button>
-        <a-button v-if="generateCode" type="link" icon="a-icon-document" @click="handleGenerateCode">生成代码</a-button>
-        <a-button type="link">保存</a-button>
+      <a-layout-header class="action-box">
+        <a-button-group>
+          <a-button v-if="upload" type="primary" @click="handleUpload">导入JSON</a-button>
+          <a-button v-if="clearable" type="primary" @click="handleClear">清空</a-button>
+          <a-button v-if="preview" type="primary" @click="handlePreview">预览</a-button>
+          <a-button v-if="generateJson" type="primary" @click="handleGenerateJson">生成JSON</a-button>
+          <a-button v-if="generateCode" type="primary" @click="handleGenerateCode">生成代码</a-button>
+          <a-button type="primary">保存</a-button>
+        </a-button-group>
       </a-layout-header>
-      <a-layout-content :class="{'widget-empty': widgetForm.list.length == 0}">
-        <widget-form v-if="!resetJson"  ref="widgetForm" :data="widgetForm" :select.sync="widgetFormSelect"></widget-form>
+      <a-layout-content>
+        <widget-form v-if="!resetJson" ref="widgetForm" :data="widgetForm" :select.sync="widgetFormSelect"></widget-form>
       </a-layout-content>
     </a-layout>
-    <a-layout-sider width="250px" theme="light">
+    <a-layout-sider width="400px" theme="light">
       <a-tabs v-model="configTab">
         <a-tab-pane key="widget" tab="字段属性">
           <widget-config v-show="configTab=='widget'" :data="widgetFormSelect" />
@@ -160,9 +162,14 @@ export default {
       widgetForm: {
         list: [],
         config: {
-          labelWidth: 100,
-          labelPosition: 'right',
-          size: 'small'
+          labelCol: {
+            span: 3
+          },
+          wrapperCol: {
+            span: 12
+          },
+          labelAlign: 'right',
+          size: 'default'
         },
       },
       configTab: 'widget',
@@ -203,9 +210,14 @@ export default {
       jsonEg: `{
         "list": [],
         "config": {
-          "labelWidth": 100,
-          "labelPosition": "top",
-          "size": "small"
+          labelCol: {
+            span: 3
+          },
+          wrapperCol: {
+            span: 12
+          },
+          "labelAlign": "right",
+          "size": "default"
         }
       }`,
       codeActiveName: 'vue',
@@ -289,9 +301,14 @@ export default {
       this.widgetForm = {
         list: [],
         config: {
-          labelWidth: 100,
-          labelPosition: 'right',
-          size: 'small',
+          labelCol: {
+            span: 3
+          },
+          wrapperCol: {
+            span: 12
+          },
+          labelAlign: 'right',
+          size: 'default',
           customClass: ''
         },
       }
@@ -320,14 +337,6 @@ export default {
     },
     handleDataChange (field, value, data) {
       console.log(field, value, data)
-    }
-  },
-  watch: {
-    widgetForm: {
-      deep: true,
-      handler: function (val) {
-        console.log(this.$refs.widgetForm)
-      }
     }
   }
 }

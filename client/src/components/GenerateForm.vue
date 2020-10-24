@@ -1,54 +1,43 @@
 <template>
   <div class="fm-style">
-    <a-form-model ref="generateForm"
-      laba-suffix=":"
-      :size="data.config.size"
-      :model="models" :rules="rules" :laba-position="data.config.labelPosition" :laba-width="data.config.labelWidth + 'px'">
+    <a-form-model ref="generateForm" :model="models" :rules="rules" :label-align="data.config.labelAlign" :label-col="data.config.labelCol" :wrapper-col="data.config.wrapperCol">
       <template v-for="item in data.list">
-
-        <template v-if="item.type == 'grid'">
-          <a-row
-            :key="item.key"
-            type="flex"
-            :gutter="item.options.gutter ? item.options.gutter : 0"
-            :justify="item.options.justify"
-            :align="item.options.align"
-          >
-            <a-col v-for="(col, colIndex) in item.columns" :key="colIndex" :span="col.span">
-              <template v-for="citem in col.list" >
-                <a-form-model-item v-if="citem.type=='blank'" :label="citem.name" :prop="citem.model" :key="citem.key">
-                  <slot :name="citem.model" :model="models"></slot>
-                </a-form-model-item>
-                <genetate-form-item v-else
-                  :key="citem.key"
-                  :models.sync="models"
-                  :remote="remote"
-                  :rules="rules"
-                  :widget="citem"
-                  @input-change="onInputChange">
-                </genetate-form-item>
-              </template>
-            </a-col>
-          </a-row>
-        </template>
-
-        <template v-else-if="item.type == 'blank'">
-          <a-form-model-item :label="item.name" :prop="item.model" :key="item.key">
-            <slot :name="item.model" :model="models"></slot>
-          </a-form-model-item>
-        </template>
-
-        <template v-else>
-          <genetate-form-item
-            :key="item.key"
-            :models.sync="models"
-            :rules="rules"
-            :widget="item"
-            @input-change="onInputChange"
-            :remote="remote">
-          </genetate-form-item>
-        </template>
-
+        <a-row
+          :key="item.key"
+          type="flex"
+          :gutter="item.options.gutter ? item.options.gutter : 0"
+          :justify="item.options.justify"
+          :align="item.options.align"
+          v-if="item.type == 'grid'"
+        >
+          <a-col v-for="(col, colIndex) in item.columns" :key="colIndex" :span="col.span">
+            <template v-for="citem in col.list" >
+              <a-forml-model-item v-if="citem.type=='blank'" :label="citem.name" :prop="citem.model" :key="citem.key">
+                <slot :name="citem.model" :model="models"></slot>
+              </a-forml-model-item>
+              <genetate-form-item v-else
+                :key="citem.key"
+                :models.sync="models"
+                :remote="remote"
+                :rules="rules"
+                :widget="citem"
+                @input-change="onInputChange">
+              </genetate-form-item>
+            </template>
+          </a-col>
+        </a-row>
+        <a-form-model-item v-else-if="item.type == 'blank'" :label="item.name" :prop="item.model" :key="item.key">
+          <slot :name="item.model" :model="models"></slot>
+        </a-form-model-item>
+        <genetate-form-item
+          v-else
+          :key="item.key"
+          :models.sync="models"
+          :rules="rules"
+          :widget="item"
+          @input-change="onInputChange"
+          :remote="remote">
+        </genetate-form-item>
       </template>
     </a-form-model>
   </div>

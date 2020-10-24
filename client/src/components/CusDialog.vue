@@ -1,13 +1,12 @@
 <template>
-  <a-modal :title="title" :visible.sync="dialogVisible" :close-on-click-modal="false" append-to-body center :width="width" ref="elDialog" :id="id">
+  <a-modal :title="title" :visible="dialogVisible" :close-on-click-modal="false" append-to-body center :width="width" ref="elDialog" :id="id" @cancel="close" @ok="submit">
     <span v-if="show">
       <slot></slot>
     </span>
-    <span v-if="action" slot="footer" class="dialog-footer" v-loading="loading"
-      :element-loading-text="loadingText">
+    <span v-if="action" slot="footer" class="dialog-footer">
       <slot name="action">
         <a-button @click="close">取 消</a-button>
-        <a-button type="primary" @click="submit" >确 定</a-button>
+        <a-button type="primary" @click="submit">确 定</a-button>
       </slot>
     </span>
   </a-modal>
@@ -17,10 +16,6 @@
 export default {
   props: {
     visible: Boolean,
-    loadingText: {
-      type: String,
-      default: ''
-    },
     title: {
       type: String,
       default: ''
@@ -49,7 +44,6 @@ export default {
   },
   data () {
     return {
-      loading: false,
       dialogVisible: this.visible,
       id: 'dialog_' + new Date().getTime(),
       showForm: false
@@ -60,20 +54,14 @@ export default {
       this.dialogVisible = false
     },
     submit () {
-      this.loading = true
-
       this.$emit('on-submit')
     },
-    end () {
-      this.loading = false
-    }
   },
   mounted () {
   },
   watch: {
     dialogVisible (val) {
       if (!val) {
-        this.loading = false
         this.$emit('on-close')
         setTimeout(() => {
           this.showForm = false
@@ -107,15 +95,6 @@ export default {
         margin-right: 5px;
         width: 24px;
         height: 24px;
-      }
-
-      .a-loading-text{
-        display: inline-block;
-        vertical-align: middle;
-      }
-
-      .a-loading-spinner{
-        margin-top: -12px;
       }
     }
   }

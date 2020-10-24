@@ -1,6 +1,6 @@
 <template>
   <div v-if="show">
-    <a-form laba-position="top">
+    <a-form labal-align="right" :label-col="{span: 6}" :wrapper-col="{span: 16}">
       <a-form-item label="字段标识" v-if="data.type!='grid'">
         <a-input v-model="data.model"></a-input>
       </a-form-item>
@@ -66,19 +66,19 @@
         </a-switch>
       </a-form-item>
       <a-form-item label="选项" v-if="Object.keys(data.options).indexOf('options')>=0">
-        <a-radio-group v-model="data.options.remote" size="mini" style="margin-bottom:10px;">
+        <a-radio-group v-model="data.options.remote" size="small" style="margin-bottom:10px;">
           <a-radio-button label="false">静态数据</a-radio-button>
           <a-radio-button label="true">远端数据</a-radio-button>
         </a-radio-group>
         <template v-if="data.options.remote">
           <div>
-            <a-input size="mini" style="" v-model="data.options.remoteFunc">
+            <a-input size="small" style="" v-model="data.options.remoteFunc">
               <template slot="prepend">远端方法</template>
             </a-input>
-            <a-input size="mini" style="" v-model="data.options.props.value">
+            <a-input size="small" style="" v-model="data.options.props.value">
               <template slot="prepend">值</template>
             </a-input>
-            <a-input size="mini" style="" v-model="data.options.props.label">
+            <a-input size="small" style="" v-model="data.options.props.label">
               <template slot="prepend">标签</template>
             </a-input>
           </div>
@@ -95,13 +95,11 @@
                     label="item.value"
                     style="margin-right: 5px;"
                   >
-                    <a-input :style="{'width': data.options.showLabel? '90px': '180px' }" size="mini" v-model="item.value"></a-input>
-                    <a-input style="width:90px;" size="mini" v-if="data.options.showLabel" v-model="item.label"></a-input>
-                    <!-- <input v-model="item.value"/> -->
+                    <a-input :style="{'width': data.options.showLabel? '90px': '180px' }" size="small" v-model="item.value"></a-input>
+                    <a-input style="width:90px;" size="small" v-if="data.options.showLabel" v-model="item.label"></a-input>
                   </a-radio>
                   <i class="drag-item" style="font-size: 16px;margin: 0 5px;cursor: move;"><i class="iconfont icon-icon_bars"></i></i>
-                  <a-button @click="handleOptionsRemove(index)" circle plain type="danger" size="mini" icon="a-icon-minus" style="padding: 4px;margin-left: 5px;"></a-button>
-
+                  <a-button @click="handleOptionsRemove(index)" circle plain type="danger" size="small" icon="a-icon-minus" style="padding: 4px;margin-left: 5px;"></a-button>
                 </li>
               </draggable>
 
@@ -120,11 +118,11 @@
                     label="item.value"
                     style="margin-right: 5px;"
                   >
-                    <a-input :style="{'width': data.options.showLabel? '90px': '180px' }" size="mini" v-model="item.value"></a-input>
-                    <a-input style="width:90px;" size="mini" v-if="data.options.showLabel" v-model="item.label"></a-input>
+                    <a-input :style="{'width': data.options.showLabel? '90px': '180px' }" size="small" v-model="item.value"></a-input>
+                    <a-input style="width:90px;" size="small" v-if="data.options.showLabel" v-model="item.label"></a-input>
                   </a-checkbox>
                   <i class="drag-item" style="font-size: 16px;margin: 0 5px;cursor: move;"><i class="iconfont icon-icon_bars"></i></i>
-                  <a-button @click="handleOptionsRemove(index)" circle plain type="danger" size="mini" icon="a-icon-minus" style="padding: 4px;margin-left: 5px;"></a-button>
+                  <a-button @click="handleOptionsRemove(index)" circle plain type="danger" size="small" icon="a-icon-minus" style="padding: 4px;margin-left: 5px;"></a-button>
 
                 </li>
               </draggable>
@@ -139,16 +137,16 @@
 
       <a-form-item label="远端数据" v-if="data.type=='cascader'">
         <div>
-          <a-input size="mini" style="" v-model="data.options.remoteFunc">
+          <a-input size="small" style="" v-model="data.options.remoteFunc">
             <template slot="prepend">远端方法</template>
           </a-input>
-          <a-input size="mini" style="" v-model="data.options.props.value">
+          <a-input size="small" style="" v-model="data.options.props.value">
             <template slot="prepend">值</template>
           </a-input>
-          <a-input size="mini" style="" v-model="data.options.props.label">
+          <a-input size="small" style="" v-model="data.options.props.label">
             <template slot="prepend">标签</template>
           </a-input>
-          <a-input size="mini" style="" v-model="data.options.props.children">
+          <a-input size="small" style="" v-model="data.options.props.children">
             <template slot="prepend">子选项</template>
           </a-input>
         </div>
@@ -170,14 +168,14 @@
       <template v-if="data.type == 'time' || data.type == 'date'">
         <a-form-item label="显示类型" v-if="data.type == 'date'">
           <a-select v-model="data.options.type">
-            <a-option value="year"></a-option>
-            <a-option value="month"></a-option>
-            <a-option value="date"></a-option>
-            <a-option value="dates"></a-option>
-            <!-- <a-option value="week"></a-option> -->
-            <a-option value="datetime"></a-option>
-            <a-option value="datetimerange"></a-option>
-            <a-option value="daterange"></a-option>
+            <a-select-option value="year">year</a-select-option>
+            <a-select-option value="month">month</a-select-option>
+            <a-select-option value="date">date</a-select-option>
+            <a-select-option value="dates">dates</a-select-option>
+            <!-- <a-select-option value="week"></a-select-option> -->
+            <a-select-option value="datetime">datetime</a-select-option>
+            <a-select-option value="datetimerange">datetimerange</a-select-option>
+            <a-select-option value="daterange">daterange</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item label="是否为范围选择" v-if="data.type == 'time'">
@@ -230,9 +228,9 @@
       <template v-if="data.type=='blank'">
         <a-form-item label="绑定数据类型">
           <a-select v-model="data.options.defaultType">
-            <a-option value="String" label="字符串"></a-option>
-            <a-option value="Object" label="对象"></a-option>
-            <a-option value="Array" label="数组"></a-option>
+            <a-select-option value="String">字符串</a-select-option>
+            <a-select-option value="Object">对象</a-select-option>
+            <a-select-option value="Array">数组</a-select-option>
           </a-select>
         </a-form-item>
       </template>
@@ -248,9 +246,9 @@
           >
             <li v-for="(item, index) in data.columns" :key="index" >
               <i class="drag-item" style="font-size: 16px;margin: 0 5px;cursor: move;"><i class="iconfont icon-icon_bars"></i></i>
-              <a-input :placeholder="栅格值" size="mini" style="width: 100px;" type="number" v-model.number="item.span"></a-input>
+              <a-input :placeholder="栅格值" size="small" style="width: 100px;" type="number" v-model.number="item.span"></a-input>
 
-              <a-button @click="handleOptionsRemove(index)" circle plain type="danger" size="mini" icon="a-icon-minus" style="padding: 4px;margin-left: 5px;"></a-button>
+              <a-button @click="handleOptionsRemove(index)" circle plain type="danger" size="small" icon="a-icon-minus" style="padding: 4px;margin-left: 5px;"></a-button>
 
             </li>
           </draggable>
@@ -260,18 +258,18 @@
         </a-form-item>
         <a-form-item label="水平排列方式">
           <a-select v-model="data.options.justify">
-            <a-option value="start" label="左对齐"></a-option>
-            <a-option value="end" label="右对齐"></a-option>
-            <a-option value="center" label="居中"></a-option>
-            <a-option value="space-around" label="两侧间隔相等"></a-option>
-            <a-option value="space-between" label="两端对齐"></a-option>
+            <a-select-option value="start">左对齐</a-select-option>
+            <a-select-option value="end">右对齐</a-select-option>
+            <a-select-option value="center">居中对齐</a-select-option>
+            <a-select-option value="space-around">两侧间隔相等</a-select-option>
+            <a-select-option value="space-between">两端对齐</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item label="垂直排列方式">
           <a-select v-model="data.options.align">
-            <a-option value="top" label="顶部对齐"></a-option>
-            <a-option value="middle" label="居中对齐"></a-option>
-            <a-option value="bottom" label="底部对齐"></a-option>
+            <a-select-option value="top">顶部对齐</a-select-option>
+            <a-select-option value="middle">居中对齐</a-select-option>
+            <a-select-option value="bottom">底部对齐</a-select-option>
           </a-select>
         </a-form-item>
       </template>
@@ -292,19 +290,19 @@
           <div v-if="Object.keys(data.options).indexOf('required')>=0">
             <a-checkbox v-model="data.options.required">必填</a-checkbox>
           </div>
-          <a-select v-if="Object.keys(data.options).indexOf('dataType')>=0" v-model="data.options.dataType" size="mini" >
-            <a-option value="string" label="字符串"></a-option>
-            <a-option value="number" label="数字"></a-option>
-            <a-option value="boolean" label="布尔值"></a-option>
-            <a-option value="integer" label="整数"></a-option>
-            <a-option value="float" label="浮点数"></a-option>
-            <a-option value="url" label="URL地址"></a-option>
-            <a-option value="email" label="邮箱地址"></a-option>
-            <a-option value="hex" label="十六进制"></a-option>
+          <a-select v-if="Object.keys(data.options).indexOf('dataType')>=0" v-model="data.options.dataType" size="small" >
+            <a-select-option value="string">字符串</a-select-option>
+            <a-select-option value="number">数字</a-select-option>
+            <a-select-option value="boolean">布尔值</a-select-option>
+            <a-select-option value="integer">整数</a-select-option>
+            <a-select-option value="float">浮点数</a-select-option>
+            <a-select-option value="url">URL地址</a-select-option>
+            <a-select-option value="email">邮箱地址</a-select-option>
+            <a-select-option value="hex">十六进制</a-select-option>
           </a-select>
 
           <div v-if="Object.keys(data.options).indexOf('pattern')>=0">
-            <a-input size="mini" v-model.lazy="data.options.pattern"  style=" width: 240px;" placeholder="填写正则表达式"></a-input>
+            <a-input size="small" v-model.lazy="data.options.pattern"  style=" width: 240px;" placeholder="填写正则表达式"></a-input>
           </div>
         </a-form-item>
       </template>

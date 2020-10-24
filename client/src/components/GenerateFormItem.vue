@@ -133,7 +133,7 @@
         :style="{width: widget.options.width}"
         :filterable="widget.options.filterable"
       >
-        <a-option v-for="item in (widget.options.remote ? widget.options.remoteOptions : widget.options.options)" :key="item.value" :value="item.value" :label="widget.options.showLabel || widget.options.remote?item.label:item.value"></a-option>
+        <a-option v-for="item in (widget.options.remote ? widget.options.remoteOptions : widget.options.options)" :key="item.value" :value="item.value">{{ widget.options.showLabel || widget.options.remote?item.label:item.value }}</a-option>
       </a-select>
     </template>
 
@@ -175,7 +175,6 @@
         :style="{width: widget.options.width}"
         :options="widget.options.remoteOptions"
       >
-
       </a-cascader>
     </template>
 
