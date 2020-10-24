@@ -1,0 +1,37 @@
+.form-empty{
+  position: absolute;
+  text-align: center;
+  width: 300px;
+  font-size: 20px;
+  top: 200px;
+  left: 50%;
+  margin-left: -150px;
+  color: #ccc;
+}
+.widget-empty{
+  background-position: 50%;
+}
+.component-list{
+  display flex
+  justify-content space-between
+  flex-wrap wrap
+  .component-list-item {
+    list-style none
+    font-size: 12px;
+    width: 48%;
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom 10px;
+    &:hover{
+      color: $primary-color;
+      border: 1px dashed $primary-color;
+    }
+  }
+}
+.ant-card-head-title {
+  height: 45px;
+}
+.ant-card-body {
+  padding: 10px;
+}

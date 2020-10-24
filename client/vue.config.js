@@ -29,21 +29,25 @@ module.exports = {
   productionSourceMap: process.env.NODE_ENV !== 'production',
   pages: {
     index: {
+      title: '可视化表单系统',
       entry: './src/main.js',
       filename: 'index.html',
       template: './index.ejs'
     },
     login: {
+      title: '登录',
       entry: './src/login.js',
       filename: 'login.html',
       template: './login.ejs'
     },
     updatePassword: {
+      title: '修改密码',
       entry: './src/updatePassword.js',
       filename: 'updatePassword.html',
       template: './updatePassword.ejs'
     },
     formEdit: {
+      title: '表单编辑',
       entry: './src/formEdit.js',
       filename: 'formEdit.html',
       template: './formEdit.ejs'

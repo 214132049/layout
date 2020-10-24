@@ -153,6 +153,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="stylus">
 // @import '../styles/cover.scss';
 </style>

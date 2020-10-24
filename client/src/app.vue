@@ -36,14 +36,16 @@
     overflow hidden
     > .header
       display flex
+      align-items center
+      justify-content space-between
       background: #fff
       padding: 0 16px
       .logo
         font-size: 16px
         padding 20px 24px
         a
-          color #ffffff
-      &-avatar
+          color #333333
+      .header-avatar
         border-radius: 50%
         width: 30px
         height: 30px

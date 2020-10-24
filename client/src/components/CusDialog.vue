@@ -1,19 +1,8 @@
 <template>
-  <a-modal
-    class="cus-dialog-container"
-    :title="title"
-    :visible.sync="dialogVisible"
-    :close-on-click-modal="false"
-    append-to-body
-    center
-    :width="width"
-    ref="elDialog"
-    :id="id"
-    >
+  <a-modal :title="title" :visible.sync="dialogVisible" :close-on-click-modal="false" append-to-body center :width="width" ref="elDialog" :id="id">
     <span v-if="show">
       <slot></slot>
     </span>
-
     <span v-if="action" slot="footer" class="dialog-footer" v-loading="loading"
       :element-loading-text="loadingText">
       <slot name="action">
@@ -100,7 +89,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="stylus">
 .cus-dialog-container{
   .a-dialog__footer{
     margin: 0 20px;

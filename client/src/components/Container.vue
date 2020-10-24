@@ -1,169 +1,98 @@
 <template>
-  <span class="fm-style">
-    <a-layout class="fm2-container">
-      <a-layout-content class="fm2-main">
-        <a-layout>
-          <a-layout-sider width="250px">
-            <div class="components-list">
-              <template v-if="basicFields.length">
-                <div class="widget-cate">基础字段</div>
-                <draggable tag="ul" :list="basicComponents"
-                  v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}"
-                  @end="handleMoveEnd"
-                  @start="handleMoveStart"
-                  :move="handleMove"
-                >
-
-                  <li v-if="basicFields.indexOf(item.type)>=0" class="form-edit-widget-label" :class="{'no-put': item.type == 'divider'}" v-for="(item, index) in basicComponents" :key="index">
-                    <a>
-                      <i class="icon iconfont" :class="item.icon"></i>
-                      <span>{{item.name}}</span>
-                    </a>
-                  </li>
-                </draggable>
-              </template>
-
-              <template v-if="advanceFields.length">
-                <div class="widget-cate">高级字段</div>
-                <draggable tag="ul" :list="advanceComponents"
-                  v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}"
-                  @end="handleMoveEnd"
-                  @start="handleMoveStart"
-                  :move="handleMove"
-                >
-
-                  <li v-if="advanceFields.indexOf(item.type) >= 0" class="form-edit-widget-label" :class="{'no-put': item.type == 'table'}" v-for="(item, index) in advanceComponents" :key="index">
-                    <a>
-                      <i class="icon iconfont" :class="item.icon"></i>
-                      <span>{{item.name}}</span>
-                    </a>
-                  </li>
-                </draggable>
-              </template>
-
-
-              <template v-if="layoutFields.length">
-                <div class="widget-cate">布局字段</div>
-                <draggable tag="ul" :list="layoutComponents"
-                  v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}"
-                  @end="handleMoveEnd"
-                  @start="handleMoveStart"
-                  :move="handleMove"
-                >
-
-                  <li v-if="layoutFields.indexOf(item.type) >=0" class="form-edit-widget-label no-put" v-for="(item, index) in layoutComponents" :key="index">
-                    <a>
-                      <i class="icon iconfont" :class="item.icon"></i>
-                      <span>{{item.name}}</span>
-                    </a>
-                  </li>
-                </draggable>
-              </template>
-
-            </div>
-
-          </a-layout-sider>
-          <a-layout class="center-container" direction="vertical">
-            <a-layout-header class="btn-bar" style="height: 45px;">
-              <slot name="action">
-              </slot>
-              <a-button v-if="upload" type="text" size="medium" icon="a-icon-upload2" @click="handleUpload">导入JSON</a-button>
-              <a-button v-if="clearable" type="text" size="medium" icon="a-icon-delete" @click="handleClear">清空</a-button>
-              <a-button v-if="preview" type="text" size="medium" icon="a-icon-view" @click="handlePreview">预览</a-button>
-              <a-button v-if="generateJson" type="text" size="medium" icon="a-icon-tickets" @click="handleGenerateJson">生成JSON</a-button>
-              <a-button v-if="generateCode" type="text" size="medium" icon="a-icon-document" @click="handleGenerateCode">生成代码</a-button>
-            </a-layout-header>
-            <a-layout-content :class="{'widget-empty': widgetForm.list.length == 0}">
-
-              <widget-form v-if="!resetJson"  ref="widgetForm" :data="widgetForm" :select.sync="widgetFormSelect"></widget-form>
-            </a-layout-content>
-          </a-layout>
-
-          <a-layout-sider class="widget-config-container">
-            <a-layout>
-              <a-layout-header height="45px">
-                <div class="config-tab" :class="{active: configTab=='widget'}" @click="handleConfigSelect('widget')">字段属性</div>
-                <div class="config-tab" :class="{active: configTab=='form'}" @click="handleConfigSelect('form')">表单属性</div>
-              </a-layout-header>
-              <a-layout-content class="config-content">
-                <widget-config v-show="configTab=='widget'" :data="widgetFormSelect"></widget-config>
-                <form-config v-show="configTab=='form'" :data="widgetForm.config"></form-config>
-              </a-layout-content>
-            </a-layout>
-
-          </a-layout-sider>
-
-          <cus-dialog
-            :visible="previewVisible"
-            @on-close="previewVisible = false"
-            ref="widgetPreview"
-            width="1000px"
-            form
-          >
-            <generate-form insite="true" @on-change="handleDataChange" v-if="previewVisible" :data="widgetForm" :value="widgetModels" :remote="remoteFuncs" ref="generateForm">
-
-              <template v-slot:blank="scope">
-                Width <a-input v-model="scope.model.blank.width" style="width: 100px"></a-input>
-                Height <a-input v-model="scope.model.blank.height" style="width: 100px"></a-input>
-              </template>
-            </generate-form>
-
-            <template slot="action">
-              <a-button type="primary" @click="handleTest">获取数据</a-button>
-              <a-button @click="handleReset">重置</a-button>
-            </template>
-          </cus-dialog>
-
-          <cus-dialog
-            :visible="uploadVisible"
-            @on-close="uploadVisible = false"
-            @on-submit="handleUploadJson"
-            ref="uploadJson"
-            width="800px"
-            form
-          >
-            <a-alert type="info" title="JSON格式如下，直接复制生成的json覆盖此处代码点击确定即可"></a-alert>
-            <div id="uploadeditor" style="height: 400px;width: 100%;">{{jsonEg}}</div>
-          </cus-dialog>
-
-          <cus-dialog
-            :visible="jsonVisible"
-            @on-close="jsonVisible = false"
-            ref="jsonPreview"
-            width="800px"
-            form
-          >
-
-            <div id="jsoneditor" style="height: 400px;width: 100%;">{{jsonTemplate}}</div>
-
-            <template slot="action">
-              <a-button type="primary" class="json-btn" :data-clipboard-text="jsonCopyValue">复制数据</a-button>
-            </template>
-          </cus-dialog>
-
-          <cus-dialog
-            :visible="codeVisible"
-            @on-close="codeVisible = false"
-            ref="codePreview"
-            width="800px"
-            form
-            :action="false"
-          >
-            <!-- <div id="codeeditor" style="height: 500px; width: 100%;">{{htmlTemplate}}</div> -->
-            <a-tabs type="border-card" style="box-shadow: none;" v-model="codeActiveName">
-              <a-tab-pane label="Vue Component" name="vue">
-                <div id="vuecodeeditor" style="height: 500px; width: 100%;">{{vueTemplate}}</div>
-              </a-tab-pane>
-              <a-tab-pane label="HTML" name="html">
-                <div id="codeeditor" style="height: 500px; width: 100%;">{{htmlTemplate}}</div>
-              </a-tab-pane>
-            </a-tabs>
-          </cus-dialog>
-        </a-layout>
+  <a-layout style="height: 100%; overflow: hidden;">
+    <a-layout-sider width="300px" theme="light">
+      <a-card title="基础字段" :bordered="false" style="width: 100%;" v-if="basicFields.length">
+        <draggable tag="ul" class="component-list" :list="basicComponents" @end="handleMoveEnd" @start="handleMoveStart" :move="handleMove" v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}">
+          <li v-if="basicFields.indexOf(item.type) >= 0" class="component-list-item" v-for="(item, index) in basicComponents" :key="index">
+            <a-button block>
+              <i class="icon iconfont" :class="item.icon"></i>
+              <span>{{item.name}}</span>
+            </a-button>
+          </li>
+        </draggable>
+      </a-card>
+      <a-card title="高级字段" :bordered="false" style="width: 100%;" v-if="advanceFields.length">
+        <draggable tag="ul" class="component-list" :list="advanceComponents"  @end="handleMoveEnd" @start="handleMoveStart" :move="handleMove" v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}">
+          <li v-if="advanceFields.indexOf(item.type) >= 0" class="component-list-item" v-for="(item, index) in advanceComponents" :key="index">
+            <a-button block>
+              <span>{{item.name}}</span>
+            </a-button>
+          </li>
+        </draggable>
+      </a-card>
+      <a-card title="布局字段" :bordered="false" style="width: 100%;" v-if="advanceFields.length">
+        <draggable tag="ul" class="component-list" :list="layoutComponents" @end="handleMoveEnd" @start="handleMoveStart" :move="handleMove" v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}">
+          <li v-if="layoutFields.indexOf(item.type) >=0" class="component-list-item" v-for="(item, index) in layoutComponents" :key="index">
+            <a-button block>
+              <i class="icon iconfont" :class="item.icon"></i>
+              <span>{{item.name}}</span>
+            </a-button>
+          </li>
+        </draggable>
+      </a-card>
+    </a-layout-sider>
+    <a-layout>
+      <a-layout-header class="btn-bar" style="height: 45px;background: #fff;">
+        <a-button v-if="upload" type="link" icon="a-icon-upload2" @click="handleUpload">导入JSON</a-button>
+        <a-button v-if="clearable" type="link" icon="a-icon-delete" @click="handleClear">清空</a-button>
+        <a-button v-if="preview" type="link" icon="a-icon-view" @click="handlePreview">预览</a-button>
+        <a-button v-if="generateJson" type="link" icon="a-icon-tickets" @click="handleGenerateJson">生成JSON</a-button>
+        <a-button v-if="generateCode" type="link" icon="a-icon-document" @click="handleGenerateCode">生成代码</a-button>
+        <a-button type="link">保存</a-button>
+      </a-layout-header>
+      <a-layout-content :class="{'widget-empty': widgetForm.list.length == 0}">
+        <widget-form v-if="!resetJson"  ref="widgetForm" :data="widgetForm" :select.sync="widgetFormSelect"></widget-form>
       </a-layout-content>
-      <a-footer height="30px" style="font-weight: 600;">Powered by <a target="_blank" href="https://github.com/GavinZhuLei/vue-form-making">vue-form-making</a></a-footer>
     </a-layout>
-  </span>
+    <a-layout-sider width="250px" theme="light">
+      <a-tabs v-model="configTab">
+        <a-tab-pane key="widget" tab="字段属性">
+          <widget-config v-show="configTab=='widget'" :data="widgetFormSelect" />
+        </a-tab-pane>
+        <a-tab-pane key="form" tab="表单属性">
+          <form-config v-show="configTab=='form'" :data="widgetForm.config" />
+        </a-tab-pane>
+      </a-tabs>
+    </a-layout-sider>
+
+    <cus-dialog :visible="previewVisible" @on-close="previewVisible = false" ref="widgetPreview" width="1000px" form>
+      <generate-form insite="true" @on-change="handleDataChange" v-if="previewVisible" :data="widgetForm" :value="widgetModels" :remote="remoteFuncs" ref="generateForm">
+
+        <template v-slot:blank="scope">
+          Width <a-input v-model="scope.model.blank.width" style="width: 100px"></a-input>
+          Height <a-input v-model="scope.model.blank.height" style="width: 100px"></a-input>
+        </template>
+      </generate-form>
+
+      <template slot="action">
+        <a-button type="primary" @click="handleTest">获取数据</a-button>
+        <a-button @click="handleReset">重置</a-button>
+      </template>
+    </cus-dialog>
+
+    <cus-dialog :visible="uploadVisible" @on-close="uploadVisible = false" @on-submit="handleUploadJson" ref="uploadJson" width="800px" form>
+      <a-alert type="info" title="JSON格式如下，直接复制生成的json覆盖此处代码点击确定即可" show-icon></a-alert>
+      <div id="uploadeditor" style="height: 400px;width: 100%;">{{jsonEg}}</div>
+    </cus-dialog>
+
+    <cus-dialog :visible="jsonVisible" @on-close="jsonVisible = false" ref="jsonPreview" width="800px" form>
+      <div id="jsoneditor" style="height: 400px;width: 100%;">{{jsonTemplate}}</div>
+      <template slot="action">
+        <a-button type="primary" class="json-btn" :data-clipboard-text="jsonCopyValue">复制数据</a-button>
+      </template>
+    </cus-dialog>
+
+    <cus-dialog :visible="codeVisible" @on-close="codeVisible = false" ref="codePreview" width="800px" form :action="false">
+      <a-tabs type="border-card" style="box-shadow: none;" v-model="codeActiveName">
+        <a-tab-pane label="Vue Component" name="vue">
+          <div id="vuecodeeditor" style="height: 500px; width: 100%;">{{vueTemplate}}</div>
+        </a-tab-pane>
+        <a-tab-pane label="HTML" name="html">
+          <div id="codeeditor" style="height: 500px; width: 100%;">{{htmlTemplate}}</div>
+        </a-tab-pane>
+      </a-tabs>
+    </cus-dialog>
+  </a-layout>
 </template>
 
 <script>
@@ -175,7 +104,7 @@ import CusDialog from './CusDialog'
 import GenerateForm from './GenerateForm'
 import Clipboard from 'clipboard'
 import {basicComponents, layoutComponents, advanceComponents} from './componentsConfig.js'
-import request from '../util/request.js'
+import request from '../extend/Server'
 import generateCode from './generateCode.js'
 
 export default {
@@ -285,9 +214,6 @@ export default {
   mounted () {
   },
   methods: {
-    handleConfigSelect (value) {
-      this.configTab = value
-    },
     handleMoveEnd (evt) {
       console.log('end', evt)
     },

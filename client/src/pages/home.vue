@@ -6,10 +6,10 @@
     <p>先从创建项目开始吧！</p>
     <div>
       <router-link to="/projects/edit">
-        <a-button>创建项目</a-button>
+        <a-button type="primary">创建项目</a-button>
       </router-link>
-      <router-link to="/projects/list">
-        <a-button>查看已有项目</a-button>
+      <router-link to="/projects/list" style="margin-left: 20px">
+        <a-button type="primary">查看已有项目</a-button>
       </router-link>
     </div>
   </div>

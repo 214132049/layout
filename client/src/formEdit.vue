@@ -1,34 +1,20 @@
 <template>
-  <div id="app">
-    <header class="header">
-      <a-button>保存</a-button>
-    </header>
-    <main class="container">
-      <fm-making-form ref="makingForm" upload preview generate-code generate-json clearable>
-        <template slot="action">
-        </template>
-      </fm-making-form>
-    </main>
-  </div>
+  <fm-making-form ref="makingForm" upload preview generate-code clearable />
 </template>
 
 <script>
-  import Home from './pages/home'
   export default {
-    name: 'app',
-    components: { Home },
-    methods: {
-    }
+    name: 'FormEdit',
   }
 </script>
 
-<style lang="scss">
+<style lang="stylus">
   .header{
     height: 50px;
-    box-shadow: 0 2px 10px rgba(70,160,252, 0.6);
     padding: 0 10px;
-    background-image: linear-gradient(to right,#1278f6,#00b4aa);
     position: relative;
+    text-align right
+    background #fff
   }
   .container{
     height: calc(100% - 50px);
@@ -41,7 +27,7 @@
   html,body{
     height: 100%;
   }
-  #app {
+  .app {
     font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
