@@ -72,8 +72,8 @@
       </template>
     </cus-dialog>
 
-    <cus-dialog :visible="uploadVisible" @on-close="uploadVisible = false" @on-submit="handleUploadJson" ref="uploadJson" width="800px" form>
-      <a-alert type="info" title="JSON格式如下，直接复制生成的json覆盖此处代码点击确定即可" show-icon></a-alert>
+    <cus-dialog :visible="uploadVisible" @on-close="uploadVisible = false" @on-submit="handleUploadJson" ref="uploadJson" width="800px" form :action="false">>
+      <a-alert type="info" message="JSON格式如下，直接复制生成的json覆盖此处代码点击确定即可" show-icon></a-alert>
       <div id="uploadeditor" style="height: 400px;width: 100%;">{{jsonEg}}</div>
     </cus-dialog>
 
@@ -85,11 +85,11 @@
     </cus-dialog>
 
     <cus-dialog :visible="codeVisible" @on-close="codeVisible = false" ref="codePreview" width="800px" form :action="false">
-      <a-tabs type="border-card" style="box-shadow: none;" v-model="codeActiveName">
-        <a-tab-pane label="Vue Component" name="vue">
+      <a-tabs style="box-shadow: none;" v-model="codeActiveName">
+        <a-tab-pane tab="Vue Component" key="vue" forceRender>
           <div id="vuecodeeditor" style="height: 500px; width: 100%;">{{vueTemplate}}</div>
         </a-tab-pane>
-        <a-tab-pane label="HTML" name="html">
+        <a-tab-pane tab="HTML" key="html" forceRender>
           <div id="codeeditor" style="height: 500px; width: 100%;">{{htmlTemplate}}</div>
         </a-tab-pane>
       </a-tabs>
@@ -210,17 +210,22 @@ export default {
       jsonEg: `{
         "list": [],
         "config": {
-          labelCol: {
-            span: 3
+          "labelCol": {
+            "span": 3
           },
-          wrapperCol: {
-            span: 12
+          "wrapperCol": {
+            "span": 12
           },
           "labelAlign": "right",
           "size": "default"
         }
       }`,
       codeActiveName: 'vue',
+    }
+  },
+  watch: {
+    codeActiveName () {
+
     }
   },
   mounted () {

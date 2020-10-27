@@ -1,5 +1,5 @@
 <template>
-  <a-modal :title="title" :visible="dialogVisible" :close-on-click-modal="false" append-to-body center :width="width" ref="elDialog" :id="id" @cancel="close" @ok="submit">
+  <a-modal :title="title" :visible="dialogVisible" :close-on-click-modal="false" append-to-body center :width="width" ref="elDialog" :id="id" @cancel="close" @ok="submit" :footer="action">
     <span v-if="show">
       <slot></slot>
     </span>
