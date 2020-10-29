@@ -13,17 +13,6 @@
           <a-input placeholder="姓名" v-model="form.name">
           </a-input>
         </a-form-model-item>
-<!--        <a-form-model-item label="token" prop="security" :rules="[-->
-<!--          { message: '输入1-35位token', trigger: 'blur'},-->
-<!--          { min: 1, max: 64, message: '长度在 1 到 64 个字符', trigger: 'blur' }-->
-<!--          ]">-->
-<!--          <a-input placeholder="token" :maxlength="64" v-model="form.security" disabled>-->
-<!--            <a-button slot="append" @click="makeSecurity">随机生成</a-button>-->
-<!--          </a-input>-->
-<!--          <div class="desc">-->
-<!--            <div>创建组件等场景需使用token</div>-->
-<!--          </div>-->
-<!--        </a-form-model-item>-->
         <a-form-model-item>
           <a-button type="primary" @click="baseSubmit">修改</a-button>
         </a-form-model-item>

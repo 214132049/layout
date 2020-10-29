@@ -1,5 +1,5 @@
 <template>
-  <a-form-model ref="form" :model="form" :rules="rules" :label-col="{span: 3}" :wrapper-col="{span: 21}">
+  <a-form-model ref="form" :model="form" :rules="rules" :label-col="{span: 4}" :wrapper-col="{span: 20}" style="width: 500px;">
     <a-form-model-item label="项目图标">
       <UploadImage @ended="uploadEnd" :url="form.image | defaultProject" />
     </a-form-model-item>

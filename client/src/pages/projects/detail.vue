@@ -4,7 +4,7 @@
       <a-tab-pane tab="页面" key="doc">
         <c-page :id="project.id" :userId="project.userId" />
       </a-tab-pane>
-      <a-tab-pane tab="组件" key="doc">
+      <a-tab-pane tab="组件" key="component">
         <c-com :id="project.id" :userId="project.userId" />
       </a-tab-pane>
       <a-tab-pane tab="成员" key="member">

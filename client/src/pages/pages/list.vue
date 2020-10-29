@@ -13,7 +13,7 @@
           <img slot="cover" alt="cover" :src="item.image | defaultProject"
           />
           <template slot="actions" class="ant-card-actions">
-            <a-button type="link">编辑</a-button>
+            <a-button type="link" @click="editPage(item.id)">编辑</a-button>
             <router-link :to="{path: '/pages/edit', query: { id: item.id }}">
               <a-button type="link">设置</a-button>
             </router-link>
@@ -85,11 +85,14 @@
           needLoading: true,
           trimNull: false,
           data: {
-            projectId: this.projectId
+            projectId: +this.projectId
           }
         }).then((res) => {
           this.pagesList = res.data.list || []
         })
+      },
+      editPage (id) {
+        window.location.href = `/formEdit?id=${id}`
       }
     }
   }

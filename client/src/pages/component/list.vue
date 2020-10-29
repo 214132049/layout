@@ -76,7 +76,7 @@
           method: 'post',
           needLoading: true,
           data: {
-            projectId: this.projectId
+            projectId: +this.projectId
           }
         }).then(({ data }) => {
           this.comLists = data.list || []

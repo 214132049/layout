@@ -81,6 +81,10 @@
         })
       },
       onSubmit () {
+        if (this.newMember.length === 0) {
+          this.$message.error('先选择要添加的用户')
+          return
+        }
         Server({
           url: 'api/project/updateMember',
           method: 'post',
