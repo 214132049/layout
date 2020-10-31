@@ -13,5 +13,5 @@ module.exports = (app) => {
     modifyDate: { type: Date, default: Date.now }
   })
 
-  return mongoose.model('component', ComponentSchema)
+  return mongoose.model('components', ComponentSchema)
 }

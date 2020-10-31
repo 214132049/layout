@@ -1,25 +1,40 @@
 <template>
   <div v-if="show">
     <a-form labal-align="right" :label-col="{span: 6}" :wrapper-col="{span: 16}">
-      <a-form-item label="字段标识" v-if="data.type!='grid'">
-        <a-input v-model="data.model"></a-input>
+      <a-form-item label="字段标识">
+        <a-input v-model="data.model" dis></a-input>
       </a-form-item>
-      <a-form-item label="标题" v-if="data.type!='grid'">
+      <a-form-item label="标题" v-if="data.type!=='button'">
         <a-input v-model="data.name"></a-input>
       </a-form-item>
+      <template v-if="data.type ==='button'">
+        <a-form-item label="按钮类型" v-if="'type' in data.options">
+          <a-select v-model="data.options.type">
+            <a-select-option value="">Default</a-select-option>
+            <a-select-option value="primary">primary</a-select-option>
+            <a-select-option value="dashed">dashed</a-select-option>
+            <a-select-option value="danger">danger</a-select-option>
+            <a-select-option value="link">link</a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item label="按钮尺寸" v-if="'size' in data.options">
+          <a-select v-model="data.options.size">
+            <a-select-option value="">Default</a-select-option>
+            <a-select-option value="small">small</a-select-option>
+            <a-select-option value="large">large</a-select-option>
+          </a-select>
+        </a-form-item>
+      </template>
       <a-form-item label="宽度" v-if="Object.keys(data.options).indexOf('width')>=0">
         <a-input v-model="data.options.width"></a-input>
       </a-form-item>
-
       <a-form-item label="高度" v-if="Object.keys(data.options).indexOf('height')>=0">
         <a-input v-model="data.options.height"></a-input>
       </a-form-item>
-
-      <a-form-item label="大小" v-if="Object.keys(data.options).indexOf('size')>=0">
+      <a-form-item label="大小" v-if="data.type!=='button' && Object.keys(data.options).indexOf('size')>=0">
         宽度 <a-input style="width: 90px;" type="number" v-model.number="data.options.size.width"></a-input>
         高度 <a-input style="width: 90px;" type="number" v-model.number="data.options.size.height"></a-input>
       </a-form-item>
-
       <a-form-item label="占位内容" v-if="Object.keys(data.options).indexOf('placeholder')>=0 && (data.type!='time' || data.type!='date')">
         <a-input v-model="data.options.placeholder"></a-input>
       </a-form-item>
@@ -41,29 +56,22 @@
       <a-form-item label="步长" v-if="Object.keys(data.options).indexOf('step')>=0">
         <a-input-number v-model="data.options.step" :min="0" :max="100" :step="1"></a-input-number>
       </a-form-item>
-      <a-form-item label="是否多选" v-if="data.type=='select'">
-        <a-switch v-model="data.options.multiple" @change="handleSelectMuliple"></a-switch>
-      </a-form-item>
-      <a-form-item label="是否可搜索" v-if="data.type=='select'">
-        <a-switch v-model="data.options.filterable"></a-switch>
-      </a-form-item>
+      <template v-if="data.type=='select'">
+        <a-form-item label="是否多选">
+          <a-switch v-model="data.options.multiple" @change="handleSelectMuliple"></a-switch>
+        </a-form-item>
+        <a-form-item label="是否可搜索">
+          <a-switch v-model="data.options.filterable"></a-switch>
+        </a-form-item>
+      </template>
       <a-form-item label="允许半选" v-if="Object.keys(data.options).indexOf('allowHalf')>=0">
-        <a-switch
-            v-model="data.options.allowHalf"
-          >
-          </a-switch>
+        <a-switch v-model="data.options.allowHalf"></a-switch>
       </a-form-item>
       <a-form-item label="支持透明度选择" v-if="Object.keys(data.options).indexOf('showAlpha')>=0">
-        <a-switch
-            v-model="data.options.showAlpha"
-          >
-          </a-switch>
+        <a-switch v-model="data.options.showAlpha"></a-switch>
       </a-form-item>
       <a-form-item label="是否显示标签" v-if="Object.keys(data.options).indexOf('showLabel')>=0">
-        <a-switch
-            v-model="data.options.showLabel"
-          >
-        </a-switch>
+        <a-switch v-model="data.options.showLabel"></a-switch>
       </a-form-item>
       <a-form-item label="选项" v-if="Object.keys(data.options).indexOf('options')>=0">
         <a-radio-group v-model="data.options.remote" size="small" style="margin-bottom:10px;">
@@ -235,46 +243,6 @@
         </a-form-item>
       </template>
 
-      <template v-if="data.type == 'grid'">
-        <a-form-item label="栅格间隔">
-          <a-input type="number" v-model.number="data.options.gutter"></a-input>
-        </a-form-item>
-        <a-form-item label="列配置项">
-          <draggable tag="ul" :list="data.columns"
-            v-bind="{group:{ name:'options'}, ghostClass: 'ghost',handle: '.drag-item'}"
-            handle=".drag-item"
-          >
-            <li v-for="(item, index) in data.columns" :key="index" >
-              <i class="drag-item" style="font-size: 16px;margin: 0 5px;cursor: move;"><i class="iconfont icon-icon_bars"></i></i>
-              <a-input :placeholder="栅格值" size="small" style="width: 100px;" type="number" v-model.number="item.span"></a-input>
-
-              <a-button @click="handleOptionsRemove(index)" circle plain type="danger" size="small" icon="a-icon-minus" style="padding: 4px;margin-left: 5px;"></a-button>
-
-            </li>
-          </draggable>
-          <div style="margin-left: 22px;">
-            <a-button type="text" @click="handleAddColumn">添加列</a-button>
-          </div>
-        </a-form-item>
-        <a-form-item label="水平排列方式">
-          <a-select v-model="data.options.justify">
-            <a-select-option value="start">左对齐</a-select-option>
-            <a-select-option value="end">右对齐</a-select-option>
-            <a-select-option value="center">居中对齐</a-select-option>
-            <a-select-option value="space-around">两侧间隔相等</a-select-option>
-            <a-select-option value="space-between">两端对齐</a-select-option>
-          </a-select>
-        </a-form-item>
-        <a-form-item label="垂直排列方式">
-          <a-select v-model="data.options.align">
-            <a-select-option value="top">顶部对齐</a-select-option>
-            <a-select-option value="middle">居中对齐</a-select-option>
-            <a-select-option value="bottom">底部对齐</a-select-option>
-          </a-select>
-        </a-form-item>
-      </template>
-
-
       <template v-if="data.type != 'grid'">
         <a-form-item label="操作属性">
           <a-checkbox v-model="data.options.readonly" v-if="Object.keys(data.options).indexOf('readonly')>=0">完全只读</a-checkbox>
@@ -286,11 +254,11 @@
           <a-checkbox v-model="data.options.isEdit" v-if="Object.keys(data.options).indexOf('isEdit')>=0">编辑}</a-checkbox>
 
         </a-form-item>
-        <a-form-item label="校验">
-          <div v-if="Object.keys(data.options).indexOf('required')>=0">
+        <a-form-item label="校验" v-if="'required' in (data.options) || 'dataType' in (data.options) || 'pattern' in (data.options)">
+          <div v-if="'required' in (data.options)">
             <a-checkbox v-model="data.options.required">必填</a-checkbox>
           </div>
-          <a-select v-if="Object.keys(data.options).indexOf('dataType')>=0" v-model="data.options.dataType" size="small" >
+          <a-select v-if="'dataType' in (data.options)" v-model="data.options.dataType" size="small" >
             <a-select-option value="string">字符串</a-select-option>
             <a-select-option value="number">数字</a-select-option>
             <a-select-option value="boolean">布尔值</a-select-option>
@@ -300,8 +268,7 @@
             <a-select-option value="email">邮箱地址</a-select-option>
             <a-select-option value="hex">十六进制</a-select-option>
           </a-select>
-
-          <div v-if="Object.keys(data.options).indexOf('pattern')>=0">
+          <div v-if="'pattern' in (data.options)">
             <a-input size="small" v-model.lazy="data.options.pattern"  style=" width: 240px;" placeholder="填写正则表达式"></a-input>
           </div>
         </a-form-item>

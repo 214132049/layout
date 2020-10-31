@@ -8,13 +8,15 @@
   export default {
     name: pkg.name,
     custom: {
-      type: {
-        name: ''
+      type: pkg.name,
+      name: 'Alert组件',
+      options: {
+        message: ''
       }
     },
     methods: {
       showAlert() {
-        window.alert('this is alert button')
+        window.alert(this.$options.custom.options.message)
       }
     }
   }

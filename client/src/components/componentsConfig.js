@@ -1,8 +1,17 @@
 export const basicComponents = [
   {
+    type: 'button',
+    name: '按钮',
+    options: {
+      type: 'primary',
+      size: '',
+      text: '确定',
+      disabled: false,
+    }
+  },
+  {
     type: 'input',
     name: '单行文本',
-    icon: 'icon-input',
     options: {
       width: '100%',
       defaultValue: '',
@@ -241,14 +250,6 @@ export const basicComponents = [
 
 export const advanceComponents = [
   {
-    type: 'blank',
-    name: '自定义区域',
-    icon: 'icon-zidingyishuju',
-    options: {
-      defaultType: 'String'
-    }
-  },
-  {
     type: 'editor',
     name: '编辑器',
     icon: 'icon-fuwenbenkuang',
@@ -275,29 +276,6 @@ export const advanceComponents = [
         children: 'children'
       },
       remoteFunc: ''
-    }
-  }
-]
-
-export const layoutComponents = [
-  {
-    type: 'grid',
-    name: '栅格布局',
-    icon: 'icon-grid-',
-    columns: [
-      {
-        span: 12,
-        list: []
-      },
-      {
-        span: 12,
-        list: []
-      }
-    ],
-    options: {
-      gutter: 0,
-      justify: 'start',
-      align: 'top'
     }
   }
 ]

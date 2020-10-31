@@ -5,10 +5,10 @@
       <draggable style="height: 100px;" v-model="data.list" v-bind="{group:'people', ghostClass: 'ghost', animation: 200, handle: '.drag-widget'}" draggable=".widget-view" @end="handleMoveEnd" @add="handleWidgetAdd">
         <transition-group name="fade" tag="div" class="widget-form-list">
           <template v-for="(element, index) in data.list">
-            <template v-if="element.type == 'grid'">
+            <template v-if="element.type === 'grid'">
               <a-row class="widget-col widget-view" v-if="element && element.key" :key="element.key"
                 type="flex"
-                :class="{active: selectWidget.key == element.key}"
+                :class="{active: selectWidget.key === element.key}"
                 :gutter="element.options.gutter ? element.options.gutter : 0"
                 :justify="element.options.justify"
                 :align="element.options.align"

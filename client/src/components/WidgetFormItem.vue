@@ -5,6 +5,16 @@
       :class="{active: selectWidget.key == element.key, 'is_req': element.options.required}"
       :label="element.name"
     >
+      <template v-if="element.type == 'button'">
+        <a-button
+          :type="element.options.type"
+          :size="element.options.size"
+          :style="{width: element.options.width}"
+          :placeholder="element.options.placeholder"
+          :disabled="element.options.disabled"
+        >{{ element.options.placeholder }}</a-button>
+      </template>
+  
       <template v-if="element.type == 'input'">
         <a-input
           v-model="element.options.defaultValue"

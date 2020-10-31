@@ -49,19 +49,21 @@ module.exports = {
   plugins: [
     new FileManagerPlugin({
       events: {
-        onEnd: [
+        onStart: [
           {
             copy: [
               { source: './package.json', destination: './lib/package.json' },
             ]
-          },
+          }
+        ],
+        onEnd: [
           {
             archive: [
-              { source: './lib/package.json', destination: pkg.name + '.zip' }
+              { source: './lib', destination: pkg.name + '.zip' }
             ],
           },
           {
-            delete: ['./lib/package.json'],
+            delete: ['./lib'],
           }
         ],
       },

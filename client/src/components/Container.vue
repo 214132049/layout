@@ -1,30 +1,19 @@
 <template>
   <a-layout style="height: 100%; overflow: hidden;">
     <a-layout-sider width="300px" style="border-right: 1px solid #e8e8e8;" theme="light">
-      <a-card title="基础字段" :bordered="false" style="width: 100%;" v-if="basicFields.length">
+      <a-card title="基础组件" :bordered="false" style="width: 100%;">
         <draggable tag="ul" class="component-list" :list="basicComponents" @end="handleMoveEnd" @start="handleMoveStart" :move="handleMove" v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}">
-          <li v-if="basicFields.indexOf(item.type) >= 0" class="component-list-item" v-for="(item, index) in basicComponents" :key="index">
-            <a-button block>
-              <i class="icon iconfont" :class="item.icon"></i>
+          <li class="component-list-item" v-for="(item, index) in basicComponents" :key="index">
+            <a-button block type="small">
               <span>{{item.name}}</span>
             </a-button>
           </li>
         </draggable>
       </a-card>
-      <a-card title="高级字段" :bordered="false" style="width: 100%;" v-if="advanceFields.length">
+      <a-card title="高级组件" :bordered="false" style="width: 100%;">
         <draggable tag="ul" class="component-list" :list="advanceComponents"  @end="handleMoveEnd" @start="handleMoveStart" :move="handleMove" v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}">
-          <li v-if="advanceFields.indexOf(item.type) >= 0" class="component-list-item" v-for="(item, index) in advanceComponents" :key="index">
-            <a-button block>
-              <span>{{item.name}}</span>
-            </a-button>
-          </li>
-        </draggable>
-      </a-card>
-      <a-card title="布局字段" :bordered="false" style="width: 100%;" v-if="advanceFields.length">
-        <draggable tag="ul" class="component-list" :list="layoutComponents" @end="handleMoveEnd" @start="handleMoveStart" :move="handleMove" v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}">
-          <li v-if="layoutFields.indexOf(item.type) >=0" class="component-list-item" v-for="(item, index) in layoutComponents" :key="index">
-            <a-button block>
-              <i class="icon iconfont" :class="item.icon"></i>
+          <li class="component-list-item" v-for="(item, index) in advanceComponents" :key="index">
+            <a-button block type="small">
               <span>{{item.name}}</span>
             </a-button>
           </li>
@@ -105,7 +94,7 @@ import WidgetForm from './WidgetForm'
 import CusDialog from './CusDialog'
 import GenerateForm from './GenerateForm'
 import Clipboard from 'clipboard'
-import {basicComponents, layoutComponents, advanceComponents} from './componentsConfig.js'
+import {basicComponents, advanceComponents} from './componentsConfig.js'
 import request from '../extend/Server'
 import generateCode from './generateCode.js'
 
@@ -139,24 +128,11 @@ export default {
     clearable: {
       type: Boolean,
       default: false
-    },
-    basicFields: {
-      type: Array,
-      default: () => ['input', 'textarea', 'number', 'radio', 'checkbox', 'time', 'date', 'rate', 'color', 'select', 'switch', 'slider', 'text']
-    },
-    advanceFields: {
-      type: Array,
-      default: () => ['blank', 'editor', 'cascader']
-    },
-    layoutFields: {
-      type: Array,
-      default: () => ['grid']
     }
   },
   data () {
     return {
       basicComponents,
-      layoutComponents,
       advanceComponents,
       resetJson: false,
       widgetForm: {

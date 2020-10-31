@@ -24,15 +24,16 @@ class ComponentController extends BaseController {
     const { ctx } = this
     const searchRule = {
       name: { type: 'string', max: 50, required: true },
-      projectId: { type: 'int', required: true },
-      npmVersion: { type: 'int', required: true },
-      npmName: { type: 'int', required: true }
+      projectId: { type: 'string', required: true },
+      npmVersion: { type: 'string', required: true },
+      npmName: { type: 'string', required: true }
     }
-    ctx.validate(searchRule, this.body)
+    const res = await ctx.getFileStream()
+    ctx.validate(searchRule, res.fields)
     if (this.body.id) {
       await this.find()
     }
-    await ctx.service.component.save(this.body)
+    await ctx.service.component.save(res)
     this.success()
   }
 

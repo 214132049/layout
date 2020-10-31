@@ -8,12 +8,11 @@
         <a-list-item slot="renderItem" slot-scope="item">
           <a-card hoverable :title="item.name">
             <template slot="actions" class="ant-card-actions">
-              <router-link :to="{path: '/component/edit', query: { id: item.id }}">
+              <router-link :to="{path: '/component/edit', query: { projectId, id: item.id }}">
                 <a-button type="link">编辑</a-button>
               </router-link>
               <a-button type="link" @click="deleteOne(item)">删除</a-button>
             </template>
-            {{ item.desc }}
           </a-card>
         </a-list-item>
       </a-list>

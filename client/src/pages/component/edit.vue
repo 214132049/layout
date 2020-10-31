@@ -1,6 +1,6 @@
 <template>
   <div v-if="!this.id || loadend">
-    <a-form-model ref="form" v-if="!this.id || form.name" :model="form" :rules="rules" :label-col="{span: 3}" :wrapper-col="{span: 21}">
+    <a-form-model ref="form" v-if="!this.id || form.name" :model="form" :label-col="{span: 3}" :wrapper-col="{span: 21}">
       <a-form-model-item label="名称" prop="name">
         <a-input placeholder="名称" :maxlength="35" v-model="form.name" />
       </a-form-model-item>
@@ -36,39 +36,33 @@
   export default {
     mixins: [BasePage],
     data () {
+      const id = this.$route.query.id
       return {
         loading: false,
         noPower: false,
         loadend: false,
-        id: +this.$route.query.id,
+        id: id ? +id : '',
         form: {
-          id: +this.$route.query.id,
+          id: id ? +id : '',
           name: '',
           npmVersion: '',
           npmName: '',
         },
-        fileList: [],
-        rules: {
-          desc: [
-            { required: false, message: '输入描述', trigger: 'blur' },
-            { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
-          ]
-        }
+        fileList: []
       }
     },
     mounted: function () {
       if (this.id) {
-        this.getTypeList()
+        this.getDetail()
       }
       this.form.projectId = +this.$route.query.projectId
     },
     methods: {
-      // 获取分类列表
-      getTypeList: function () {
+      getDetail: function () {
         Server({
           url: 'api/component/detail',
-          method: 'get',
-          params: {
+          method: 'post',
+          data: {
             id: this.id
           }
         }).then(({ data }) => {
@@ -101,6 +95,8 @@
             }).then(() => {
               this.loading = false
               this.$message.success('提交成功')
+            }).catch(() => {
+              this.loading = false
             })
           }
         })
@@ -124,19 +120,11 @@
         if (pkg) {
           const content = await pkg.async('string')
           if (!content) return false
-          const { name, description, version } = JSON.parse(content)
+          const { name, version } = JSON.parse(content)
           this.form.npmName = name
-          this.form.dessc = description
-          this.form.version = version
+          this.form.npmVersion = version
         } else {
           this.$message.error('缺少package.json文件')
-          return false
-        }
-        if (zipInfo.files['changelog.md']) {
-          var changelog = await zipInfo.files['changelog.md'].async('string')
-          this.form.changelog = changelog
-        } else {
-          this.$message.error('缺少changelog.md文件')
           return false
         }
         return true

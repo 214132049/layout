@@ -12,7 +12,8 @@ npm-debug.log
 .yarnclean
 run
 .github
-/run/
+/run/.g
 /.travis.yml
 /appveyor.yml
 /logs/
+/app/public/**/*
