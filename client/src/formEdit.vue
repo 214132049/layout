@@ -1,5 +1,5 @@
 <template>
-  <fm-making-form ref="makingForm" upload preview generate-code clearable />
+  <fm-making-form ref="makingForm" />
 </template>
 
 <script>

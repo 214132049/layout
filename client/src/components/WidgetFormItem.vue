@@ -50,7 +50,6 @@
           <a-radio
             :style="{display: element.options.inline ? 'inline-block' : 'block'}"
             :label="item.value" v-for="(item, index) in element.options.options" :key="item.value + index"
-
           >
             {{element.options.showLabel ? item.label : item.value}}
           </a-radio>
@@ -194,7 +193,7 @@
     </div>
 
     <div class="widget-view-model">
-      {{ element.model }}
+      {{ element.key }}
     </div>
     <div class="mask"></div>
   </div>
@@ -207,9 +206,6 @@ export default {
     return {
       selectWidget: this.select
     }
-  },
-  mounted () {
-
   },
   methods: {
     handleSelectWidget (index) {

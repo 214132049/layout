@@ -28,9 +28,6 @@
       <a-form-item label="宽度" v-if="Object.keys(data.options).indexOf('width')>=0">
         <a-input v-model="data.options.width"></a-input>
       </a-form-item>
-      <a-form-item label="高度" v-if="Object.keys(data.options).indexOf('height')>=0">
-        <a-input v-model="data.options.height"></a-input>
-      </a-form-item>
       <a-form-item label="大小" v-if="data.type!=='button' && Object.keys(data.options).indexOf('size')>=0">
         宽度 <a-input style="width: 90px;" type="number" v-model.number="data.options.size.width"></a-input>
         高度 <a-input style="width: 90px;" type="number" v-model.number="data.options.size.height"></a-input>
@@ -74,73 +71,19 @@
         <a-switch v-model="data.options.showLabel"></a-switch>
       </a-form-item>
       <a-form-item label="选项" v-if="Object.keys(data.options).indexOf('options')>=0">
-        <a-radio-group v-model="data.options.remote" size="small" style="margin-bottom:10px;">
-          <a-radio-button label="false">静态数据</a-radio-button>
-          <a-radio-button label="true">远端数据</a-radio-button>
-        </a-radio-group>
-        <template v-if="data.options.remote">
-          <div>
-            <a-input size="small" style="" v-model="data.options.remoteFunc">
-              <template slot="prepend">远端方法</template>
-            </a-input>
-            <a-input size="small" style="" v-model="data.options.props.value">
-              <template slot="prepend">值</template>
-            </a-input>
-            <a-input size="small" style="" v-model="data.options.props.label">
-              <template slot="prepend">标签</template>
-            </a-input>
-          </div>
+        <template v-if="data.type=='radio' || data.type=='checkbox' || data.type=='select'">
+          <draggable tag="ul" :list="data.options.options"
+                     v-bind="{group:{ name:'options'}, ghostClass: 'ghost',handle: '.drag-item'}"
+                     handle=".drag-item"
+          >
+            <li v-for="(item, index) in data.options.options" :key="index" >
+              <a-input style="width: 180px" size="small" v-model="item.value"></a-input>
+              <a-icon class="drag-item" style="margin: 0 5px;cursor: move;" type="drag"></a-icon>
+              <a-icon type="delete" @click="handleOptionsRemove(index)" style="margin-left: 5px;"/>
+            </li>
+          </draggable>
         </template>
-        <template v-else>
-          <template v-if="data.type=='radio' || (data.type=='select'&&!data.options.multiple)">
-            <a-radio-group v-model="data.options.defaultValue">
-              <draggable tag="ul" :list="data.options.options"
-                v-bind="{group:{ name:'options'}, ghostClass: 'ghost',handle: '.drag-item'}"
-                handle=".drag-item"
-              >
-                <li v-for="(item, index) in data.options.options" :key="index" >
-                  <a-radio
-                    label="item.value"
-                    style="margin-right: 5px;"
-                  >
-                    <a-input :style="{'width': data.options.showLabel? '90px': '180px' }" size="small" v-model="item.value"></a-input>
-                    <a-input style="width:90px;" size="small" v-if="data.options.showLabel" v-model="item.label"></a-input>
-                  </a-radio>
-                  <i class="drag-item" style="font-size: 16px;margin: 0 5px;cursor: move;"><i class="iconfont icon-icon_bars"></i></i>
-                  <a-button @click="handleOptionsRemove(index)" circle plain type="danger" size="small" icon="a-icon-minus" style="padding: 4px;margin-left: 5px;"></a-button>
-                </li>
-              </draggable>
-
-            </a-radio-group>
-          </template>
-
-          <template v-if="data.type=='checkbox' || (data.type=='select' && data.options.multiple)">
-            <a-checkbox-group v-model="data.options.defaultValue">
-
-              <draggable tag="ul" :list="data.options.options"
-                v-bind="{group:{ name:'options'}, ghostClass: 'ghost',handle: '.drag-item'}"
-                handle=".drag-item"
-              >
-                <li v-for="(item, index) in data.options.options" :key="index" >
-                  <a-checkbox
-                    label="item.value"
-                    style="margin-right: 5px;"
-                  >
-                    <a-input :style="{'width': data.options.showLabel? '90px': '180px' }" size="small" v-model="item.value"></a-input>
-                    <a-input style="width:90px;" size="small" v-if="data.options.showLabel" v-model="item.label"></a-input>
-                  </a-checkbox>
-                  <i class="drag-item" style="font-size: 16px;margin: 0 5px;cursor: move;"><i class="iconfont icon-icon_bars"></i></i>
-                  <a-button @click="handleOptionsRemove(index)" circle plain type="danger" size="small" icon="a-icon-minus" style="padding: 4px;margin-left: 5px;"></a-button>
-
-                </li>
-              </draggable>
-            </a-checkbox-group>
-          </template>
-          <div style="margin-left: 22px;">
-            <a-button type="text" @click="handleAddOption">添加选项</a-button>
-          </div>
-        </template>
-
+        <a-button type="link" @click="handleAddOption">添加选项</a-button>
       </a-form-item>
 
       <a-form-item label="远端数据" v-if="data.type=='cascader'">

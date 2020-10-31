@@ -2,50 +2,10 @@
   <div class="widget-form-container">
     <div v-if="data.list.length === 0" class="form-empty">从左侧拖拽来添加字段</div>
     <a-form :label-align="data.config.labelAlign" :label-col="data.config.labelCol" :wrapper-col="data.config.wrapperCol" >
-      <draggable style="height: 100px;" v-model="data.list" v-bind="{group:'people', ghostClass: 'ghost', animation: 200, handle: '.drag-widget'}" draggable=".widget-view" @end="handleMoveEnd" @add="handleWidgetAdd">
+      <draggable style="height: 100px;" v-model="data.list" v-bind="{group:'people', ghostClass: 'ghost', animation: 200, handle: '.drag-widget'}" draggable=".widget-view" @add="handleWidgetAdd">
         <transition-group name="fade" tag="div" class="widget-form-list">
           <template v-for="(element, index) in data.list">
-            <template v-if="element.type === 'grid'">
-              <a-row class="widget-col widget-view" v-if="element && element.key" :key="element.key"
-                type="flex"
-                :class="{active: selectWidget.key === element.key}"
-                :gutter="element.options.gutter ? element.options.gutter : 0"
-                :justify="element.options.justify"
-                :align="element.options.align"
-                @click="handleSelectWidget(index)">
-                  <a-col  v-for="(col, colIndex) in element.columns" :key="colIndex" :span="col.span ? col.span : 0">
-                      <draggable
-                        v-model="col.list"
-                        :no-transition-on-drag="true"
-                        v-bind="{group:'people', ghostClass: 'ghost',animation: 200, handle: '.drag-widget'}"
-                        @end="handleMoveEnd"
-                        @add="handleWidgetColAdd($event, element, colIndex)"
-                      >
-                        <transition-group name="fade" tag="div" class="widget-col-list">
-                          <widget-form-item
-                            v-for="(el, i) in col.list"
-                            :key="el.key"
-                            v-if="el.key"
-                            :element="el"
-                            :select.sync="selectWidget"
-                            :index="i"
-                            :data="col">
-                          </widget-form-item>
-                        </transition-group>
-                      </draggable>
-                  </a-col>
-                  <div class="widget-view-action widget-col-action" v-if="selectWidget.key == element.key">
-                    <a-icon type="delete" @click.stop="handleWidgetDelete(index)" />
-                  </div>
-                  <div class="widget-view-drag widget-col-drag" v-if="selectWidget.key == element.key">
-                    <a-icon type="drag" class="drag-widget" />
-                  </div>
-                <div class="mask"></div>
-                </a-row>
-            </template>
-            <template v-else>
-              <widget-form-item v-if="element && element.key"  :key="element.key" :element="element" :select.sync="selectWidget" :index="index" :data="data"></widget-form-item>
-            </template>
+            <widget-form-item :key="element.key" :element="element" :select.sync="selectWidget" :index="index" :data="data" />
           </template>
         </transition-group>
       </draggable>
@@ -68,32 +28,14 @@ export default {
       selectWidget: this.select
     }
   },
-  mounted () {
-    document.body.ondrop = function (event) {
-      let isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
-      if (isFirefox) {
-        event.preventDefault()
-        event.stopPropagation()
-      }
-    }
-  },
   methods: {
-    handleMoveEnd ({newIndex, oldIndex}) {
-      console.log('index', newIndex, oldIndex)
-    },
     handleSelectWidget (index) {
-      console.log(index, '#####')
       this.selectWidget = this.data.list[index]
     },
     handleWidgetAdd (evt) {
-      console.log('add', evt)
-      console.log('end', evt)
       const newIndex = evt.newIndex
-      const to = evt.to
-      console.log(to)
-
       //为拖拽到容器的元素添加唯一 key
-      const key = Date.parse(new Date()) + '_' + Math.ceil(Math.random() * 99999)
+      const key = Date.now().toString(32)
       this.$set(this.data.list, newIndex, {
         ...this.data.list[newIndex],
         options: {
@@ -118,77 +60,8 @@ export default {
         })
       }
 
-      if (this.data.list[newIndex].type === 'grid') {
-        this.$set(this.data.list, newIndex, {
-          ...this.data.list[newIndex],
-          columns: this.data.list[newIndex].columns.map(item => ({...item}))
-        })
-      }
-
       this.selectWidget = this.data.list[newIndex]
-    },
-    handleWidgetColAdd ($event, row, colIndex) {
-      console.log('coladd', $event, row, colIndex)
-      const newIndex = $event.newIndex
-      const oldIndex = $event.oldIndex
-      const item = $event.item
-
-      // 防止布局元素的嵌套拖拽
-      if (item.className.indexOf('data-grid') >= 0) {
-
-        // 如果是列表中拖拽的元素需要还原到原来位置
-        item.tagName === 'DIV' && this.data.list.splice(oldIndex, 0, row.columns[colIndex].list[newIndex])
-
-        row.columns[colIndex].list.splice(newIndex, 1)
-
-        return false
-      }
-
-      console.log('from', item)
-
-      const key = Date.parse(new Date()) + '_' + Math.ceil(Math.random() * 99999)
-
-      this.$set(row.columns[colIndex].list, newIndex, {
-        ...row.columns[colIndex].list[newIndex],
-        options: {
-          ...row.columns[colIndex].list[newIndex].options,
-          remoteFunc: 'func_' + key
-        },
-        key,
-        // 绑定键值
-        model: row.columns[colIndex].list[newIndex].type + '_' + key,
-        rules: []
-      })
-
-      if (row.columns[colIndex].list[newIndex].type === 'radio' || row.columns[colIndex].list[newIndex].type === 'checkbox' || row.columns[colIndex].list[newIndex].type === 'select') {
-        this.$set(row.columns[colIndex].list, newIndex, {
-          ...row.columns[colIndex].list[newIndex],
-          options: {
-            ...row.columns[colIndex].list[newIndex].options,
-            options: row.columns[colIndex].list[newIndex].options.options.map(item => ({
-              ...item
-            }))
-          }
-        })
-      }
-
-      this.selectWidget = row.columns[colIndex].list[newIndex]
-    },
-    handleWidgetDelete (index) {
-      if (this.data.list.length - 1 === index) {
-        if (index === 0) {
-          this.selectWidget = {}
-        } else {
-          this.selectWidget = this.data.list[index - 1]
-        }
-      } else {
-        this.selectWidget = this.data.list[index + 1]
-      }
-
-      this.$nextTick(() => {
-        this.data.list.splice(index, 1)
-      })
-    },
+    }
   },
   watch: {
     select (val) {
