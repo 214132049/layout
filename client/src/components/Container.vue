@@ -1,6 +1,6 @@
 <template>
   <a-layout style="height: 100%; overflow: hidden;">
-    <a-layout-sider width="300px" style="border-right: 1px solid #e8e8e8;" theme="light">
+    <a-layout-sider width="300px" style="border-right: 1px solid #e8e8e8; overflow: auto;" theme="light">
       <a-card title="基础组件" :bordered="false" style="width: 100%;">
         <draggable tag="ul" class="component-list" :list="basicComponents" v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}">
           <li class="component-list-item" v-for="(item, index) in basicComponents" :key="index">
@@ -53,17 +53,18 @@
     </a-layout-sider>
 
     <cus-dialog :visible="previewVisible" @on-close="previewVisible = false" ref="widgetPreview" width="1000px" form>
-      <generate-form insite="true" v-if="previewVisible" :data="widgetForm" :value="widgetModels" :remote="remoteFuncs" ref="generateForm">
+      <generate-form insite="true" v-if="previewVisible" :data="widgetForm" :value="widgetModels" ref="generateForm">
       </generate-form>
     </cus-dialog>
 
     <cus-dialog :visible="codeVisible" @on-close="codeVisible = false" ref="codePreview" width="800px" form :action="false">
       <a-tabs style="box-shadow: none;" v-model="codeActiveName">
         <a-tab-pane tab="Vue Component" key="vue" forceRender>
-          <div id="vuecodeeditor" style="height: 500px; width: 100%;">{{vueTemplate}}</div>
+          <Editor style="height: 500px;" :template="vueTemplate" mode="html"/>
         </a-tab-pane>
         <a-tab-pane tab="HTML" key="html" forceRender>
-          <div id="codeeditor" style="height: 500px; width: 100%;">{{htmlTemplate}}</div>
+          <div id="codeeditor" >{{htmlTemplate}}</div>
+          <Editor style="height: 500px;" :template="htmlTemplate" mode="html"/>
         </a-tab-pane>
       </a-tabs>
     </cus-dialog>
@@ -77,6 +78,7 @@ import FormConfig from './FormConfig'
 import WidgetForm from './WidgetForm'
 import CusDialog from './CusDialog'
 import GenerateForm from './GenerateForm'
+import Editor from './editor'
 import {basicComponents, advanceComponents} from './componentsConfig.js'
 import request from '../extend/Server'
 import generateCode from './generateCode.js'
@@ -89,7 +91,8 @@ export default {
     FormConfig,
     WidgetForm,
     CusDialog,
-    GenerateForm
+    GenerateForm,
+    Editor
   },
   data () {
     return {
@@ -104,27 +107,13 @@ export default {
           wrapperCol: {
             span: 12
           },
-          labelAlign: 'right',
-          size: 'default'
+          labelAlign: 'right'
         },
       },
       configTab: 'widget',
       widgetFormSelect: null,
       previewVisible: false,
       codeVisible: false,
-      remoteFuncs: {
-        func_test (resolve) {
-          setTimeout(() => {
-            const options = [
-              {id: '1', name: '1111'},
-              {id: '2', name: '2222'},
-              {id: '3', name: '3333'}
-            ]
-
-            resolve(options)
-          }, 2000)
-        }
-      },
       widgetModels: {},
       htmlTemplate: '',
       vueTemplate: '',
@@ -156,13 +145,6 @@ export default {
       this.codeVisible = true
       this.htmlTemplate = generateCode(JSON.stringify(this.widgetForm), 'html')
       this.vueTemplate = generateCode(JSON.stringify(this.widgetForm), 'vue')
-      this.$nextTick(() => {
-        const editor = ace.edit('codeeditor')
-        editor.session.setMode("ace/mode/html")
-
-        const vueeditor = ace.edit('vuecodeeditor')
-        vueeditor.session.setMode("ace/mode/html")
-      })
     },
     handleClear () {
       this.widgetForm = {

@@ -14,14 +14,6 @@
       <a-form-item label="表单内容宽度">
         <a-input-number v-model="data.wrapperCol.span" :min="0"></a-input-number>
       </a-form-item>
-      
-      <a-form-item label="组件尺寸">
-        <a-radio-group v-model="data.size">
-          <a-radio-button value="large">large</a-radio-button>
-          <a-radio-button value="small">small</a-radio-button>
-          <a-radio-button value="default">default</a-radio-button>
-        </a-radio-group>
-      </a-form-item>
     </a-form>
   </div>
 </template>
