@@ -28,7 +28,7 @@
   
         <a-alert v-if="item.tip" :message="item.tip" banner />
         
-        <Editor v-if="item.type === 'editor'" @change="options => item.value = options " mode="javascript" :template="jsonTemplate" showTest />
+        <Editor style="height: 300px;" v-if="item.type === 'editor'" :model="data.model" @change="(fn) => setValue(fn, item)" mode="javascript" :template="jsonTemplate" showTest />
   
         <div v-if="['required', 'pattern', 'dataType'].includes(key)">
           <a-input v-model="item.message" placeholder="错误提示文案" />
@@ -56,10 +56,18 @@ export default {
     return {
       jsonTemplate: `getOptions = async function () {
   return [
-    { label: '选项一', key: '1', disabled: false },
-    { label: '选项二', key: '2', disabled: false }
+    { label: '选项一', value: '1', disabled: false },
+    { label: '选项二', value: '2', disabled: false }
   ]
 }`
+    }
+  },
+  methods: {
+    async setValue (fn, item) {
+      item.fn = fn
+      let getOptions;
+      eval(fn)
+      item.value = await getOptions()
     }
   }
 }

@@ -131,7 +131,7 @@
 
       <template v-if="element.type==='slider'">
         <a-slider
-          v-model="element.options.defaultValue"
+          v-model="formData[element.model]"
           :min="element.options.min.value"
           :max="element.options.max.value"
           :disabled="element.options.disabled.value"

@@ -79,8 +79,9 @@ export const basicComponents = [
       options: {
         label: '选项',
         type: 'editor',
-        tip: '定义个getOptions函数，返回对象数组，其中：label字段为展示，key字段为值, disabled字段为禁用',
-        value: []
+        tip: '定义个getOptions函数，返回对象数组，其中：label字段为展示，value字段为值, disabled字段为禁用',
+        value: [],
+        fn: '() => {}'
       },
       required: {...baseRequired},
       dataType: {...baseDataType},
@@ -94,8 +95,9 @@ export const basicComponents = [
       options: {
         label: '选项',
         type: 'editor',
-        tip: '定义个getOptions函数，返回对象数组，其中：label字段为展示，key字段为值, disabled字段为禁用',
-        value: []
+        tip: '定义个getOptions函数，返回对象数组，其中：label字段为展示，value字段为值, disabled字段为禁用',
+        value: [],
+        fn: '() => {}'
       },
       required: {...baseRequired},
       disabled: {...baseDisabled}
@@ -123,8 +125,9 @@ export const basicComponents = [
       options: {
         label: '选项',
         type: 'editor',
-        tip: '定义个getOptions函数，返回对象数组，其中：label字段为展示，key字段为值, disabled字段为禁用',
-        value: []
+        tip: '定义个getOptions函数，返回对象数组，其中：label字段为展示，value字段为值, disabled字段为禁用',
+        value: [],
+        fn: '() => {}'
       },
       required: {...baseRequired},
       disabled: {...baseDisabled}

@@ -34,7 +34,7 @@
           <a-button type="primary" @click="handleClear">清空</a-button>
           <a-button type="primary" @click="handlePreview">预览</a-button>
           <a-button type="primary" @click="handleGenerateCode">生成代码</a-button>
-          <a-button type="primary">保存</a-button>
+          <a-button type="primary" @click="handleSave">保存</a-button>
         </a-button-group>
       </a-layout-header>
       <a-layout-content>
@@ -53,25 +53,17 @@
     </a-layout-sider>
 
     <cus-dialog :visible="previewVisible" @on-close="previewVisible = false" ref="widgetPreview" width="1000px" form>
-      <generate-form insite="true" v-if="previewVisible" :data="widgetForm" :value="widgetModels" ref="generateForm">
-      </generate-form>
+      <generate-form v-if="previewVisible" :data="widgetForm" ref="generateForm" />
     </cus-dialog>
 
     <cus-dialog :visible="codeVisible" @on-close="codeVisible = false" ref="codePreview" width="800px" form :action="false">
-      <a-tabs style="box-shadow: none;" v-model="codeActiveName">
-        <a-tab-pane tab="Vue Component" key="vue" forceRender>
-          <Editor style="height: 500px;" :template="vueTemplate" mode="html"/>
-        </a-tab-pane>
-        <a-tab-pane tab="HTML" key="html" forceRender>
-          <div id="codeeditor" >{{htmlTemplate}}</div>
-          <Editor style="height: 500px;" :template="htmlTemplate" mode="html"/>
-        </a-tab-pane>
-      </a-tabs>
+      <Editor style="height: 500px;" :template="vueTemplate" mode="html"/>
     </cus-dialog>
   </a-layout>
 </template>
 
 <script>
+import Vue from 'vue'
 import Draggable from 'vuedraggable'
 import WidgetConfig from './WidgetConfig'
 import FormConfig from './FormConfig'
@@ -80,8 +72,9 @@ import CusDialog from './CusDialog'
 import GenerateForm from './GenerateForm'
 import Editor from './editor'
 import {basicComponents, advanceComponents} from './componentsConfig.js'
-import request from '../extend/Server'
+import Server from '../extend/Server'
 import generateCode from './generateCode.js'
+import getPostConfig from './getPostConfig'
 
 export default {
   name: 'fm-making-form',
@@ -114,10 +107,7 @@ export default {
       widgetFormSelect: null,
       previewVisible: false,
       codeVisible: false,
-      widgetModels: {},
-      htmlTemplate: '',
       vueTemplate: '',
-      codeActiveName: 'vue'
     }
   },
   computed: {
@@ -143,8 +133,7 @@ export default {
     },
     handleGenerateCode () {
       this.codeVisible = true
-      this.htmlTemplate = generateCode(JSON.stringify(this.widgetForm), 'html')
-      this.vueTemplate = generateCode(JSON.stringify(this.widgetForm), 'vue')
+      this.vueTemplate = generateCode(this.widgetForm)
     },
     handleClear () {
       this.widgetForm = {
@@ -165,6 +154,19 @@ export default {
     },
     handleTreeSelect (keys) {
       this.widgetFormSelect = this.widgetForm.list.find(v => v.key === keys[0])
+    },
+    handleSave () {
+
+      Server({
+        url: 'api/pages/save',
+        method: 'post',
+        data: {
+          id: this.$route.query.id,
+          content: Vue.compile(generateCode(this.widgetForm))
+        }
+      }).then(() => {
+        this.$message.success('提交成功')
+      })
     }
   }
 }

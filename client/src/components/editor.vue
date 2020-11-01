@@ -7,8 +7,6 @@
 </template>
 
 <script>
-	import lodash from 'lodash'
-	
 	export default {
 		name: 'editor',
 		props: {
@@ -23,6 +21,10 @@
 			showTest: {
 				type: Boolean,
 				default: false
+			},
+			model: {
+				type: String,
+				default: ''
 			}
 		},
 		data () {
@@ -31,21 +33,27 @@
 				editor: null
 			}
 		},
+		watch: {
+			model () {
+				if (this.editor) {
+					this.getOptions()
+				}
+			}
+		},
 		mounted() {
 			this.$nextTick(() => {
 				this.editor = ace.edit(this.id, {
 					theme: 'ace/theme/monokai',
 					mode: `ace/mode/${this.mode}`,
-					enableLiveAutocompletion: true
+					enableLiveAutocompletion: true,
+					tabSize: 2
 				})
+				this.getOptions()
 			})
 		},
 		methods: {
-			async getOptions () {
-				let getOptions;
-				eval(this.editor.getValue())
-				const options = await getOptions()
-				this.$emit('change', options)
+			getOptions () {
+				this.$emit('change', this.editor.getValue())
 			}
 		},
 		beforeDestroy() {
@@ -56,7 +64,7 @@
 
 <style scoped>
 .editor {
-	height: 300px;
+	height: calc(100% - 60px);
 	width: 100%;
 }
 </style>

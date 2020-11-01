@@ -1,187 +1,140 @@
 <template>
-  <a-form-item :label="widget.name" :prop="widget.model">
-    <template v-if="widget.type == 'input'" >
-      <a-input
-        v-if="widget.options.dataType == 'number' || widget.options.dataType == 'integer' || widget.options.dataType == 'float'"
-        type="number"
-        v-model.number="dataModel"
+  <a-form-model-item :label="widget.name" :prop="widget.model">
+    <template v-if="widget.type === 'input'" >
+      <a-textarea
+        v-if="widget.options.type === 'textarea'"
+        v-model="dataModel"
         :placeholder="widget.options.placeholder"
-        :style="{width: widget.options.width}"
         :disabled="widget.options.disabled"
-      ></a-input>
+      />
       <a-input
         v-else
-        :type="widget.options.dataType"
         v-model="dataModel"
         :disabled="widget.options.disabled"
         :placeholder="widget.options.placeholder"
-        :style="{width: widget.options.width}"
-      ></a-input>
+      />
     </template>
 
-    <template v-if="widget.type == 'textarea'">
-      <a-input type="textarea" :rows="5"
-        v-model="dataModel"
-        :disabled="widget.options.disabled"
-        :placeholder="widget.options.placeholder"
-        :style="{width: widget.options.width}"
-      ></a-input>
-    </template>
-
-    <template v-if="widget.type == 'number'">
+    <template v-if="widget.type === 'inputNumber'">
       <a-input-number
-        v-model="dataModel"
-        :style="{width: widget.options.width}"
+        v-model.number="dataModel"
         :step="widget.options.step"
-        controls-position="right"
         :disabled="widget.options.disabled"
         :min="widget.options.min"
         :max="widget.options.max"
-      ></a-input-number>
+      />
     </template>
 
-    <template v-if="widget.type == 'radio'">
-      <a-radio-group v-model="dataModel"
-        :style="{width: widget.options.width}"
-        :disabled="widget.options.disabled"
-      >
-        <a-radio
-          :style="{display: widget.options.inline ? 'inline-block' : 'block'}"
-          :label="item.value" v-for="(item, index) in (widget.options.remote ? widget.options.remoteOptions : widget.options.options)" :key="index"
-        >
-          <template v-if="widget.options.remote">{{item.label}}</template>
-          <template v-else>{{widget.options.showLabel ? item.label : item.value}}</template>
-        </a-radio>
+    <template v-if="widget.type === 'radio'">
+      <a-radio-group v-model="dataModel" :disabled="widget.options.disabled">
+        <template v-if="widget.options.style === 'default'">
+          <a-radio
+            :style="{display: widget.options.inline ? 'inline-block' : 'block'}"
+            :disabled="item.disabled"
+            :value="item.value" v-for="item in widget.options.options" :key="item.value"
+          >
+            {{item.label}}
+          </a-radio>
+        </template>
+        <template v-else>
+          <a-radio-button :disabled="item.disabled" :value="item.value" v-for="item in widget.options.options" :key="item.value">{{item.label}}</a-radio-button>
+        </template>
       </a-radio-group>
     </template>
 
-    <template v-if="widget.type == 'checkbox'">
-      <a-checkbox-group v-model="dataModel"
-        :style="{width: widget.options.width}"
+    <template v-if="widget.type === 'checkbox'">
+      <a-checkbox-group
+        v-model="dataModel"
         :disabled="widget.options.disabled"
       >
         <a-checkbox
-
-          :style="{display: widget.options.inline ? 'inline-block' : 'block'}"
-          :label="item.value" v-for="(item, index) in (widget.options.remote ? widget.options.remoteOptions : widget.options.options)" :key="index"
+          :value="item.value" v-for="item in widget.options.options" :key="item.value"
         >
-          <template v-if="widget.options.remote">{{item.label}}</template>
-          <template v-else>{{widget.options.showLabel ? item.label : item.value}}</template>
+          {{item.label}}
         </a-checkbox>
       </a-checkbox-group>
     </template>
 
-    <template v-if="widget.type == 'time'">
+    <template v-if="widget.type === 'timePicker'">
       <a-time-picker
         v-model="dataModel"
-        :is-range="widget.options.isRange"
         :placeholder="widget.options.placeholder"
-        :start-placeholder="widget.options.startPlaceholder"
-        :end-placeholder="widget.options.endPlaceholder"
-        :readonly="widget.options.readonly"
         :disabled="widget.options.disabled"
-        :editable="widget.options.editable"
-        :clearable="widget.options.clearable"
-        :arrowControl="widget.options.arrowControl"
-        :value-format="widget.options.format"
-        :style="{width: widget.options.width}"
+        :allow-clear="widget.options.allowClear"
+        :format="widget.options.format"
       >
       </a-time-picker>
     </template>
 
-    <template v-if="widget.type=='date'">
+    <template v-if="widget.type==='datePicker'">
       <a-date-picker
+        v-if="widget.options.type === 'date'"
         v-model="dataModel"
-        :type="widget.options.type"
         :placeholder="widget.options.placeholder"
-        :start-placeholder="widget.options.startPlaceholder"
-        :end-placeholder="widget.options.endPlaceholder"
-        :readonly="widget.options.readonly"
         :disabled="widget.options.disabled"
-        :editable="widget.options.editable"
-        :clearable="widget.options.clearable"
-        :value-format="widget.options.timestamp ? 'timestamp' : widget.options.format"
-        :format="widget.options.format"
-        :style="{width: widget.options.width}"
-      >
-      </a-date-picker>
-    </template>
-
-    <template v-if="widget.type =='rate'">
-      <a-rate v-model="dataModel"
-        :max="widget.options.max"
-        :disabled="widget.options.disabled"
-        :allow-half="widget.options.allowHalf"
-      ></a-rate>
-    </template>
-
-    <template v-if="widget.type == 'color'">
-      <a-color-picker
+        :allow-clear="widget.options.allowClear"
+        :show-time="widget.options.showtime"
+      />
+      <a-month-picker
+        v-if="widget.options.type === 'month'"
         v-model="dataModel"
+        :placeholder="widget.options.placeholder"
         :disabled="widget.options.disabled"
-        :show-alpha="widget.options.showAlpha"
-      ></a-color-picker>
+        :allow-clear="widget.options.allowClear"
+      />
+      <a-week-picker
+        v-if="widget.options.type === 'week'"
+        v-model="dataModel"
+        :placeholder="widget.options.placeholder"
+        :disabled="widget.options.disabled"
+        :allow-clear="widget.options.allowClear"
+      />
+    </template>
+  
+    <template v-if="widget.type === 'dateRangePicker'">
+      <a-range-picker
+        v-model="dataModel"
+        :placeholder="[widget.options.startPlaceholder, widget.options.endPlaceholder]"
+        :disabled="widget.options.disabled"
+        :allow-clear="widget.options.allowClear"
+        :show-time="widget.options.showtime"
+      />
     </template>
 
-    <template v-if="widget.type == 'select'">
+    <template v-if="widget.type === 'select'">
       <a-select
         v-model="dataModel"
         :disabled="widget.options.disabled"
-        :multiple="widget.options.multiple"
-        :clearable="widget.options.clearable"
+        :multiple="widget.options.mode"
+        :allow-clear="widget.options.allowClear"
         :placeholder="widget.options.placeholder"
-        :style="{width: widget.options.width}"
-        :filterable="widget.options.filterable"
       >
-        <a-option v-for="item in (widget.options.remote ? widget.options.remoteOptions : widget.options.options)" :key="item.value" :value="item.value">{{ widget.options.showLabel || widget.options.remote?item.label:item.value }}</a-option>
+        <a-select-option v-for="item in widget.options.options" :key="item.value" :value="item.value">{{ item.label }}</a-select-option>
       </a-select>
     </template>
 
-    <template v-if="widget.type=='switch'">
+    <template v-if="widget.type==='switch'">
       <a-switch
         v-model="dataModel"
         :disabled="widget.options.disabled"
+        :checked-children="widget.options.checkedChildren"
+        :un-checked-children="widget.options.unCheckedChildren"
       >
       </a-switch>
     </template>
 
-    <template v-if="widget.type=='slider'">
+    <template v-if="widget.type==='slider'">
       <a-slider
         v-model="dataModel"
         :min="widget.options.min"
         :max="widget.options.max"
         :disabled="widget.options.disabled"
         :step="widget.options.step"
-        :show-input="widget.options.showInput"
         :range="widget.options.range"
-        :style="{width: widget.options.width}"
+        :reverse="widget.options.reverse"
       ></a-slider>
     </template>
-
-    <template v-if="widget.type == 'editor'">
-      <vue-editor
-        v-model="dataModel"
-        :style="{width: widget.options.width}"
-      >
-      </vue-editor>
-    </template>
-
-    <template v-if="widget.type == 'cascader'">
-      <a-cascader
-        v-model="dataModel"
-        :disabled="widget.options.disabled"
-        :clearable="widget.options.clearable"
-        :placeholder="widget.options.placeholder"
-        :style="{width: widget.options.width}"
-        :options="widget.options.remoteOptions"
-      >
-      </a-cascader>
-    </template>
-
-    <template v-if="widget.type == 'text'">
-      <span>{{dataModel}}</span>
-    </template>
-  </a-form-item>
+  </a-form-model-item>
 </template>
 
 <script>
@@ -192,17 +145,11 @@ export default {
       dataModel: this.models[this.widget.model]
     }
   },
-  created () {
-    if (this.widget.options.remote && this.remote[this.widget.options.remoteFunc]) {
-      this.remote[this.widget.options.remoteFunc]((data) => {
-        this.widget.options.remoteOptions = data.map(item => {
-          return {
-            value: item[this.widget.options.props.value],
-            label: item[this.widget.options.props.label],
-            children: item[this.widget.options.props.children]
-          }
-        })
-      })
+  async created () {
+    if (['radio', 'checkbox', 'select'].includes(this.widget.type)) {
+      let getOptions;
+      eval(this.widget.options.optionsFn)
+      this.widget.options.options = await getOptions()
     }
   },
   methods: {

@@ -1,95 +1,89 @@
-function findRemoteFunc (list, funcList, tokenFuncList, blankList) {
-  for (let i = 0; i < list.length; i++) {
-    if (list[i].type == 'grid') {
-      list[i].columns.forEach(item => {
-        findRemoteFunc(item.list, funcList, tokenFuncList, blankList)
-      })
-    } else {
-      if (list[i].type == 'blank') {
-        if (list[i].model) {
-          blankList.push({
-            name: list[i].model,
-            label: list[i].name
-          })
-        }
-      } else {
-        if (list[i].options.remote && list[i].options.remoteFunc) {
-          funcList.push({
-            func: list[i].options.remoteFunc,
-            label: list[i].name,
-            model: list[i].model
-          })
-        }
-      }
-    }
-  }
+import getPostConfig from './getPostConfig'
+import createFormItemCode from './createFormItemCode'
+
+const allOptions = []
+
+function craeteOptions (model, optionsFn) {
+  const name = `${model}Options`
+  allOptions.push({
+    name,
+    fn: optionsFn
+  })
+  return name
 }
 
-export default function (data, type = 'vue') {
+function createFormItem (list) {
+  const _tempList = getPostConfig(list)
+  return createFormItemCode(_tempList, craeteOptions)
+}
 
-  const funcList = []
+function generateModels (list) {
+  const models = {}
+  list.forEach(item => {
+    const key = item.model
+    if (item.type === 'checkbox' || item.type === 'dateRangePicker') {
+      models[key] = []
+    } else {
+      models[key] = ''
+    }
+  })
+  return models
+}
 
-  const tokenFuncList = []
+function generateRules (list) {
+  const rules = {}
+  list.forEach(item => {
+    const key = item.model
+    const value = []
+    const {required, dataType, pattern} = item.options
+    if (required && required.value) {
+      value.push({ required: true, message: required.message })
+    }
+    if (dataType && dataType.value) {
+      value.push({ type: dataType.value, message: dataType.message })
+    }
+    if (pattern && pattern.value) {
+      value.push({ pattern: pattern.value, message: pattern.message })
+    }
+    rules[key] = value
+  })
+  return rules
+}
 
-  const blankList = []
-
-  findRemoteFunc(JSON.parse(data).list, funcList, tokenFuncList, blankList)
-
-  let funcTemplate = ''
-
-  let blankTemplate = ''
-
-  for(let i = 0; i < funcList.length; i++) {
-    funcTemplate += `
-            ${funcList[i].func} (resolve) {
-              // ${funcList[i].label} ${funcList[i].model}
-              // Call callback function once get the data from remote server
-              // resolve(data)
-            },
-    `
-  }
-
-  for(let i = 0; i < tokenFuncList.length; i++) {
-    funcTemplate += `
-            ${tokenFuncList[i].func} (resolve) {
-              // ${tokenFuncList[i].label} ${tokenFuncList[i].model}
-              // Call callback function once get the token
-              // resolve(token)
-            },
-    `
-  }
-
-  for (let i = 0; i < blankList.length; i++) {
-    blankTemplate += `
-        <template slot="${blankList[i].name}" slot-scope="scope">
-          <!-- ${blankList[i].label} -->
-          <!-- use v-model="scope.model.${blankList[i].name}" to bind data -->
-        </template>
-    `
-  }
-
-  if (type == 'vue') {
-    return `<template>
-  <div>
-    <fm-generate-form :data="jsonData" :remote="remoteFuncs" :value="editData" ref="generateForm">
-      ${blankTemplate}
-    </fm-generate-form>
-    <a-button type="primary" @click="handleSubmit">提交</a-button>
-  </div>
+export default function (data) {
+  return `
+<template>
+  <a-form-model ref="generateForm" :model="models" :rules="rules" :label-align="${data.config.labelAlign}" :label-col="${JSON.stringify(data.config.labelCol)}" :wrapper-col="${JSON.stringify(data.config.wrapperCol)}">
+    ${createFormItem(data.list)}
+    <a-form-model-item :wrapper-col="${JSON.stringify({
+      ...data.config.wrapperCol,
+      offset: data.config.labelCol.span
+    })}">
+      <a-button @click="handleSubmit" type="primary">提交</a-button>
+    </a-form-model-item>
+  </a-form-model>>
 </template>
-
 <script>
   export default {
     data () {
       return {
-        jsonData: ${data},
-        editData: {},
-        remoteFuncs: {
-          ${funcTemplate}
+        models: ${JSON.stringify(generateModels(data.list), null, 2)},
+        rules: ${JSON.stringify(generateRules(data.list), null, 2)},
+        ${
+          allOptions.length && allOptions.map(v => `${v.name}: []`).join('\n,')
         }
       }
     },
     methods: {
+    	${
+        allOptions.length && allOptions.map(v => {
+          return `async get${v.name} () {
+            var self = this
+            var fn = ${v.fn.replace(/(.+)(?=function)/, 'async ')}
+            this.${v.name} = await fn()
+          }`
+        }).join('\n,')
+      }
       handleSubmit () {
         this.$refs.generateForm.getData().then(data => {
           // data check success
@@ -101,47 +95,4 @@ export default function (data, type = 'vue') {
     }
   }
 </script>`
-  } else {
-    return `<!DOCTYPE html>
-  <html>
-  <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-    <link rel="stylesheet" href="https://unpkg.com/form-making/dist/FormMaking.css">
-  </head>
-  <body>
-    <div id="app">
-      <fm-generate-form :data="jsonData" :remote="remoteFuncs" :value="editData" ref="generateForm">
-        ${blankTemplate}
-      </fm-generate-form>
-      <a-button type="primary" @click="handleSubmit">提交</a-button>
-    </div>
-    <script src="https://unpkg.com/vue/dist/vue.js"></script>
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-    <script src="https://unpkg.com/form-making/dist/FormMaking.umd.js"></script>
-    <script>
-      new Vue({
-        el: '#app',
-        data: {
-          jsonData: ${data},
-          editData: {},
-          remoteFuncs: {
-            ${funcTemplate}
-          }
-        },
-        methods: {
-          handleSubmit () {
-            this.$refs.generateForm.getData().then(data => {
-              // data check success
-              // data - form data
-            }).catch(e => {
-              // data check failed
-            })
-          }
-        }
-      })
-    </script>
-  </body>
-  </html>`
-  }
 }
