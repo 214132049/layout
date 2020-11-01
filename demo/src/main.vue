@@ -11,12 +11,16 @@
       type: pkg.name,
       name: 'Alert组件',
       options: {
-        message: ''
+        message: {
+          label: '提示内容',
+          type: 'input',
+          value: ''
+        }
       }
     },
     methods: {
       showAlert() {
-        window.alert(this.$options.custom.options.message)
+        window.alert(this.$options.custom.options.message.value)
       }
     }
   }

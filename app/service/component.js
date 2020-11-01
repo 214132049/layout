@@ -20,13 +20,14 @@ function unzipSync(fileName, mbDir) {
 
 class ComponentService extends CountersService {
   async list (params) {
+    // const { includeContent } = params
     return this.ctx.model.Component.find({
       projectId: params.projectId,
       status: 1
     }, {
       __v: 0,
       _id: 0
-    })
+    }).populate('path', 'path', 'componentCompiled')
   }
 
   async save (params) {
@@ -71,7 +72,7 @@ class ComponentService extends CountersService {
       await unzipSync(zipFilePath, unzipPath)
       // del zip
       await fs.unlinkSync(zipFilePath)
-      const jsPath = path.join(unzipPath, `${body.npmName}.js`)
+      const jsPath = path.join('/public', `${body.npmName}_${body.npmVersion}/${body.npmName}.js`)
       await ctx.model.ComponentCompiled.create({ npmVersion: body.npmVersion, id: componentId, path: jsPath })
     } catch (e) {
       console.log(e)

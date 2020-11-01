@@ -18,6 +18,7 @@ module.exports = app => {
   // pages
   router.post('/api/pages/list', jwt, controller.pages.list)
   router.post('/api/pages/save', jwt, controller.pages.save)
+  router.post('/api/pages/savePage', jwt, controller.pages.savePage)
   router.post('/api/pages/delete', jwt, controller.pages.delete)
   router.post('/api/pages/detail', jwt, controller.pages.detail)
   router.post('/api/pages/publish', jwt, controller.pages.publish)

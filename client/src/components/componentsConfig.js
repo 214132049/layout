@@ -254,5 +254,3 @@ export const basicComponents = [
     }
   }
 ]
-
-export const advanceComponents = []

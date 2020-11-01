@@ -63,7 +63,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import Draggable from 'vuedraggable'
 import WidgetConfig from './WidgetConfig'
 import FormConfig from './FormConfig'
@@ -71,10 +70,9 @@ import WidgetForm from './WidgetForm'
 import CusDialog from './CusDialog'
 import GenerateForm from './GenerateForm'
 import Editor from './editor'
-import {basicComponents, advanceComponents} from './componentsConfig.js'
+import {basicComponents} from './componentsConfig.js'
 import Server from '../extend/Server'
 import generateCode from './generateCode.js'
-import getPostConfig from './getPostConfig'
 
 export default {
   name: 'fm-making-form',
@@ -90,7 +88,6 @@ export default {
   data () {
     return {
       basicComponents,
-      advanceComponents,
       widgetForm: {
         list: [],
         config: {
@@ -108,6 +105,7 @@ export default {
       previewVisible: false,
       codeVisible: false,
       vueTemplate: '',
+      advanceComponents: []
     }
   },
   computed: {
@@ -125,6 +123,10 @@ export default {
       if (!this.widgetFormSelect) return []
       return [this.widgetFormSelect.key]
     }
+  },
+  mounted() {
+    this.getDetail()
+    this.getComponent()
   },
   methods: {
     handlePreview () {
@@ -156,16 +158,42 @@ export default {
       this.widgetFormSelect = this.widgetForm.list.find(v => v.key === keys[0])
     },
     handleSave () {
-
       Server({
-        url: 'api/pages/save',
+        url: 'api/pages/savePage',
         method: 'post',
         data: {
-          id: this.$route.query.id,
-          content: Vue.compile(generateCode(this.widgetForm))
+          id: +this.$route.query.id,
+          content: JSON.stringify(this.widgetForm)
         }
       }).then(() => {
         this.$message.success('提交成功')
+      })
+    },
+    getDetail () {
+      Server({
+        url: 'api/pages/detail',
+        method: 'post',
+        data: {
+          id: +this.$route.query.id
+        }
+      }).then((res) => {
+        console.log(res)
+        this.widgetForm = JSON.parse(res.data.data.content)
+        this.widgetFormSelect = this.widgetForm.list[0]
+      })
+    },
+    getComponent () {
+      Server({
+        url: 'api/component/list',
+        method: 'post',
+        needLoading: true,
+        data: {
+          projectId: +this.$route.query.projectId,
+          includeContent: true
+        }
+      }).then(({ data }) => {
+        this.advanceComponents = data.list || []
+        this.loadend = true
       })
     }
   }

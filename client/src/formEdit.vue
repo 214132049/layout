@@ -3,8 +3,30 @@
 </template>
 
 <script>
+  import config from 'src/config'
   export default {
     name: 'FormEdit',
+    mounted() {
+      window.EMA.bind('logout', () => {
+        this.logout()
+      })
+      window.EMA.bind('alert.show', (title, fn) => {
+        this.$error({
+          title: '注意',
+          content: title,
+          onOk () {
+            typeof fn == 'function' && fn()
+          },
+        })
+      })
+    },
+    methods: {
+      logout: function () {
+        window.localStorage.removeItem('token')
+        // 删除指定的cookie信息
+        window.location.replace(`${config.ADMIN_PATH}login`)
+      }
+    }
   }
 </script>
 

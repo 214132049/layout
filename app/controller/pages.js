@@ -34,7 +34,14 @@ class PagesController extends BaseController {
     await ctx.service.pages.save(this.body)
     this.success()
   }
-
+  
+  async savePage () {
+    const { ctx } = this
+    await this.find()
+    await ctx.service.pages.save(this.body)
+    this.success()
+  }
+  
   async delete () {
     const { ctx } = this
     await this.find()
