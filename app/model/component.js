@@ -6,7 +6,7 @@ module.exports = (app) => {
     id: { type: Number },
     name: { type: String },
     npmName: { type: String },
-    projectId: { type: String },
+    projectId: { type: Number },
     npmVersion: { type: String },
     status: { type: Number },
     createDate: { type: Date, default: Date.now },

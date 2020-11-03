@@ -70,7 +70,7 @@ import WidgetForm from './WidgetForm'
 import CusDialog from './CusDialog'
 import GenerateForm from './GenerateForm'
 import Editor from './editor'
-import {basicComponents} from './componentsConfig.js'
+import {basicComponents, advanceComponents} from './componentsConfig.js'
 import Server from '../extend/Server'
 import generateCode from './generateCode.js'
 
@@ -88,6 +88,7 @@ export default {
   data () {
     return {
       basicComponents,
+      advanceComponents,
       widgetForm: {
         list: [],
         config: {
@@ -104,8 +105,7 @@ export default {
       widgetFormSelect: null,
       previewVisible: false,
       codeVisible: false,
-      vueTemplate: '',
-      advanceComponents: []
+      vueTemplate: ''
     }
   },
   computed: {
@@ -126,7 +126,6 @@ export default {
   },
   mounted() {
     this.getDetail()
-    this.getComponent()
   },
   methods: {
     handlePreview () {
@@ -180,20 +179,6 @@ export default {
         console.log(res)
         this.widgetForm = JSON.parse(res.data.data.content)
         this.widgetFormSelect = this.widgetForm.list[0]
-      })
-    },
-    getComponent () {
-      Server({
-        url: 'api/component/list',
-        method: 'post',
-        needLoading: true,
-        data: {
-          projectId: +this.$route.query.projectId,
-          includeContent: true
-        }
-      }).then(({ data }) => {
-        this.advanceComponents = data.list || []
-        this.loadend = true
       })
     }
   }

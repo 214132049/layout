@@ -9,18 +9,63 @@ import routerMap from './RouterMap'
 import MakingForm from './components/Container.vue'
 import GenerateForm from './components/GenerateForm.vue'
 import './assets/style/form.styl'
+import Server from './extend/Server'
+import { advanceComponents } from './components/componentsConfig'
 
+function getUrlParams(name) {
+  const reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+  const r = window.location.search.substr(1).match(reg);
+  if (r != null) return unescape(r[2]);
+  return null;
+}
+
+async function getComponent () {
+  const projectId = getUrlParams('projectId')
+  if (!projectId) {
+    return;
+  }
+  return Server({
+    url: 'api/component/list',
+    method: 'post',
+    needLoading: true,
+    data: {
+      projectId: +projectId,
+      includeContent: true
+    }
+  }).then(({ data }) => {
+    return data.list || []
+  })
+}
 
 Vue.use(Antd)
 Vue.use(VueRouter)
 Vue.component(MakingForm.name, MakingForm)
 Vue.component(GenerateForm.name, GenerateForm)
 window.EMA = EmaProxy
+
 Vue.config.devtools = process.env.NODE_ENV !== 'production'
 const router = new VueRouter(routerMap)
 
-export default new Vue({
-  el: '#app',
-  router: router,
-  render: h => h(App)
-})
+async function startApp () {
+  const list = await getComponent()
+  const promises = list.map(async ({ path, npmName }) => {
+    const res = await fetch(`http://127.0.0.1:7001${path}`)
+    return { content: res.text(), npmName }
+  })
+  for (let promise of promises) {
+    const { content, npmName: name } = await promise
+    eval(content)
+    const componentOptions = window[name].default
+    advanceComponents.push(componentOptions.custom)
+    delete componentOptions.custom
+    Vue.component(componentOptions.name, componentOptions)
+  }
+
+  new Vue({
+    el: '#app',
+    router: router,
+    render: h => h(App)
+  })
+}
+
+startApp()

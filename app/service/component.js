@@ -20,14 +20,35 @@ function unzipSync(fileName, mbDir) {
 
 class ComponentService extends CountersService {
   async list (params) {
-    // const { includeContent } = params
-    return this.ctx.model.Component.find({
-      projectId: params.projectId,
-      status: 1
-    }, {
-      __v: 0,
-      _id: 0
-    }).populate('path', 'path', 'componentCompiled')
+    const { ctx } = this
+    const { includeContent } = params
+    const Model = ctx.model.Component
+    if (!includeContent) {
+      return Model.find({
+        projectId: params.projectId,
+        status: 1
+      }, {
+        __v: 0,
+        _id: 0
+      })
+    }
+    const formCollection = ctx.model.ComponentCompiled.collection.name
+    return Model.aggregate()
+      .match({ projectId: params.projectId })
+      .lookup({
+        from: formCollection,
+        let: { varId: '$id', varNpmVersion: '$npmVersion' },
+        pipeline: [{
+          $match: {
+            $expr: { $and: [{ $eq: ['$id', '$$varId'] }, { $eq: ['$npmVersion', '$$varNpmVersion'] }] }
+          }
+        }],
+        as: "temPath"
+      })
+      .replaceRoot({
+        $mergeObjects: [{ $arrayElemAt: ['$temPath', 0] }, "$$ROOT"]
+      })
+      .project({ _id: 0, __v: 0, temPath: 0 })
   }
 
   async save (params) {
@@ -91,7 +112,7 @@ class ComponentService extends CountersService {
       ctx.throw('相同版本的组件已存在', 200)
     }
   }
-  
+
   async checkNpmName (params) {
     const { ctx } = this
     const res = await ctx.model.Component.findOne({
