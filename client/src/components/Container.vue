@@ -35,6 +35,7 @@
           <a-button type="primary" @click="handlePreview">预览</a-button>
           <a-button type="primary" @click="handleGenerateCode">生成代码</a-button>
           <a-button type="primary" @click="handleSave">保存</a-button>
+          <a-button type="primary" @click="handlePublish">发布</a-button>
         </a-button-group>
       </a-layout-header>
       <a-layout-content>
@@ -57,7 +58,7 @@
     </cus-dialog>
 
     <cus-dialog :visible="codeVisible" @on-close="codeVisible = false" ref="codePreview" width="800px" form :action="false">
-      <Editor style="height: 500px;" :template="vueTemplate" mode="html"/>
+      <Editor style="height: 500px;" :template="htmlTemplate" mode="html"/>
     </cus-dialog>
   </a-layout>
 </template>
@@ -105,7 +106,8 @@ export default {
       widgetFormSelect: null,
       previewVisible: false,
       codeVisible: false,
-      vueTemplate: ''
+      htmlTemplate: '',
+      pageName: name
     }
   },
   computed: {
@@ -134,7 +136,7 @@ export default {
     },
     handleGenerateCode () {
       this.codeVisible = true
-      this.vueTemplate = generateCode(this.widgetForm)
+      this.htmlTemplate = generateCode(this.widgetForm)
     },
     handleClear () {
       this.widgetForm = {
@@ -168,6 +170,20 @@ export default {
         this.$message.success('提交成功')
       })
     },
+    handlePublish () {
+      this.htmlTemplate = generateCode(this.widgetForm)
+      Server({
+        url: 'api/pages/publish',
+        method: 'post',
+        data: {
+          id: +this.$route.query.id,
+          content: JSON.stringify(this.widgetForm),
+          pageContent: this.htmlTemplate
+        }
+      }).then(() => {
+        this.$message.success('发布成功')
+      })
+    },
     getDetail () {
       Server({
         url: 'api/pages/detail',
@@ -175,9 +191,9 @@ export default {
         data: {
           id: +this.$route.query.id
         }
-      }).then((res) => {
-        console.log(res)
-        this.widgetForm = JSON.parse(res.data.data.content)
+      }).then(({data}) => {
+        this.widgetForm = JSON.parse(data.data.content)
+        this.pageName = data.data.name
         this.widgetFormSelect = this.widgetForm.list[0]
       })
     }

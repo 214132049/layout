@@ -1,3 +1,6 @@
+const fs = require('fs')
+const path = require('path')
+const pump = require('mz-modules/pump')
 const CountersService = require('./counters')
 
 class PagesService extends CountersService {
@@ -42,8 +45,16 @@ class PagesService extends CountersService {
   }
 
   async publish (query) {
-    await this.ctx.model.Pages.update({ content: query.content, draft: '' }, { where: { id: query.id } })
-    return true
+    const { ctx } = this
+    const fileBuffer = new Uint8Array(Buffer.from(query.pageContent))
+    const fileName = `${ctx.helper.uuid()}.html`
+    const htmlPath = path.join(this.config.baseDir, 'app/public/view', fileName)
+    const writeStream = fs.createWriteStream(htmlPath)
+    await pump(fileBuffer, writeStream)
+    return ctx.model.Pages.findOneAndUpdate({ id: query.id }, {
+      content: query.content,
+      pageUrl: path.join('app/public/view', fileName)
+    })
   }
 
   async find (params) {

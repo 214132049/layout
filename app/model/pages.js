@@ -10,6 +10,7 @@ module.exports = (app) => {
     content: { type: String, default: '' },
     projectId: { type: Number },
     status: { type: Number, default: 1 },
+    pageUrl: { type: String, default: '' },
     createDate: { type: Date, default: Date.now },
     modifyDate: { type: Date, default: Date.now },
   })

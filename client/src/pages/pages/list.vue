@@ -14,6 +14,7 @@
           />
           <template slot="actions" class="ant-card-actions">
             <a-button type="link" @click="editPage(item)">编辑</a-button>
+            <a-button type="link" @click="viewPage(item)">查看</a-button>
             <router-link :to="{path: '/pages/edit', query: { id: item.id }}">
               <a-button type="link">设置</a-button>
             </router-link>
@@ -93,6 +94,16 @@
       },
       editPage (item) {
         window.location.href = `/formEdit?id=${item.id}&projectId=${item.projectId}`
+      },
+      viewPage (item) {
+        if (!item.pageUrl) {
+          this.$message.error('页面还没发布，请在编辑页面，编辑后发布')
+          return
+        }
+        const a = document.createElement('a')
+        a.href = item.pageUrl
+        a.target = '_blank'
+        a.click()
       }
     }
   }
