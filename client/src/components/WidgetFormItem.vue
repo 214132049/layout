@@ -2,7 +2,7 @@
   <div class="widget-view" @click.stop="handleSelectWidget(index)">
     <a-form-model-item
       v-if="element && element.key"
-      :required="element.options.required.value"
+      :required="element.options.required && element.options.required.value"
       :class="{active: selectWidget.key === element.key}"
       :label="element.name"
       :prop="element.model"
@@ -60,7 +60,7 @@
           </a-checkbox>
         </a-checkbox-group>
       </template>
-  
+
       <template v-if="element.type === 'select'">
         <a-select
           v-model="formData[element.model]"
@@ -72,7 +72,7 @@
           <a-select-option v-for="item in element.options.options.value" :key="item.value" :value="item.value">{{ item.label }}</a-select-option>
         </a-select>
       </template>
-      
+
       <template v-if="element.type === 'timePicker'">
         <a-time-picker
           v-model="formData[element.model]"
@@ -83,7 +83,7 @@
         >
         </a-time-picker>
       </template>
-      
+
       <template v-if="element.type === 'datePicker'">
         <a-date-picker
           v-if="element.options.type.value === 'date'"
@@ -108,7 +108,7 @@
           :allow-clear="element.options.allowClear.value"
         />
       </template>
-  
+
       <template v-if="element.type === 'dateRangePicker'">
         <a-range-picker
           v-model="formData[element.model]"
@@ -118,7 +118,7 @@
           :show-time="element.options.showtime.value"
         />
       </template>
-      
+
       <template v-if="element.type==='switch'">
         <a-switch
           v-model="formData[element.model]"
@@ -140,6 +140,9 @@
           :reverse="element.options.reverse.value"
         ></a-slider>
       </template>
+
+      <component :is="element.type"></component>
+
     </a-form-model-item>
     <div class="widget-view-action" v-if="selectWidget.key == element.key">
       <a-icon type="copy" @click.stop="handleWidgetClone(index)" />
@@ -186,7 +189,7 @@ export default {
     },
     handleWidgetClone (index) {
       const source = JSON.parse(JSON.stringify(this.data.list[index]))
-      
+
       this.data.list.splice(index, 0, {
         ...source,
         key: Date.now().toString(32),

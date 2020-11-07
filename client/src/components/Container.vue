@@ -43,11 +43,11 @@
       </a-layout-content>
     </a-layout>
     <a-layout-sider width="400px" theme="light">
-      <a-tabs v-model="configTab">
-        <a-tab-pane key="widget" tab="字段属性">
+      <a-tabs v-model="configTab" style="height: 100%">
+        <a-tab-pane key="widget" tab="字段属性"  style="height: 100%">
           <widget-config v-show="configTab=='widget'" :data="widgetFormSelect" />
         </a-tab-pane>
-        <a-tab-pane key="form" tab="表单属性">
+        <a-tab-pane key="form" tab="表单属性"  style="height: 100%">
           <form-config v-show="configTab=='form'" :data="widgetForm.config" />
         </a-tab-pane>
       </a-tabs>

@@ -11,6 +11,33 @@ import GenerateForm from './components/GenerateForm.vue'
 import './assets/style/form.styl'
 import Server from './extend/Server'
 import { advanceComponents } from './components/componentsConfig'
+import config from './config'
+
+Vue.use(Antd)
+Vue.use(VueRouter)
+Vue.component(MakingForm.name, MakingForm)
+Vue.component(GenerateForm.name, GenerateForm)
+window.EMA = EmaProxy
+
+window.EMA.bind('alert.show', (title, fn) => {
+  Vue.prototype.$error({
+    title: '注意',
+    content: title,
+    onOk () {
+      typeof fn == 'function' && fn()
+    },
+  })
+})
+
+window.EMA.bind('logout', () => {
+  logout()
+})
+
+function logout () {
+  window.localStorage.removeItem('token')
+  // 删除指定的cookie信息
+  window.location.replace(`${config.ADMIN_PATH}login`)
+}
 
 function getUrlParams(name) {
   const reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -37,20 +64,14 @@ async function getComponent () {
   })
 }
 
-Vue.use(Antd)
-Vue.use(VueRouter)
-Vue.component(MakingForm.name, MakingForm)
-Vue.component(GenerateForm.name, GenerateForm)
-window.EMA = EmaProxy
-
 Vue.config.devtools = process.env.NODE_ENV !== 'production'
 const router = new VueRouter(routerMap)
 
 async function startApp () {
   const list = await getComponent()
   const promises = list.map(async ({ path, npmName }) => {
-    const res = await fetch(`http://127.0.0.1:7001${path}`)
-    return { content: res.text(), npmName }
+    const res = await fetch(`http://127.0.0.1:7001${path}`).then(res => res.text())
+    return { content: res, npmName }
   })
   for (let promise of promises) {
     const { content, npmName: name } = await promise

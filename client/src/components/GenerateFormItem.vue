@@ -90,7 +90,7 @@
         :allow-clear="widget.options.allowClear"
       />
     </template>
-  
+
     <template v-if="widget.type === 'dateRangePicker'">
       <a-range-picker
         v-model="dataModel"
@@ -134,6 +134,9 @@
         :reverse="widget.options.reverse"
       ></a-slider>
     </template>
+  
+    <component :is="widget.type"></component>
+
   </a-form-model-item>
 </template>
 
