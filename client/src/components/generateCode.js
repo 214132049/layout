@@ -52,9 +52,9 @@ function generateRules (list) {
 }
 
 export default function (data, name) {
-  const template = `<a-form-model ref="generateForm" :model="models" :rules="rules" :label-align="${data.config.labelAlign}" :label-col="${JSON.stringify(data.config.labelCol)}" :wrapper-col="${JSON.stringify(data.config.wrapperCol)}">
+  const template = `<a-form-model ref="generateForm" :model="models" :rules="rules" label-align="${data.config.labelAlign}" :label-col='${JSON.stringify(data.config.labelCol)}' :wrapper-col='${JSON.stringify(data.config.wrapperCol)}'>
     ${createFormItem(data.list)}
-    <a-form-model-item :wrapper-col="${JSON.stringify({ ...data.config.wrapperCol, offset: data.config.labelCol.span })}">'
+    <a-form-model-item :wrapper-col='${JSON.stringify({ ...data.config.wrapperCol, offset: data.config.labelCol.span })}'>
       <a-button @click="handleSubmit" type="primary">提交</a-button>
     </a-form-model-item>
   </a-form-model>`
@@ -72,7 +72,7 @@ export default function (data, name) {
         <page-demo />
       </div>
       <script src="https://cdn.bootcdn.net/ajax/libs/babel-polyfill/7.12.1/polyfill.min.js"></script>
-      <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.min.js"></script>
+      <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.js"></script>
       <script src="https://cdn.bootcdn.net/ajax/libs/ant-design-vue/1.6.5/antd.min.js"></script>
       <script>
         Vue.component('page-demo', {
@@ -104,11 +104,10 @@ export default function (data, name) {
               }).filter(v => v).join('\n,') : ''
             }
             handleSubmit () {
-              this.$refs.generateForm.getData().then(data => {
-                // data check success
-                // data - form data
-              }).catch(e => {
-                // data check failed
+              this.$refs.generateForm.validate(valid => {
+                if (valid) {
+                  console.log(this.models)
+                }
               })
             }
           }
