@@ -77,9 +77,8 @@ async function startApp () {
     const { content, npmName: name } = await promise
     eval(content)
     const componentOptions = window[name].default
-    advanceComponents.push(componentOptions.custom)
-    delete componentOptions.custom
-    Vue.component(componentOptions.name, componentOptions)
+    const component = Vue.component(componentOptions.name, componentOptions)
+    advanceComponents.push(component.options.custom)
   }
 
   new Vue({

@@ -21,7 +21,7 @@
           :placeholder="element.options.placeholder.value" :rows="4" />
       </template>
 
-      <template v-if="element.type === 'inputNumber'">
+      <template v-else-if="element.type === 'inputNumber'">
         <a-input-number
           v-model="formData[element.model]"
           :min="element.options.min.value"
@@ -31,7 +31,7 @@
         ></a-input-number>
       </template>
 
-      <template v-if="element.type === 'radio'">
+      <template v-else-if="element.type === 'radio'">
         <a-radio-group :disabled="element.options.disabled.value" v-model="formData[element.model]">
           <template v-if="element.options.style.value === 'default'">
             <a-radio
@@ -48,7 +48,7 @@
         </a-radio-group>
       </template>
 
-      <template v-if="element.type === 'checkbox'">
+      <template v-else-if="element.type === 'checkbox'">
         <a-checkbox-group
           v-model="formData[element.model]"
           :disabled="element.options.disabled.value"
@@ -61,7 +61,7 @@
         </a-checkbox-group>
       </template>
 
-      <template v-if="element.type === 'select'">
+      <template v-else-if="element.type === 'select'">
         <a-select
           v-model="formData[element.model]"
           :disabled="element.options.disabled.value"
@@ -73,7 +73,7 @@
         </a-select>
       </template>
 
-      <template v-if="element.type === 'timePicker'">
+      <template v-else-if="element.type === 'timePicker'">
         <a-time-picker
           v-model="formData[element.model]"
           :placeholder="element.options.placeholder.value"
@@ -84,7 +84,7 @@
         </a-time-picker>
       </template>
 
-      <template v-if="element.type === 'datePicker'">
+      <template v-else-if="element.type === 'datePicker'">
         <a-date-picker
           v-if="element.options.type.value === 'date'"
           v-model="formData[element.model]"
@@ -109,7 +109,7 @@
         />
       </template>
 
-      <template v-if="element.type === 'dateRangePicker'">
+      <template v-else-if="element.type === 'dateRangePicker'">
         <a-range-picker
           v-model="formData[element.model]"
           :placeholder="[element.options.startPlaceholder.value, element.options.endPlaceholder.value]"
@@ -119,7 +119,7 @@
         />
       </template>
 
-      <template v-if="element.type==='switch'">
+      <template v-else-if="element.type==='switch'">
         <a-switch
           v-model="formData[element.model]"
           :disabled="element.options.disabled.value"
@@ -129,7 +129,7 @@
         </a-switch>
       </template>
 
-      <template v-if="element.type==='slider'">
+      <template v-else-if="element.type==='slider'">
         <a-slider
           v-model="formData[element.model]"
           :min="element.options.min.value"
@@ -141,7 +141,9 @@
         ></a-slider>
       </template>
 
-      <component :is="element.type"></component>
+      <template v-else>
+        <component :is="element.type"></component>
+      </template>
 
     </a-form-model-item>
     <div class="widget-view-action" v-if="selectWidget.key == element.key">

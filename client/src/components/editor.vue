@@ -3,7 +3,7 @@
 		<div :id="id" class="editor">{{ template }}</div>
 		<a-button size="small" @click="getOptions" type="primary" v-if="showTest">测试获取</a-button>
 	</div>
-	
+
 </template>
 
 <script>
@@ -43,7 +43,6 @@
 		mounted() {
 			this.$nextTick(() => {
 				this.editor = ace.edit(this.id, {
-					theme: 'ace/theme/monokai',
 					mode: `ace/mode/${this.mode}`,
 					enableLiveAutocompletion: true,
 					tabSize: 2

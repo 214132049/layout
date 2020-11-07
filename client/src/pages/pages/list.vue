@@ -93,7 +93,10 @@
         })
       },
       editPage (item) {
-        window.location.href = `/formEdit?id=${item.id}&projectId=${item.projectId}`
+        const a = document.createElement('a')
+        a.href = `/formEdit?id=${item.id}&projectId=${item.projectId}`
+        a.target = '_blank'
+        a.click()
       },
       viewPage (item) {
         if (!item.pageUrl) {
@@ -101,7 +104,7 @@
           return
         }
         const a = document.createElement('a')
-        a.href = item.pageUrl
+        a.href = 'http://127.0.0.1:7001'+ item.pageUrl
         a.target = '_blank'
         a.click()
       }

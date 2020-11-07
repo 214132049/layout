@@ -107,7 +107,7 @@ export default {
       previewVisible: false,
       codeVisible: false,
       htmlTemplate: '',
-      pageName: name
+      pageName: ''
     }
   },
   computed: {
@@ -135,8 +135,8 @@ export default {
       this.previewVisible = true
     },
     handleGenerateCode () {
+      this.htmlTemplate = generateCode(this.widgetForm, this.pageName)
       this.codeVisible = true
-      this.htmlTemplate = generateCode(this.widgetForm)
     },
     handleClear () {
       this.widgetForm = {
@@ -171,7 +171,7 @@ export default {
       })
     },
     handlePublish () {
-      this.htmlTemplate = generateCode(this.widgetForm)
+      this.htmlTemplate = generateCode(this.widgetForm, this.pageName)
       Server({
         url: 'api/pages/publish',
         method: 'post',

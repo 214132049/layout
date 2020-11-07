@@ -15,7 +15,7 @@
       />
     </template>
 
-    <template v-if="widget.type === 'inputNumber'">
+    <template v-else-if="widget.type === 'inputNumber'">
       <a-input-number
         v-model.number="dataModel"
         :step="widget.options.step"
@@ -25,7 +25,7 @@
       />
     </template>
 
-    <template v-if="widget.type === 'radio'">
+    <template v-else-if="widget.type === 'radio'">
       <a-radio-group v-model="dataModel" :disabled="widget.options.disabled">
         <template v-if="widget.options.style === 'default'">
           <a-radio
@@ -42,7 +42,7 @@
       </a-radio-group>
     </template>
 
-    <template v-if="widget.type === 'checkbox'">
+    <template v-else-if="widget.type === 'checkbox'">
       <a-checkbox-group
         v-model="dataModel"
         :disabled="widget.options.disabled"
@@ -55,7 +55,7 @@
       </a-checkbox-group>
     </template>
 
-    <template v-if="widget.type === 'timePicker'">
+    <template v-else-if="widget.type === 'timePicker'">
       <a-time-picker
         v-model="dataModel"
         :placeholder="widget.options.placeholder"
@@ -66,7 +66,7 @@
       </a-time-picker>
     </template>
 
-    <template v-if="widget.type==='datePicker'">
+    <template v-else-if="widget.type==='datePicker'">
       <a-date-picker
         v-if="widget.options.type === 'date'"
         v-model="dataModel"
@@ -91,7 +91,7 @@
       />
     </template>
 
-    <template v-if="widget.type === 'dateRangePicker'">
+    <template v-else-if="widget.type === 'dateRangePicker'">
       <a-range-picker
         v-model="dataModel"
         :placeholder="[widget.options.startPlaceholder, widget.options.endPlaceholder]"
@@ -101,7 +101,7 @@
       />
     </template>
 
-    <template v-if="widget.type === 'select'">
+    <template v-else-if="widget.type === 'select'">
       <a-select
         v-model="dataModel"
         :disabled="widget.options.disabled"
@@ -113,7 +113,7 @@
       </a-select>
     </template>
 
-    <template v-if="widget.type==='switch'">
+    <template v-else-if="widget.type==='switch'">
       <a-switch
         v-model="dataModel"
         :disabled="widget.options.disabled"
@@ -123,7 +123,7 @@
       </a-switch>
     </template>
 
-    <template v-if="widget.type==='slider'">
+    <template v-else-if="widget.type==='slider'">
       <a-slider
         v-model="dataModel"
         :min="widget.options.min"
@@ -134,8 +134,10 @@
         :reverse="widget.options.reverse"
       ></a-slider>
     </template>
-  
-    <component :is="widget.type"></component>
+
+    <template v-else>
+      <component :is="widget.type" v-bind="widget.options"></component>
+    </template>
 
   </a-form-model-item>
 </template>

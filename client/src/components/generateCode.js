@@ -5,9 +5,10 @@ const allOptions = []
 
 function craeteOptions (model, optionsFn) {
   const name = `${model}Options`
+  console.log(name)
   allOptions.push({
     name,
-    fn: optionsFn
+    fn: optionsFn || null
   })
   return name
 }
@@ -51,6 +52,13 @@ function generateRules (list) {
 }
 
 export default function (data, name) {
+  const template = `<a-form-model ref="generateForm" :model="models" :rules="rules" :label-align="${data.config.labelAlign}" :label-col="${JSON.stringify(data.config.labelCol)}" :wrapper-col="${JSON.stringify(data.config.wrapperCol)}">
+    ${createFormItem(data.list)}
+    <a-form-model-item :wrapper-col="${JSON.stringify({ ...data.config.wrapperCol, offset: data.config.labelCol.span })}">'
+      <a-button @click="handleSubmit" type="primary">提交</a-button>
+    </a-form-model-item>
+  </a-form-model>`
+
   return `<!DOCTYPE html>
   <html>
     <head>
@@ -61,45 +69,39 @@ export default function (data, name) {
     </head>
     <body>
       <div id="app">
-        <a-form-model ref="generateForm" :model="models" :rules="rules" :label-align="${data.config.labelAlign}" :label-col="${JSON.stringify(data.config.labelCol)}" :wrapper-col="${JSON.stringify(data.config.wrapperCol)}">
-            ${createFormItem(data.list)}
-          <a-form-model-item :wrapper-col="${JSON.stringify({
-            ...data.config.wrapperCol,
-            offset: data.config.labelCol.span
-          })}">'
-              <a-button @click="handleSubmit" type="primary">提交</a-button>
-          </a-form-model-item>
-        </a-form-model>
+        <page-demo />
       </div>
-      <script src="//cdn.staticfile.org/babel-polyfill/6.20.0/polyfill.min.js"></script>
-      <script src="//cdn.staticfile.org/vue/2.5.16/vue.runtime.min.js"></script>
+      <script src="https://cdn.bootcdn.net/ajax/libs/babel-polyfill/7.12.1/polyfill.min.js"></script>
+      <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.min.js"></script>
       <script src="https://cdn.bootcdn.net/ajax/libs/ant-design-vue/1.6.5/antd.min.js"></script>
       <script>
-        new Vue({
-          el: '#app',
-          data: {
-            models: ${JSON.stringify(generateModels(data.list), null, 2)},
-            rules: ${JSON.stringify(generateRules(data.list), null, 2)},
-            ${
-              allOptions.length && allOptions.map(v => `${v.name}: []`).join('\n,')
+        Vue.component('page-demo', {
+          template: \`${template}\`,
+          data () {
+            return {
+              models: ${JSON.stringify(generateModels(data.list), null, 2)},
+              rules: ${JSON.stringify(generateRules(data.list), null, 2)},
+              ${
+                allOptions.length ? allOptions.map(v => `${v.name}: []`).join('\n,') : ''
+              }
             }
           },
           mounted () {
             ${
-              allOptions.length && allOptions.map(v => {
-                return `this.get${v.name}()`
-              }).join('\n,')
+              allOptions.length ? allOptions.map(v => {
+                return v.fn ? `this.get${v.name}()` : ''
+              }).filter(v => v).join('\n') : ''
             }
           },
           methods: {
             ${
-              allOptions.length && allOptions.map(v => {
-                return `async get${v.name} () {
-                  var self = this
-                  var fn = ${v.fn.replace(/(.+)(?=function)/, 'async ')}
-                  this.${v.name} = await fn()
-                }`
-              }).join('\n,')
+              allOptions.length ? allOptions.map(v => {
+                return v.fn ? `async get${v.name} () {
+                            var self = this
+                            var fn = ${v.fn.replace(/(.+)(?=function)/, 'async ')}
+                            this.${v.name} = await fn()
+                          }` : ''
+              }).filter(v => v).join('\n,') : ''
             }
             handleSubmit () {
               this.$refs.generateForm.getData().then(data => {
@@ -110,6 +112,10 @@ export default function (data, name) {
               })
             }
           }
+        });
+        Vue.use(window.antd)
+        var vm = new Vue({
+          el: '#app'
         })
       </script>
     </body>

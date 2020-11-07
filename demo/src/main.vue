@@ -20,7 +20,7 @@
     },
     methods: {
       showAlert() {
-        window.alert(this.$options.custom.options.message.value)
+        window.alert(this.$attrs.message)
       }
     }
   }
