@@ -51,13 +51,21 @@ function generateRules (list) {
   return rules
 }
 
-export default function (data, name) {
+export default function (data, name, paths) {
   const template = `<a-form-model ref="generateForm" :model="models" :rules="rules" label-align="${data.config.labelAlign}" :label-col='${JSON.stringify(data.config.labelCol)}' :wrapper-col='${JSON.stringify(data.config.wrapperCol)}'>
     ${createFormItem(data.list)}
     <a-form-model-item :wrapper-col='${JSON.stringify({ ...data.config.wrapperCol, offset: data.config.labelCol.span })}'>
       <a-button @click="handleSubmit" type="primary">提交</a-button>
     </a-form-model-item>
   </a-form-model>`
+  
+  const scripts = paths.map(item => {
+    return `<script src="${item.path}"></script>`
+  }).join('\n')
+  
+  const components = paths.map(item => {
+    return `Vue.component(window['${item.name}'].default.name, window['${item.name}'].default)`
+  }).join('\n')
 
   return `<!DOCTYPE html>
   <html>
@@ -74,7 +82,9 @@ export default function (data, name) {
       <script src="https://cdn.bootcdn.net/ajax/libs/babel-polyfill/7.12.1/polyfill.min.js"></script>
       <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.js"></script>
       <script src="https://cdn.bootcdn.net/ajax/libs/ant-design-vue/1.6.5/antd.min.js"></script>
+      ${scripts}
       <script>
+        ${components}
         Vue.component('page-demo', {
           template: \`${template}\`,
           data () {

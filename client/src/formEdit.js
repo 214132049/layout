@@ -10,7 +10,7 @@ import MakingForm from './components/Container.vue'
 import GenerateForm from './components/GenerateForm.vue'
 import './assets/style/form.styl'
 import Server from './extend/Server'
-import { advanceComponents } from './components/componentsConfig'
+import { advanceComponents, advanceComponentPaths } from './components/componentsConfig'
 import config from './config'
 
 Vue.use(Antd)
@@ -70,7 +70,9 @@ const router = new VueRouter(routerMap)
 async function startApp () {
   const list = await getComponent()
   const promises = list.map(async ({ path, npmName }) => {
-    const res = await fetch(`http://127.0.0.1:7001${path}`).then(res => res.text())
+    const _path = `http://127.0.0.1:7001${path}`
+    advanceComponentPaths.push({path: _path, name: npmName})
+    const res = await fetch(_path).then(res => res.text())
     return { content: res, npmName }
   })
   for (let promise of promises) {

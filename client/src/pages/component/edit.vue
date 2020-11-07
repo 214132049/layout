@@ -95,6 +95,7 @@
             }).then(() => {
               this.loading = false
               this.$message.success('提交成功')
+              this.$router.back()
             }).catch(() => {
               this.loading = false
             })

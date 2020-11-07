@@ -159,6 +159,7 @@ export default function (list, craeteOptions) {
 		      />`
 				break
 			default:
+				itemContent = `<component is="${type}" v-bind='${JSON.stringify(options)}'></component>`
 				break
 		}
 		content += `

@@ -34,7 +34,7 @@ class ComponentService extends CountersService {
     }
     const formCollection = ctx.model.ComponentCompiled.collection.name
     return Model.aggregate()
-      .match({ projectId: params.projectId })
+      .match({ projectId: params.projectId, status: 1 })
       .lookup({
         from: formCollection,
         let: { varId: '$id', varNpmVersion: '$npmVersion' },

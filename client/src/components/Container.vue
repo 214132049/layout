@@ -71,7 +71,7 @@ import WidgetForm from './WidgetForm'
 import CusDialog from './CusDialog'
 import GenerateForm from './GenerateForm'
 import Editor from './editor'
-import {basicComponents, advanceComponents} from './componentsConfig.js'
+import {basicComponents, advanceComponents, advanceComponentPaths} from './componentsConfig.js'
 import Server from '../extend/Server'
 import generateCode from './generateCode.js'
 
@@ -135,7 +135,7 @@ export default {
       this.previewVisible = true
     },
     handleGenerateCode () {
-      this.htmlTemplate = generateCode(this.widgetForm, this.pageName)
+      this.htmlTemplate = generateCode(this.widgetForm, this.pageName, advanceComponentPaths)
       this.codeVisible = true
     },
     handleClear () {
@@ -171,7 +171,7 @@ export default {
       })
     },
     handlePublish () {
-      this.htmlTemplate = generateCode(this.widgetForm, this.pageName)
+      this.htmlTemplate = generateCode(this.widgetForm, this.pageName, advanceComponentPaths)
       Server({
         url: 'api/pages/publish',
         method: 'post',

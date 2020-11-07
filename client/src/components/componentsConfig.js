@@ -256,3 +256,5 @@ export const basicComponents = [
 ]
 
 export const advanceComponents = []
+
+export const advanceComponentPaths = []
