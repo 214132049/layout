@@ -38,7 +38,7 @@
 				if (this.editor) {
 					this.getOptions()
 				}
-			}
+			},
 		},
 		mounted() {
 			this.$nextTick(() => {

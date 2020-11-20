@@ -1,7 +1,7 @@
 import getPostConfig from './getPostConfig'
 import createFormItemCode from './createFormItemCode'
 
-const allOptions = []
+let allOptions = []
 
 function craeteOptions (model, optionsFn) {
   const name = `${model}Options`
@@ -14,6 +14,7 @@ function craeteOptions (model, optionsFn) {
 }
 
 function createFormItem (list) {
+  allOptions = []
   const _tempList = getPostConfig(list)
   return createFormItemCode(_tempList, craeteOptions)
 }
@@ -110,8 +111,8 @@ export default function (data, name, paths) {
                             var self = this
                             var fn = ${v.fn.replace(/(.+)(?=function)/, 'async ')}
                             this.${v.name} = await fn()
-                          }` : ''
-              }).filter(v => v).join('\n,') : ''
+                          },` : ''
+              }).filter(v => v) : ''
             }
             handleSubmit () {
               this.$refs.generateForm.validate(valid => {
